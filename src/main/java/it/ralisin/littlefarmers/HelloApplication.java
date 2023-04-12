@@ -18,8 +18,8 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
-        System.out.println("Try 1");
+        System.err.println("Try 1");
         launch();
-        System.out.println("Try 2");
+        System.err.println("Try 2");
     }
 }
