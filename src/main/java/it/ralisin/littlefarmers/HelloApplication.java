@@ -7,7 +7,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class HelloApplication extends Application {
+    static Logger logger = Logger.getLogger(HelloApplication.class.getName());
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
@@ -18,8 +22,8 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
-        System.err.println("Try 1");
+        logger.log(Level.INFO, "Try 1");
         launch();
-        System.err.println("Try 2");
+        logger.log(Level.INFO, "Try 2");
     }
 }
