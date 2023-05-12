@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -17,7 +16,7 @@ public class Main extends Application {
         String firstPage = "HomeScreen.fxml";
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(firstPage));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        Scene scene = new Scene(fxmlLoader.load(), 480, 320);
         stage.setTitle(properties.getProperty("APP_NAME"));
         stage.setScene(scene);
         stage.show();
