@@ -21,7 +21,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int choice = 0;
+        int choice;
         System.out.println("Seleziona la view:\n 1- Interfaccia grafica\n 2- Linea di comando");
 
         while(true) {
