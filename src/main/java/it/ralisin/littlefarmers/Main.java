@@ -33,7 +33,6 @@ public class Main extends Application {
             }
             else if(choice == 2) {
                 // TODO: Second view
-                break;
             }
             else System.out.println("Valore inserito non valido");
         }

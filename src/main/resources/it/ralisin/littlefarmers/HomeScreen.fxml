@@ -1,20 +1,320 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ralisin.littlefarmers.controller.MainController">
+<VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="654.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ralisin.littlefarmers.controller.MainController">
    <children>
-      <HBox maxHeight="45.0" minHeight="45.0" prefHeight="45.0" prefWidth="720.0" />
-      <ScrollPane fx:id="scrollPaneId" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hvalue="0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="437.0" prefWidth="720.0">
-         <content>
-            <VBox fx:id="vBox" prefHeight="458.0" prefWidth="719.0">
+      <AnchorPane>
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="360.0">
                <children>
-                  <Button fx:id="basicButton" mnemonicParsing="false" onAction="#onBasicButtonClick" text="Button" />
+                  <Label text="AppName" textAlignment="CENTER">
+                     <font>
+                        <Font name="Times New Roman" size="20.0" />
+                     </font>
+                  </Label>
                </children>
-            </VBox>
+               <padding>
+                  <Insets left="15.0" right="15.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" layoutX="360.0" prefHeight="46.0" prefWidth="360.0" spacing="14.0">
+               <children>
+                  <Button mnemonicParsing="false" text="Login" />
+                  <Button mnemonicParsing="false" text="Sign In" />
+                  <Button mnemonicParsing="false" text="Cart">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="88.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@bag.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets left="15.0" right="15.0" />
+               </padding>
+            </HBox>
+         </children>
+      </AnchorPane>
+      <ScrollPane fx:id="scrollPaneId" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hvalue="0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+         <content>
+            <GridPane alignment="CENTER" hgap="10.0" vgap="10.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+              </rowConstraints>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="Button" textFill="WHITE" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <graphic>
+                        <ImageView fitHeight="117.0" fitWidth="207.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@regions/images/Abruzzo.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" text="Button" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <graphic>
+                        <ImageView fitHeight="117.0" fitWidth="207.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@regions/images/Basilicata.jpg" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" text="Button" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <graphic>
+                        <ImageView fitHeight="117.0" fitWidth="207.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@regions/images/Calabria.jpg" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button contentDisplay="CENTER" mnemonicParsing="false" text="Button" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <graphic>
+                        <ImageView fitHeight="117.0" fitWidth="207.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@regions/images/Campania.jpg" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Button" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                     <graphic>
+                        <ImageView fitHeight="117.0" fitWidth="207.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@regions/images/Emilia-Romagna.jpg" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button contentDisplay="CENTER" mnemonicParsing="false" text="Button" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                     <graphic>
+                        <ImageView fitHeight="117.0" fitWidth="207.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@regions/images/Friuli-Venezia-Giulia.jpg" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Button" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                     <graphic>
+                        <ImageView fitHeight="117.0" fitWidth="207.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@regions/images/Lazio.jpg" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button contentDisplay="CENTER" mnemonicParsing="false" text="Button" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                     <graphic>
+                        <ImageView fitHeight="117.0" fitWidth="207.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@regions/images/Liguria.jpg" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Button" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                     <graphic>
+                        <ImageView fitHeight="117.0" fitWidth="207.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@regions/images/Lombardia.jpg" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button contentDisplay="CENTER" mnemonicParsing="false" text="Button" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                     <graphic>
+                        <ImageView fitHeight="117.0" fitWidth="207.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@regions/images/Marche.jpg" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Button" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                     <graphic>
+                        <ImageView fitHeight="117.0" fitWidth="207.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@regions/images/Molise.jpg" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button contentDisplay="CENTER" mnemonicParsing="false" text="Button" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                     <graphic>
+                        <ImageView fitHeight="117.0" fitWidth="207.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@regions/images/Piemonte.jpg" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Button" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                     <graphic>
+                        <ImageView fitHeight="117.0" fitWidth="207.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@regions/images/Puglia.jpg" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button contentDisplay="CENTER" mnemonicParsing="false" text="Button" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                     <graphic>
+                        <ImageView fitHeight="117.0" fitWidth="207.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@regions/images/Sardegna.jpg" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Button" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+                     <graphic>
+                        <ImageView fitHeight="117.0" fitWidth="207.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@regions/images/Sicilia.jpg" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button contentDisplay="CENTER" mnemonicParsing="false" text="Button" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+                     <graphic>
+                        <ImageView fitHeight="117.0" fitWidth="207.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@regions/images/Toscana.jpg" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Button" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="8">
+                     <graphic>
+                        <ImageView fitHeight="117.0" fitWidth="207.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@regions/images/Trentino-Alto-Adige.jpg" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button contentDisplay="CENTER" mnemonicParsing="false" text="Button" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8">
+                     <graphic>
+                        <ImageView fitHeight="117.0" fitWidth="207.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@regions/images/Umbria.jpg" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Button" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="9">
+                     <graphic>
+                        <ImageView fitHeight="117.0" fitWidth="207.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@regions/images/Val-dAosta.jpg" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button contentDisplay="CENTER" mnemonicParsing="false" text="Button" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="9">
+                     <graphic>
+                        <ImageView fitHeight="117.0" fitWidth="207.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@regions/images/Veneto.jpg" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </GridPane>
          </content></ScrollPane>
    </children>
 </VBox>
