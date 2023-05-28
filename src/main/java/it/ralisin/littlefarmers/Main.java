@@ -8,17 +8,19 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Main extends Application {
     public void start(Stage stage) throws IOException {
-        String firstPage = "HomeScreen.fxml";
+        String firstPage = "RegionListScreen.fxml";
 
-        Parent root = FXMLLoader.load(getClass().getResource(firstPage));
-        Scene scene = new Scene(root, 720, 480);
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(firstPage)));
+        Scene scene = new Scene(root, 900, 650);
 
         NavigatorSingleton n = NavigatorSingleton.getInstance(stage);
 
         n.getStg().setTitle("LittleFarmers");
+        n.getStg().setResizable(false);
         n.getStg().setScene(scene);
         n.getStg().show();
     }

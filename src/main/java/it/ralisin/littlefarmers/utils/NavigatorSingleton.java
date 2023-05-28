@@ -13,6 +13,7 @@ public class NavigatorSingleton {
     private static NavigatorSingleton instance = null;
 
     protected Stage stg;
+
     public Stage getStg() {return stg;}
 
     protected NavigatorSingleton(Stage stg) {this.stg = stg;}
@@ -24,8 +25,8 @@ public class NavigatorSingleton {
         return instance;
     }
 
-    public void gotoPage(String fxmlFile) throws IOException {
-        Parent pane = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxmlFile)));
-        stg.getScene().setRoot(pane);
+    public void gotoPage(String fxml) throws IOException {
+        Parent newRoot = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxml)));
+        stg.getScene().setRoot(newRoot);
     }
 }

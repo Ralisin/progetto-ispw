@@ -8,14 +8,15 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 
-<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" vbarPolicy="ALWAYS">
+<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <ScrollPane hbarPolicy="NEVER" prefWidth="900.0">
          <content>
             <VBox>
                <children>
@@ -105,5 +106,8 @@
             </VBox>
          </content>
       </ScrollPane>
-   </children>
-</VBox>
+   </center>
+   <top>
+      <HBox prefHeight="51.0" prefWidth="900.0" style="-fx-background-color: #A3A4A5;" BorderPane.alignment="CENTER" />
+   </top>
+</BorderPane>
