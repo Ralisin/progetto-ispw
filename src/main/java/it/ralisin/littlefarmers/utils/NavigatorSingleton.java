@@ -3,7 +3,6 @@ package it.ralisin.littlefarmers.utils;
 import it.ralisin.littlefarmers.Main;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;

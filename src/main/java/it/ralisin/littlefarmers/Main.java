@@ -26,24 +26,6 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
-        /*
-        Sample code to have basic two views
-        Scanner scanner = new Scanner(System.in);
-        int choice;
-        System.out.println("Seleziona la view:\n 1- Interfaccia grafica\n 2- Linea di comando");
-
-        while(true) {
-            choice = scanner.nextInt();
-
-            if(choice == 1) {
-                launch();
-                break;
-            }
-            else if(choice == 2) { // TODO: Second view
-            }
-            else System.out.println("Valore inserito non valido");
-        }
-         */
+        launch(); // TODO: implement second view
     }
 }

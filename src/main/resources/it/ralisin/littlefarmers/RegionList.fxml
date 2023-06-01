@@ -55,7 +55,7 @@
                                  <graphic>
                                     <ImageView fitHeight="150.0" fitWidth="320.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@regions/Abruzzo.png" />
+                                          <Image url="@regionsImg/Abruzzo.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -67,7 +67,7 @@
                                  <graphic>
                                     <ImageView fitHeight="150.0" fitWidth="320.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@regions/Basilicata.jpg" />
+                                          <Image url="@regionsImg/Basilicata.jpg" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -79,7 +79,7 @@
                                  <graphic>
                                     <ImageView fitHeight="150.0" fitWidth="320.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@regions/Calabria.jpg" />
+                                          <Image url="@regionsImg/Calabria.jpg" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -91,7 +91,7 @@
                                  <graphic>
                                     <ImageView fitHeight="150.0" fitWidth="320.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@regions/Campania.jpg" />
+                                          <Image url="@regionsImg/Campania.jpg" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -103,7 +103,7 @@
                                  <graphic>
                                     <ImageView fitHeight="150.0" fitWidth="320.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@regions/Emilia-Romagna.jpg" />
+                                          <Image url="@regionsImg/Emilia-Romagna.jpg" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -115,7 +115,7 @@
                                  <graphic>
                                     <ImageView fitHeight="150.0" fitWidth="320.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@regions/Friuli-Venezia-Giulia.jpg" />
+                                          <Image url="@regionsImg/Friuli-Venezia-Giulia.jpg" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -127,7 +127,7 @@
                                  <graphic>
                                     <ImageView fitHeight="150.0" fitWidth="320.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@regions/Lazio.jpg" />
+                                          <Image url="@regionsImg/Lazio.jpg" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -139,7 +139,7 @@
                                  <graphic>
                                     <ImageView fitHeight="150.0" fitWidth="320.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@regions/Liguria.jpg" />
+                                          <Image url="@regionsImg/Liguria.jpg" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -151,7 +151,7 @@
                                  <graphic>
                                     <ImageView fitHeight="150.0" fitWidth="320.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@regions/Lombardia.jpg" />
+                                          <Image url="@regionsImg/Lombardia.jpg" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -163,7 +163,7 @@
                                  <graphic>
                                     <ImageView fitHeight="150.0" fitWidth="320.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@regions/Marche.jpg" />
+                                          <Image url="@regionsImg/Marche.jpg" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -175,7 +175,7 @@
                                  <graphic>
                                     <ImageView fitHeight="150.0" fitWidth="320.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@regions/Molise.jpg" />
+                                          <Image url="@regionsImg/Molise.jpg" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -187,7 +187,7 @@
                                  <graphic>
                                     <ImageView fitHeight="150.0" fitWidth="320.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@regions/Piemonte.jpg" />
+                                          <Image url="@regionsImg/Piemonte.jpg" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -199,7 +199,7 @@
                                  <graphic>
                                     <ImageView fitHeight="150.0" fitWidth="320.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@regions/Puglia.jpg" />
+                                          <Image url="@regionsImg/Puglia.jpg" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -211,7 +211,7 @@
                                  <graphic>
                                     <ImageView fitHeight="150.0" fitWidth="320.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@regions/Sardegna.jpg" />
+                                          <Image url="@regionsImg/Sardegna.jpg" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -223,7 +223,7 @@
                                  <graphic>
                                     <ImageView fitHeight="150.0" fitWidth="320.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@regions/Sicilia.jpg" />
+                                          <Image url="@regionsImg/Sicilia.jpg" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -235,7 +235,7 @@
                                  <graphic>
                                     <ImageView fitHeight="150.0" fitWidth="320.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@regions/Toscana.jpg" />
+                                          <Image url="@regionsImg/Toscana.jpg" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -247,7 +247,7 @@
                                  <graphic>
                                     <ImageView fitHeight="150.0" fitWidth="320.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@regions/Trentino-Alto-Adige.jpg" />
+                                          <Image url="@regionsImg/Trentino-Alto-Adige.jpg" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -259,7 +259,7 @@
                                  <graphic>
                                     <ImageView fitHeight="150.0" fitWidth="320.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@regions/Umbria.jpg" />
+                                          <Image url="@regionsImg/Umbria.jpg" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -271,7 +271,7 @@
                                  <graphic>
                                     <ImageView fitHeight="150.0" fitWidth="320.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@regions/Val-dAosta.jpg" />
+                                          <Image url="@regionsImg/Val-dAosta.jpg" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -283,7 +283,7 @@
                                  <graphic>
                                     <ImageView fitHeight="150.0" fitWidth="320.0" pickOnBounds="true">
                                        <image>
-                                          <Image url="@regions/Veneto.jpg" />
+                                          <Image url="@regionsImg/Veneto.jpg" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -314,15 +314,15 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="490.0" spacing="5.0">
                <children>
-                  <Button contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#onClickLogin" style="-fx-background-color: #70AE6E; -fx-border-radius: 4;" text="Login" textFill="WHITE">
+                  <Button fx:id="signUpBtn" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" style="-fx-border-color: #70AE6E; -fx-background-color: #FFFFFF; -fx-border-radius: 4;" text="Sign Up" textFill="#70ae6e">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font></Button>
-                  <Button contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#onClickSignUp" style="-fx-border-color: #70AE6E; -fx-background-color: #FFFFFF; -fx-border-radius: 4;" text="Sign Up" textFill="#70ae6e">
+                  <Button fx:id="loginBtn" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" style="-fx-background-color: #70AE6E; -fx-border-radius: 4;" text="Login" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font></Button>
-                  <Button mnemonicParsing="false" onAction="#onClickCart" style="-fx-background-color: transparent;" text="Cart" textAlignment="CENTER" textFill="#70ae6e">
+                  <Button fx:id="cartBtn" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Cart" textAlignment="CENTER" textFill="#70ae6e">
                      <graphic>
                         <ImageView fitHeight="24.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
