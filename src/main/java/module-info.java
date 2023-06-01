@@ -7,6 +7,6 @@ module it.ralisin.littlefarmers {
 
     opens it.ralisin.littlefarmers to javafx.fxml;
     exports it.ralisin.littlefarmers;
-    exports it.ralisin.littlefarmers.controller.GraphicController;
-    opens it.ralisin.littlefarmers.controller.GraphicController to javafx.fxml;
+    exports it.ralisin.littlefarmers.controller.graphic_controller;
+    opens it.ralisin.littlefarmers.controller.graphic_controller to javafx.fxml;
 }
