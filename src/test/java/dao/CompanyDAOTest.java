@@ -8,10 +8,8 @@ import java.sql.SQLException;
 
 public class CompanyDAOTest {
     @Test
-    void connectDB() throws SQLException {
+    void connectionFactoryTest() throws SQLException {
         Connection conn = null;
         conn = ConnectionFactory.getConnection();
-
-
     }
 }

@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ConnectionFactory {
     private static Connection connection;
@@ -14,7 +16,7 @@ public class ConnectionFactory {
     protected ConnectionFactory() {}
 
     static {
-        try (InputStream input = new FileInputStream("src/main/java/it/ralisin/littlefarmers/dao/db.properties")) {
+        try (InputStream input = new FileInputStream("src/main/resources/it/ralisin/littlefarmers/conf/db.properties")) {
             Properties properties = new Properties();
             properties.load(input);
 
@@ -24,11 +26,11 @@ public class ConnectionFactory {
 
             connection = DriverManager.getConnection(connection_url, user, password);
         } catch (IOException | SQLException e) {
-            e.printStackTrace();
+            Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
         }
     }
 
-    public static Connection getConnection() throws SQLException {
+    public static Connection getConnection() {
         return connection;
     }
 }
