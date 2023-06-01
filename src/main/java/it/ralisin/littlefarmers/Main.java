@@ -12,7 +12,7 @@ import java.util.Objects;
 
 public class Main extends Application {
     public void start(Stage stage) throws IOException {
-        String firstPage = "RegionListScreen.fxml";
+        String firstPage = "HomeScreen.fxml";
 
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(firstPage)));
         Scene scene = new Scene(root, 900, 650);

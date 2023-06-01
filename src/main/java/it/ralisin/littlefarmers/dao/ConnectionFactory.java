@@ -1,0 +1,34 @@
+package it.ralisin.littlefarmers.dao;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
+
+public class ConnectionFactory {
+    private static Connection connection;
+
+    protected ConnectionFactory() {}
+
+    static {
+        try (InputStream input = new FileInputStream("src/main/java/it/ralisin/littlefarmers/dao/db.properties")) {
+            Properties properties = new Properties();
+            properties.load(input);
+
+            String connection_url = properties.getProperty("CONNECTION_URL");
+            String user = properties.getProperty("USER");
+            String password = properties.getProperty("PASSWORD");
+
+            connection = DriverManager.getConnection(connection_url, user, password);
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Connection getConnection() throws SQLException {
+        return connection;
+    }
+}

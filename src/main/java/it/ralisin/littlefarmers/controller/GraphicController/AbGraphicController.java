@@ -1,4 +1,4 @@
-package it.ralisin.littlefarmers.controller;
+package it.ralisin.littlefarmers.controller.GraphicController;
 
 import it.ralisin.littlefarmers.utils.NavigatorSingleton;
 import java.util.logging.Level;
