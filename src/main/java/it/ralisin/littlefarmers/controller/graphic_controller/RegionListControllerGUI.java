@@ -27,9 +27,8 @@ public class RegionListControllerGUI {
     public String onClickRegionButton(ActionEvent event) {
         String str = event.getSource().toString();
         String regionName = str.substring(str.indexOf("'")+1, str.lastIndexOf("'"));
-        System.out.println(regionName);
 
-        System.out.println(Main.class.getResource("RegionProducts.fxml"));
+        Logger.getAnonymousLogger().log(Level.INFO, regionName);
 
         return regionName;
     }

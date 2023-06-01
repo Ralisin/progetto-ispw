@@ -13,6 +13,29 @@ import java.util.logging.Logger;
 public class ConnectionFactory {
     private static Connection connection;
 
+    private ConnectionFactory() {}
+
+    static {
+        try (InputStream input = new FileInputStream("src/main/resources/it/ralisin/littlefarmers/conf/db.properties")) {
+            Properties properties = new Properties();
+            properties.load(input);
+
+            String connectionUrl = properties.getProperty("CONNECTION_URL");
+            String user = properties.getProperty("USER");
+            String password = properties.getProperty("PASSWORD");
+
+            connection = DriverManager.getConnection(connectionUrl, user, password);
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Connection getConnection() throws SQLException {
+        return connection;
+    }
+    /*
+    private static Connection connection;
+
     protected ConnectionFactory() {}
 
     static {
@@ -33,4 +56,6 @@ public class ConnectionFactory {
     public static Connection getConnection() {
         return connection;
     }
+
+     */
 }
