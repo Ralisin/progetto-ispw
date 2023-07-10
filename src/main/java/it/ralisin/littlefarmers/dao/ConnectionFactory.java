@@ -7,8 +7,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ConnectionFactory {
     private static Connection connection;
@@ -21,8 +19,8 @@ public class ConnectionFactory {
             properties.load(input);
 
             String connectionUrl = properties.getProperty("CONNECTION_URL");
-            String user = properties.getProperty("USER");
-            String password = properties.getProperty("PASSWORD");
+            String user = properties.getProperty("USER_LOGIN");
+            String password = properties.getProperty("PASSWORD_LOGIN");
 
             connection = DriverManager.getConnection(connectionUrl, user, password);
         } catch (IOException | SQLException e) {
