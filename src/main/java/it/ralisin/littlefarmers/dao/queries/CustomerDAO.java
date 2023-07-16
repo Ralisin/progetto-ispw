@@ -5,34 +5,69 @@ import it.ralisin.littlefarmers.enums.Regions;
 import it.ralisin.littlefarmers.model.Product;
 import it.ralisin.littlefarmers.model.User;
 
-import java.sql.*;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDAO {
     private CustomerDAO() {}
 
-    public static List<Product> getProductsByRegion(Regions region) throws SQLException {
+    public static List<Product> getProductsByRegion(Regions region) {
         Connection conn = ConnectionFactory.getConnection();
         List<Product> productList = new ArrayList<>();
 
-        PreparedStatement cs = conn.prepareCall(
-                "select productId, productName, productDescription, price, category,  imageLink from products join " +
-                "(select * from company where region = ?) as companyParsed " +
-                "on products.companyEmail = companyParsed.email");
-        cs.setString(1, region.getRegion());
+        CallableStatement cs = null;
+        ResultSet rs = null;
 
-        ResultSet rs = cs.executeQuery();
+        try {
+            cs = conn.prepareCall(
+                    "select productId, productName, productDescription, price, category,  imageLink from products join " +
+                    "(select * from company where region = ?) as companyParsed " +
+                    "on products.companyEmail = companyParsed.email");
+            cs.setString(1, region.getRegion());
 
-        while(rs.next()) {
-            int productId = rs.getInt("productId");
-            String productName = rs.getString("productName");
-            String productDescription = rs.getString("productDescription");
-            float price = rs.getFloat("price");
-            String category = rs.getString("category");
-            String imageLink = rs.getString("imageLink");
+            rs = cs.executeQuery();
 
-            productList.add(new Product(productId, productName, productDescription, price, category, imageLink, region));
+            while(rs.next()) {
+                int productId = rs.getInt("productId");
+                String productName = rs.getString("productName");
+                String productDescription = rs.getString("productDescription");
+                float price = rs.getFloat("price");
+                String category = rs.getString("category");
+                String imageLink = rs.getString("imageLink");
+
+                productList.add(new Product(productId, productName, productDescription, price, category, imageLink, region));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // Close the ResultSet, CallableStatement, and Connection in the finally block
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (cs != null) {
+                try {
+                    cs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         return productList;
