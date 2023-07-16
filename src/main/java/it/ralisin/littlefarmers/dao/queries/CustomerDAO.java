@@ -90,14 +90,16 @@ public class CustomerDAO {
         String sql = "insert into cart (customerEmail, productId, quantity) " +
                 "value (?, ?, ?) on duplicate key update quantity = ?";
 
-        PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        ps.setString(1, user.getEmail());
-        ps.setInt(2, product.getProductId());
-        ps.setInt(3, quantity);
-        ps.setInt(4, quantity);
+        int affectedRows;
 
-        int affectedRows = ps.executeUpdate();
-        ps.close();
+        try(PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
+            ps.setString(1, user.getEmail());
+            ps.setInt(2, product.getProductId());
+            ps.setInt(3, quantity);
+            ps.setInt(4, quantity);
+
+            affectedRows = ps.executeUpdate();
+        }
 
         return affectedRows > 0;
     }
@@ -106,13 +108,14 @@ public class CustomerDAO {
         Connection conn = ConnectionFactory.getConnection();
 
         String sql = "delete from cart where productId = ? and customerEmail = ?";
+        int affectedRows;
 
-        PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        ps.setInt(1, product.getProductId());
-        ps.setString(2, user.getEmail());
+        try (PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
+            ps.setInt(1, product.getProductId());
+            ps.setString(2, user.getEmail());
 
-        int affectedRows = ps.executeUpdate();
-        ps.close();
+            affectedRows = ps.executeUpdate();
+        }
 
         return affectedRows > 0;
     }
