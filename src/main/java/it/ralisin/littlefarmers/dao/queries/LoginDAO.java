@@ -14,18 +14,22 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class LoginDAO {
-    public static User getUser(String email, String psw) throws SQLException {
+    public static User getUser(String email, String psw) {
         Connection conn = ConnectionFactory.getConnection();
+        CallableStatement cs = null;
+        ResultSet rs = null;
 
-        CallableStatement cs = conn.prepareCall("select * from users where email = ? and password = ?");
-        cs.setString(1, email);
-        cs.setString(2, psw);
+        User user = null;
 
         try(InputStream input = new FileInputStream("src/main/resources/it/ralisin/littlefarmers/conf/db.properties")) {
             Properties properties = new Properties();
             properties.load(input);
 
-            ResultSet rs = cs.executeQuery();
+            cs = conn.prepareCall("select * from users where email = ? and password = ?");
+            cs.setString(1, email);
+            cs.setString(2, psw);
+
+            rs = cs.executeQuery();
 
             if(rs.next()) {
                 String emailDB = rs.getString("email");
@@ -38,20 +42,44 @@ public class LoginDAO {
 
                     ConnectionFactory.changeConnection(userCustomer, pswCustomer);
 
-                    return new User(emailDB, pswDB, UserRole.CUSTOMER);
+                    user = new User(emailDB, pswDB, UserRole.CUSTOMER);
                 } else if(roleDB.equals("company")) {
                     String userCompany = properties.getProperty("USER_COMPANY");
                     String pswCompany = properties.getProperty("PASSWORD_COMPANY");
 
                     ConnectionFactory.changeConnection(userCompany, pswCompany);
 
-                    return new User(emailDB, pswDB, UserRole.COMPANY);
+                    user = new User(emailDB, pswDB, UserRole.COMPANY);
                 }
             }
         } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (cs != null) {
+                try {
+                    cs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
-        return null;
+        return user;
     }
 }
