@@ -17,10 +17,10 @@ public class CustomerDAO {
 
     public static List<Product> getProductsByRegion(Regions region) {
         Connection conn = ConnectionFactory.getConnection();
-        List<Product> productList = new ArrayList<>();
-
         CallableStatement cs = null;
         ResultSet rs = null;
+
+        List<Product> productList = new ArrayList<>();
 
         try {
             cs = conn.prepareCall(
@@ -44,30 +44,10 @@ public class CustomerDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            // Close the ResultSet, CallableStatement, and Connection in the finally block
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (cs != null) {
-                try {
-                    cs.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+            // Close the ResultSet, CallableStatement, and Connection in the final block
+            closeRs(rs);
+            closeCs(cs);
+            closeConn(conn);
         }
 
         return productList;
@@ -75,16 +55,19 @@ public class CustomerDAO {
 
     public static List<Product> getCart(User user) {
         Connection conn = ConnectionFactory.getConnection();
+        CallableStatement cs = null;
+        ResultSet rs = null;
+
         List<Product> productList = new ArrayList<>();
 
         try {
-            CallableStatement cs = conn.prepareCall(
+            cs = conn.prepareCall(
                     "select products.productId, productName, productDescription, price, category, imageLink " +
                     "from cart join products on cart.productId = products.productId " +
                     "where cart.customerEmail = ?");
             cs.setString(1, user.getEmail());
 
-            ResultSet rs = cs.executeQuery();
+            rs = cs.executeQuery();
 
             while (rs.next()) {
                 int productId = rs.getInt("products.productId");
@@ -98,6 +81,11 @@ public class CustomerDAO {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            // Close the ResultSet, CallableStatement, and Connection in the final block
+            closeRs(rs);
+            closeCs(cs);
+            closeConn(conn);
         }
 
         return productList;
@@ -105,9 +93,10 @@ public class CustomerDAO {
 
     public static Boolean addToCart(User user, Product product, int quantity) {
         Connection conn = ConnectionFactory.getConnection();
+        CallableStatement cs = null;
 
         try {
-            CallableStatement cs = conn.prepareCall("insert into cart (customerEmail, productId, quantity) " +
+            cs = conn.prepareCall("insert into cart (customerEmail, productId, quantity) " +
                             "value (?, ?, ?) on duplicate key update quantity = ?");
             cs.setString(1, user.getEmail());
             cs.setInt(2, product.getProductId());
@@ -119,6 +108,10 @@ public class CustomerDAO {
             if(affectedRows > 0) return true;
         } catch(SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            // Close the CallableStatement, and Connection in the final block
+            closeCs(cs);
+            closeConn(conn);
         }
 
         return false;
@@ -126,9 +119,10 @@ public class CustomerDAO {
 
     public static Boolean removeFromCart(User user, Product product) {
         Connection conn = ConnectionFactory.getConnection();
+        CallableStatement cs = null;
 
         try {
-            CallableStatement cs = conn.prepareCall("delete from cart where productId = ? and customerEmail = ?");
+            cs = conn.prepareCall("delete from cart where productId = ? and customerEmail = ?");
             cs.setInt(1, product.getProductId());
             cs.setString(2, user.getEmail());
 
@@ -137,8 +131,41 @@ public class CustomerDAO {
             if(affectedRows > 0) return true;
         } catch(SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            closeCs(cs);
+            closeConn(conn);
         }
 
         return false;
+    }
+
+    private static void closeRs(ResultSet rs) {
+        if (rs != null) {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static void closeCs(CallableStatement cs) {
+        if (cs != null) {
+            try {
+                cs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static void closeConn(Connection conn) {
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
