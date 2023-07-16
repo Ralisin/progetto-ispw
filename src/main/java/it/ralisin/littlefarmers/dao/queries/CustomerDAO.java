@@ -24,7 +24,6 @@ public class CustomerDAO {
                 "from products join (select * from company where region = ?) as companyParsed " +
                 "on products.companyEmail = companyParsed.email";
 
-//        PreparedStatement ps = null;
         ResultSet rs = null;
         
         try(PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
@@ -59,24 +58,28 @@ public class CustomerDAO {
                 "from cart join products on cart.productId = products.productId " +
                 "where cart.customerEmail = ?";
 
-        PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        ps.setString(1, user.getEmail());
+        ResultSet rs = null;
 
-        ResultSet rs = ps.executeQuery();
+        try(PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
+            ps.setString(1, user.getEmail());
 
-        while (rs.next()) {
-            int productId = rs.getInt("products.productId");
-            String productName = rs.getString("productName");
-            String productDescription = rs.getString("productDescription");
-            float price = rs.getFloat("price");
-            String category = rs.getString("category");
-            String imageLink = rs.getString("imageLink");
+            rs = ps.executeQuery();
 
-            productList.add(new Product(productId, productName, productDescription, price, category, imageLink));
+            while (rs.next()) {
+                int productId = rs.getInt("products.productId");
+                String productName = rs.getString("productName");
+                String productDescription = rs.getString("productDescription");
+                float price = rs.getFloat("price");
+                String category = rs.getString("category");
+                String imageLink = rs.getString("imageLink");
+
+                productList.add(new Product(productId, productName, productDescription, price, category, imageLink));
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
         }
-
-        rs.close();
-        ps.close();
 
         return productList;
     }
