@@ -16,124 +16,102 @@ import java.util.List;
 public class CustomerDAO {
     private CustomerDAO() {}
 
-    public static List<Product> getProductsByRegion(Regions region) throws DAOException {
-        Connection conn = ConnectionFactory.getConnection();
-        CallableStatement cs = null;
-        ResultSet rs = null;
-
+    public static List<Product> getProductsByRegion(Regions region) throws DAOException, SQLException {
         List<Product> productList = new ArrayList<>();
 
-        try {
-            cs = conn.prepareCall(
-                    "select productId, productName, productDescription, price, category,  imageLink from products join " +
-                    "(select * from company where region = ?) as companyParsed " +
-                    "on products.companyEmail = companyParsed.email");
-            cs.setString(1, region.getRegion());
+        Connection conn = ConnectionFactory.getConnection();
 
-            rs = cs.executeQuery();
+        CallableStatement cs = conn.prepareCall(
+                "select productId, productName, productDescription, price, category,  imageLink from products join " +
+                "(select * from company where region = ?) as companyParsed " +
+                "on products.companyEmail = companyParsed.email");
+        cs.setString(1, region.getRegion());
 
-            while(rs.next()) {
-                int productId = rs.getInt("productId");
-                String productName = rs.getString("productName");
-                String productDescription = rs.getString("productDescription");
-                float price = rs.getFloat("price");
-                String category = rs.getString("category");
-                String imageLink = rs.getString("imageLink");
+        ResultSet rs = cs.executeQuery();
 
-                productList.add(new Product(productId, productName, productDescription, price, category, imageLink, region));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            // Close the ResultSet, CallableStatement, and Connection in the final block
-            closeRs(rs);
-            closeCs(cs);
+        while(rs.next()) {
+            int productId = rs.getInt("productId");
+            String productName = rs.getString("productName");
+            String productDescription = rs.getString("productDescription");
+            float price = rs.getFloat("price");
+            String category = rs.getString("category");
+            String imageLink = rs.getString("imageLink");
+
+            productList.add(new Product(productId, productName, productDescription, price, category, imageLink, region));
         }
+
+        closeRs(rs);
+        closeCs(cs);
 
         return productList;
     }
 
-    public static List<Product> getCart(User user) throws DAOException {
-        Connection conn = ConnectionFactory.getConnection();
-        CallableStatement cs = null;
-        ResultSet rs = null;
-
+    public static List<Product> getCart(User user) throws DAOException, SQLException {
         List<Product> productList = new ArrayList<>();
 
-        try {
-            cs = conn.prepareCall(
-                    "select products.productId, productName, productDescription, price, category, imageLink " +
-                    "from cart join products on cart.productId = products.productId " +
-                    "where cart.customerEmail = ?");
-            cs.setString(1, user.getEmail());
+        Connection conn = ConnectionFactory.getConnection();
 
-            rs = cs.executeQuery();
+        CallableStatement cs = conn.prepareCall(
+                "select products.productId, productName, productDescription, price, category, imageLink " +
+                "from cart join products on cart.productId = products.productId " +
+                "where cart.customerEmail = ?");
+        cs.setString(1, user.getEmail());
 
-            while (rs.next()) {
-                int productId = rs.getInt("products.productId");
-                String productName = rs.getString("productName");
-                String productDescription = rs.getString("productDescription");
-                float price = rs.getFloat("price");
-                String category = rs.getString("category");
-                String imageLink = rs.getString("imageLink");
+        ResultSet rs = cs.executeQuery();
 
-                productList.add(new Product(productId, productName, productDescription, price, category, imageLink));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            // Close the ResultSet, CallableStatement, and Connection in the final block
-            closeRs(rs);
-            closeCs(cs);
+        while (rs.next()) {
+            int productId = rs.getInt("products.productId");
+            String productName = rs.getString("productName");
+            String productDescription = rs.getString("productDescription");
+            float price = rs.getFloat("price");
+            String category = rs.getString("category");
+            String imageLink = rs.getString("imageLink");
+
+            productList.add(new Product(productId, productName, productDescription, price, category, imageLink));
         }
+
+        closeRs(rs);
+        closeCs(cs);
 
         return productList;
     }
 
-    public static Boolean addToCart(User user, Product product, int quantity) throws DAOException {
+    public static boolean addToCart(User user, Product product, int quantity) throws DAOException, SQLException {
         Connection conn = ConnectionFactory.getConnection();
-        CallableStatement cs = null;
 
-        try {
-            cs = conn.prepareCall("insert into cart (customerEmail, productId, quantity) " +
-                            "value (?, ?, ?) on duplicate key update quantity = ?");
-            cs.setString(1, user.getEmail());
-            cs.setInt(2, product.getProductId());
-            cs.setInt(3, quantity);
-            cs.setInt(4, quantity);
+        boolean result = false;
 
-            int affectedRows = cs.executeUpdate();
+        CallableStatement cs = conn.prepareCall("insert into cart (customerEmail, productId, quantity) " +
+                        "value (?, ?, ?) on duplicate key update quantity = ?");
+        cs.setString(1, user.getEmail());
+        cs.setInt(2, product.getProductId());
+        cs.setInt(3, quantity);
+        cs.setInt(4, quantity);
 
-            if(affectedRows > 0) return true;
-        } catch(SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            // Close the CallableStatement, and Connection in the final block
-            closeCs(cs);
-        }
+        int affectedRows = cs.executeUpdate();
+        if(affectedRows > 0) result = true;
 
-        return false;
+        closeCs(cs);
+
+        return result;
     }
 
-    public static Boolean removeFromCart(User user, Product product) throws DAOException {
+    public static boolean removeFromCart(User user, Product product) throws DAOException, SQLException {
         Connection conn = ConnectionFactory.getConnection();
-        CallableStatement cs = null;
 
-        try {
-            cs = conn.prepareCall("delete from cart where productId = ? and customerEmail = ?");
-            cs.setInt(1, product.getProductId());
-            cs.setString(2, user.getEmail());
+        boolean result = false;
 
-            int affectedRows = cs.executeUpdate();
+        CallableStatement cs = conn.prepareCall("delete from cart where productId = ? and customerEmail = ?");
+        cs.setInt(1, product.getProductId());
+        cs.setString(2, user.getEmail());
 
-            if(affectedRows > 0) return true;
-        } catch(SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            closeCs(cs);
-        }
+        int affectedRows = cs.executeUpdate();
 
-        return false;
+        if(affectedRows > 0) result = true;
+
+        closeCs(cs);
+
+        return result;
     }
 
     private static void closeRs(ResultSet rs) throws DAOException {
@@ -150,6 +128,16 @@ public class CustomerDAO {
         if (cs != null) {
             try {
                 cs.close();
+            } catch (SQLException e) {
+                throw new DAOException("Error closing connection instance");
+            }
+        }
+    }
+
+    private static void closeConn(Connection conn) throws DAOException {
+        if (conn != null) {
+            try {
+                conn.close();
             } catch (SQLException e) {
                 throw new DAOException("Error closing connection instance");
             }

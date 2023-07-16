@@ -19,8 +19,8 @@ public class ConnectionFactory {
             properties.load(input);
 
             String connectionUrl = properties.getProperty("CONNECTION_URL");
-            String user = properties.getProperty("USER_LOGIN");
-            String password = properties.getProperty("PASSWORD_LOGIN");
+            String user = properties.getProperty("USER");
+            String password = properties.getProperty("PASSWORD");
 
             connection = DriverManager.getConnection(connectionUrl, user, password);
         } catch (IOException | SQLException e) {
@@ -30,18 +30,5 @@ public class ConnectionFactory {
 
     public static Connection getConnection() {
         return connection;
-    }
-
-    public static void changeConnection(String username, String password) {
-        try(InputStream input = new FileInputStream("src/main/resources/it/ralisin/littlefarmers/conf/db.properties")) {
-            Properties properties = new Properties();
-            properties.load(input);
-
-            String connectionUrl = properties.getProperty("CONNECTION_URL");
-
-            connection = DriverManager.getConnection(connectionUrl, username, password);
-        } catch (IOException | SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
