@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class ConnectionFactory {
-    private static Connection connection;
+    private static final Connection connection;
 
     private ConnectionFactory() {}
 
@@ -24,7 +24,7 @@ public class ConnectionFactory {
 
             connection = DriverManager.getConnection(connectionUrl, user, password);
         } catch (IOException | SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Error on getting user", e);
         }
     }
 
