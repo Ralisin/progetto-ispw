@@ -24,7 +24,7 @@ public class DAOTest {
     }
 
     @Test
-    void testGetUser() throws DAOException {
+    void testGetUser() throws DAOException, SQLException {
         User user = LoginDAO.getUser("customer1@gmail.com", "0000");
         assert user != null;
         Assertions.assertEquals(user.getRole(), UserRole.CUSTOMER);
@@ -38,7 +38,7 @@ public class DAOTest {
     }
 
     @Test
-    void testCustomerGetProductsByRegion() throws SQLException {
+    void testCustomerGetProductsByRegion() throws SQLException, DAOException {
         // Check all regions
         for(Regions region : Regions.values()) {
             List<Product> productList = CustomerDAO.getProductsByRegion(region);
@@ -55,7 +55,7 @@ public class DAOTest {
     }
 
     @Test
-    void testCustomerAddToCart() throws DAOException, SQLException {
+    void testCustomerAddToCart() throws DAOException {
         User user = new User("customer1@gmail.com", "0000", UserRole.CUSTOMER);
         Product product = new Product(1, "Macinato 500g", null, 6.90F, "carne", "https://i0.wp.com/www.alpassofood.com/wp-content/uploads/2022/07/Carne-macinata.jpeg?fit=853%2C853&ssl=1");
         boolean result = CustomerDAO.addToCart(user, product, 5);
@@ -64,7 +64,7 @@ public class DAOTest {
     }
 
     @Test
-    void testCustomerRemoveFromCart() throws DAOException, SQLException {
+    void testCustomerRemoveFromCart() throws DAOException {
         User user = new User("customer1@gmail.com", "0000", UserRole.CUSTOMER);
         Product product = new Product(1, "Macinato 500g", null, 6.90F, "carne", "https://i0.wp.com/www.alpassofood.com/wp-content/uploads/2022/07/Carne-macinata.jpeg?fit=853%2C853&ssl=1");
         boolean result = CustomerDAO.removeFromCart(user, product);

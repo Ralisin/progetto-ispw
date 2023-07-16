@@ -2,6 +2,7 @@ package it.ralisin.littlefarmers.dao.queries;
 
 import it.ralisin.littlefarmers.dao.ConnectionFactory;
 import it.ralisin.littlefarmers.enums.Regions;
+import it.ralisin.littlefarmers.exeptions.DAOException;
 import it.ralisin.littlefarmers.model.Product;
 import it.ralisin.littlefarmers.model.User;
 
@@ -15,7 +16,7 @@ import java.util.List;
 public class CustomerDAO {
     private CustomerDAO() {}
 
-    public static List<Product> getProductsByRegion(Regions region) throws SQLException {
+    public static List<Product> getProductsByRegion(Regions region) throws SQLException, DAOException {
         List<Product> productList = new ArrayList<>();
 
         Connection conn = ConnectionFactory.getConnection();
@@ -40,7 +41,9 @@ public class CustomerDAO {
 
                 productList.add(new Product(productId, productName, productDescription, price, category, imageLink, region));
             }
-        } finally {
+        } catch (SQLException e) {
+            throw new DAOException("Error on getting products by region", e);
+        }  finally {
             if (rs != null) {
                 rs.close();
             }
@@ -49,7 +52,7 @@ public class CustomerDAO {
         return productList;
     }
 
-    public static List<Product> getCart(User user) throws SQLException {
+    public static List<Product> getCart(User user) throws SQLException, DAOException {
         List<Product> productList = new ArrayList<>();
 
         Connection conn = ConnectionFactory.getConnection();
@@ -75,7 +78,9 @@ public class CustomerDAO {
 
                 productList.add(new Product(productId, productName, productDescription, price, category, imageLink));
             }
-        } finally {
+        } catch (SQLException e) {
+            throw new DAOException("Error on getting cart", e);
+        }  finally {
             if (rs != null) {
                 rs.close();
             }
@@ -84,7 +89,7 @@ public class CustomerDAO {
         return productList;
     }
 
-    public static boolean addToCart(User user, Product product, int quantity) throws SQLException {
+    public static boolean addToCart(User user, Product product, int quantity) throws DAOException {
         Connection conn = ConnectionFactory.getConnection();
 
         String sql = "insert into cart (customerEmail, productId, quantity) " +
@@ -99,12 +104,14 @@ public class CustomerDAO {
             ps.setInt(4, quantity);
 
             affectedRows = ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Error on adding to cart", e);
         }
 
         return affectedRows > 0;
     }
 
-    public static boolean removeFromCart(User user, Product product) throws SQLException {
+    public static boolean removeFromCart(User user, Product product) throws DAOException {
         Connection conn = ConnectionFactory.getConnection();
 
         String sql = "delete from cart where productId = ? and customerEmail = ?";
@@ -115,6 +122,8 @@ public class CustomerDAO {
             ps.setString(2, user.getEmail());
 
             affectedRows = ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Error on deliting from cart", e);
         }
 
         return affectedRows > 0;

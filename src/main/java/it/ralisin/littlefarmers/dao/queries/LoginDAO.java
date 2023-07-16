@@ -5,25 +5,23 @@ import it.ralisin.littlefarmers.enums.UserRole;
 import it.ralisin.littlefarmers.exeptions.DAOException;
 import it.ralisin.littlefarmers.model.User;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class LoginDAO {
-    public static User getUser(String email, String psw) throws DAOException {
+    public static User getUser(String email, String psw) throws DAOException, SQLException {
         Connection conn = ConnectionFactory.getConnection();
-        CallableStatement cs;
-        ResultSet rs;
+
+        ResultSet rs = null;
 
         User user = null;
 
-        try {
-            cs = conn.prepareCall("select * from users where email = ? and password = ?");
-            cs.setString(1, email);
-            cs.setString(2, psw);
+        String sql = "select * from users where email = ? and password = ?";
 
-            rs = cs.executeQuery();
+        try(PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
+            ps.setString(1, email);
+            ps.setString(2, psw);
+
+            rs = ps.executeQuery();
 
             if (rs.next()) {
                 String emailDB = rs.getString("email");
@@ -34,14 +32,11 @@ public class LoginDAO {
                 else if (roleDB.equals("company")) user = new User(emailDB, pswDB, UserRole.COMPANY);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
-            rs.close();
-            cs.close();
-        } catch (SQLException e) {
-            throw new DAOException("Error closing instances");
+            throw new DAOException("Error on getting user", e);
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
         }
 
         return user;
