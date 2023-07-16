@@ -1,29 +1,31 @@
 package it.ralisin.littlefarmers.model;
 
+import it.ralisin.littlefarmers.enums.UserRole;
+
 public class User {
     private final String email;
     private final String pass;
-    private final String role;
+    private final UserRole role;
 
-    public User(String email, String pass, String role) {
+    public User(String email, String pass, UserRole role) {
         this.email = email;
         this.pass = pass;
         this.role = role;
     }
 
     public String getEmail() {
-        return this.email;
+        return email;
     }
 
     public String getPass() {
-        return this.pass;
+        return pass;
     }
 
-    public String getRole() {
-        return this.role;
+    public UserRole getRole() {
+        return role;
     }
 
-     @Override
+    @Override
     public String toString() {
         return String.format("User [\"email\": %s, \"pass\": %s, \"role\": %s]", this.email, this.pass, this.role);
     }

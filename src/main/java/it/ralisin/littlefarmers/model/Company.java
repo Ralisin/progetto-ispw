@@ -1,11 +1,11 @@
 package it.ralisin.littlefarmers.model;
 
 public class Company {
-    private String email;
-    private String name;
-    private String iban;
-    private String region;
-    private String address;
+    protected String email;
+    protected String name;
+    protected String iban;
+    protected String region;
+    protected String address;
 
     public Company(String email, String name, String iban, String region, String address) {
         this.email = email;
