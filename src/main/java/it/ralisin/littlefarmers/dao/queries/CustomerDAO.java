@@ -74,71 +74,36 @@ public class CustomerDAO {
         return productList;
     }
 
-    public static boolean addToCart(User user, Product product, int quantity) throws DAOException, SQLException {
+    public static boolean addToCart(User user, Product product, int quantity) throws SQLException {
         Connection conn = ConnectionFactory.getConnection();
 
-        boolean result = false;
+        String sql = "insert into cart (customerEmail, productId, quantity) " +
+                "value (?, ?, ?) on duplicate key update quantity = ?";
 
-        CallableStatement cs = conn.prepareCall("insert into cart (customerEmail, productId, quantity) " +
-                        "value (?, ?, ?) on duplicate key update quantity = ?");
-        cs.setString(1, user.getEmail());
-        cs.setInt(2, product.getProductId());
-        cs.setInt(3, quantity);
-        cs.setInt(4, quantity);
+        PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        ps.setString(1, user.getEmail());
+        ps.setInt(2, product.getProductId());
+        ps.setInt(3, quantity);
+        ps.setInt(4, quantity);
 
-        int affectedRows = cs.executeUpdate();
-        if(affectedRows > 0) result = true;
+        int affectedRows = ps.executeUpdate();
+        ps.close();
 
-        closeCs(cs);
-
-        return result;
+        return affectedRows > 0;
     }
 
     public static boolean removeFromCart(User user, Product product) throws DAOException, SQLException {
         Connection conn = ConnectionFactory.getConnection();
 
-        boolean result = false;
+        String sql = "delete from cart where productId = ? and customerEmail = ?";
 
-        CallableStatement cs = conn.prepareCall("delete from cart where productId = ? and customerEmail = ?");
-        cs.setInt(1, product.getProductId());
-        cs.setString(2, user.getEmail());
+        PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        ps.setInt(1, product.getProductId());
+        ps.setString(2, user.getEmail());
 
-        int affectedRows = cs.executeUpdate();
+        int affectedRows = ps.executeUpdate();
+        ps.close();
 
-        if(affectedRows > 0) result = true;
-
-        closeCs(cs);
-
-        return result;
-    }
-
-    private static void closeRs(ResultSet rs) throws DAOException {
-        if (rs != null) {
-            try {
-                rs.close();
-            } catch (SQLException e) {
-                throw new DAOException("Error closing connection instance");
-            }
-        }
-    }
-
-    private static void closeCs(CallableStatement cs) throws DAOException {
-        if (cs != null) {
-            try {
-                cs.close();
-            } catch (SQLException e) {
-                throw new DAOException("Error closing connection instance");
-            }
-        }
-    }
-
-    private static void closeConn(Connection conn) throws DAOException {
-        if (conn != null) {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                throw new DAOException("Error closing connection instance");
-            }
-        }
+        return affectedRows > 0;
     }
 }
