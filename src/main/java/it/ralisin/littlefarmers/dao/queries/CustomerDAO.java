@@ -22,9 +22,9 @@ public class CustomerDAO {
                 "from products join (select * from company where region = ?) as companyParsed " +
                 "on products.companyEmail = companyParsed.email";
 
-        PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-        stmt.setString(1, region.getRegion());
-        ResultSet rs = stmt.executeQuery();
+        PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        ps.setString(1, region.getRegion());
+        ResultSet rs = ps.executeQuery();
 
         while(rs.next()) {
             int productId = rs.getInt("productId");
@@ -38,23 +38,24 @@ public class CustomerDAO {
         }
 
         rs.close();
-        stmt.close();
+        ps.close();
 
         return productList;
     }
 
-    public static List<Product> getCart(User user) throws DAOException, SQLException {
+    public static List<Product> getCart(User user) throws SQLException {
         List<Product> productList = new ArrayList<>();
 
         Connection conn = ConnectionFactory.getConnection();
 
-        CallableStatement cs = conn.prepareCall(
-                "select products.productId, productName, productDescription, price, category, imageLink " +
+        String sql = "select products.productId, productName, productDescription, price, category, imageLink " +
                 "from cart join products on cart.productId = products.productId " +
-                "where cart.customerEmail = ?");
-        cs.setString(1, user.getEmail());
+                "where cart.customerEmail = ?";
 
-        ResultSet rs = cs.executeQuery();
+        PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        ps.setString(1, user.getEmail());
+
+        ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
             int productId = rs.getInt("products.productId");
@@ -67,8 +68,8 @@ public class CustomerDAO {
             productList.add(new Product(productId, productName, productDescription, price, category, imageLink));
         }
 
-        closeRs(rs);
-        closeCs(cs);
+        rs.close();
+        ps.close();
 
         return productList;
     }
