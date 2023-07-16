@@ -13,17 +13,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDAO {
-    public static List<Product> getProductsByRegion(Regions region) throws SQLException {
+    public static List<Product> getProductsByRegion(Regions region) {
         Connection conn = ConnectionFactory.getConnection();
         List<Product> productList = new ArrayList<>();
 
-        CallableStatement cs = conn.prepareCall(
-                "select productId, productName, productDescription, price, category,  imageLink from products join " +
-                "(select * from company where region = ?) as companyParsed " +
-                "on products.companyEmail = companyParsed.email");
-        cs.setString(1, region.getRegion());
-
         try {
+            CallableStatement cs = conn.prepareCall(
+                    "select productId, productName, productDescription, price, category,  imageLink from products join " +
+                    "(select * from company where region = ?) as companyParsed " +
+                    "on products.companyEmail = companyParsed.email");
+            cs.setString(1, region.getRegion());
+
             ResultSet rs = cs.executeQuery();
 
             while(rs.next()) {
@@ -43,17 +43,17 @@ public class CustomerDAO {
         return productList;
     }
 
-    public static List<Product> getCart(User user) throws SQLException {
+    public static List<Product> getCart(User user) {
         Connection conn = ConnectionFactory.getConnection();
         List<Product> productList = new ArrayList<>();
 
-        CallableStatement cs = conn.prepareCall(
-                "select products.productId, productName, productDescription, price, category, imageLink " +
-                "from cart join products on cart.productId = products.productId " +
-                "where cart.customerEmail = ?");
-        cs.setString(1, user.getEmail());
-
         try {
+            CallableStatement cs = conn.prepareCall(
+                    "select products.productId, productName, productDescription, price, category, imageLink " +
+                    "from cart join products on cart.productId = products.productId " +
+                    "where cart.customerEmail = ?");
+            cs.setString(1, user.getEmail());
+
             ResultSet rs = cs.executeQuery();
 
             while (rs.next()) {
@@ -73,17 +73,17 @@ public class CustomerDAO {
         return productList;
     }
 
-    public static Boolean addToCart(User user, Product product, int quantity) throws SQLException {
+    public static Boolean addToCart(User user, Product product, int quantity) {
         Connection conn = ConnectionFactory.getConnection();
 
-        CallableStatement cs = conn.prepareCall("insert into cart (customerEmail, productId, quantity) " +
-                        "value (?, ?, ?) on duplicate key update quantity = ?");
-        cs.setString(1, user.getEmail());
-        cs.setInt(2, product.getProductId());
-        cs.setInt(3, quantity);
-        cs.setInt(4, quantity);
-
         try {
+            CallableStatement cs = conn.prepareCall("insert into cart (customerEmail, productId, quantity) " +
+                            "value (?, ?, ?) on duplicate key update quantity = ?");
+            cs.setString(1, user.getEmail());
+            cs.setInt(2, product.getProductId());
+            cs.setInt(3, quantity);
+            cs.setInt(4, quantity);
+
             int affectedRows = cs.executeUpdate();
 
             if(affectedRows > 0) return true;
@@ -94,14 +94,14 @@ public class CustomerDAO {
         return false;
     }
 
-    public static Boolean removeFromCart(User user, Product product) throws SQLException {
+    public static Boolean removeFromCart(User user, Product product) {
         Connection conn = ConnectionFactory.getConnection();
 
-        CallableStatement cs = conn.prepareCall("delete from cart where productId = ? and customerEmail = ?");
-        cs.setInt(1, product.getProductId());
-        cs.setString(2, user.getEmail());
-
         try {
+            CallableStatement cs = conn.prepareCall("delete from cart where productId = ? and customerEmail = ?");
+            cs.setInt(1, product.getProductId());
+            cs.setString(2, user.getEmail());
+
             int affectedRows = cs.executeUpdate();
 
             if(affectedRows > 0) return true;
