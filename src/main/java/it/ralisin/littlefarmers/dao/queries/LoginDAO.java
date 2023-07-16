@@ -8,6 +8,8 @@ import it.ralisin.littlefarmers.model.User;
 import java.sql.*;
 
 public class LoginDAO {
+    private LoginDAO() {}
+
     public static User getUser(String email, String psw) throws DAOException, SQLException {
         Connection conn = ConnectionFactory.getConnection();
 

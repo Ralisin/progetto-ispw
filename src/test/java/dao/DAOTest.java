@@ -15,7 +15,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-public class DAOTest {
+class DAOTest {
     @Test
     void testConnectionFactory() {
         Connection conn = ConnectionFactory.getConnection();
@@ -27,11 +27,11 @@ public class DAOTest {
     void testGetUser() throws DAOException, SQLException {
         User user = LoginDAO.getUser("customer1@gmail.com", "0000");
         assert user != null;
-        Assertions.assertEquals(user.getRole(), UserRole.CUSTOMER);
+        Assertions.assertEquals(UserRole.CUSTOMER, user.getRole());
 
         user = LoginDAO.getUser("company1@gmail.com", "0000");
         assert user != null;
-        Assertions.assertEquals(user.getRole(), UserRole.COMPANY);
+        Assertions.assertEquals(UserRole.COMPANY, user.getRole());
 
         user = LoginDAO.getUser("test@gmail.com", "0000");
         Assertions.assertNull(user);
