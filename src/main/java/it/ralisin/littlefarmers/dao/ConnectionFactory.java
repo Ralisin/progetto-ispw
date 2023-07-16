@@ -7,9 +7,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ConnectionFactory {
-    private static final Connection connection;
+    private static Connection connection;
 
     private ConnectionFactory() {}
 
@@ -24,7 +26,7 @@ public class ConnectionFactory {
 
             connection = DriverManager.getConnection(connectionUrl, user, password);
         } catch (IOException | SQLException e) {
-            throw new RuntimeException("Error on getting user", e);
+            Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
         }
     }
 
