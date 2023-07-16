@@ -38,7 +38,7 @@ public class DAOTest {
     }
 
     @Test
-    void testCustomerDAO() throws DAOException, SQLException {
+    void testCustomerGetProductsByRegion() throws SQLException {
         // Check all regions
         for(Regions region : Regions.values()) {
             List<Product> productList = CustomerDAO.getProductsByRegion(region);

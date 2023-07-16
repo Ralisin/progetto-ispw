@@ -6,28 +6,25 @@ import it.ralisin.littlefarmers.exeptions.DAOException;
 import it.ralisin.littlefarmers.model.Product;
 import it.ralisin.littlefarmers.model.User;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDAO {
     private CustomerDAO() {}
 
-    public static List<Product> getProductsByRegion(Regions region) throws DAOException, SQLException {
+    public static List<Product> getProductsByRegion(Regions region) throws SQLException {
         List<Product> productList = new ArrayList<>();
 
         Connection conn = ConnectionFactory.getConnection();
 
-        CallableStatement cs = conn.prepareCall(
-                "select productId, productName, productDescription, price, category,  imageLink from products join " +
-                "(select * from company where region = ?) as companyParsed " +
-                "on products.companyEmail = companyParsed.email");
-        cs.setString(1, region.getRegion());
+        String sql = "select productId, productName, productDescription, price, category,  imageLink " +
+                "from products join (select * from company where region = ?) as companyParsed " +
+                "on products.companyEmail = companyParsed.email";
 
-        ResultSet rs = cs.executeQuery();
+        PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        stmt.setString(1, region.getRegion());
+        ResultSet rs = stmt.executeQuery();
 
         while(rs.next()) {
             int productId = rs.getInt("productId");
@@ -40,8 +37,8 @@ public class CustomerDAO {
             productList.add(new Product(productId, productName, productDescription, price, category, imageLink, region));
         }
 
-        closeRs(rs);
-        closeCs(cs);
+        rs.close();
+        stmt.close();
 
         return productList;
     }
