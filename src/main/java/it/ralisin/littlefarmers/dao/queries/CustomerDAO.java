@@ -2,6 +2,7 @@ package it.ralisin.littlefarmers.dao.queries;
 
 import it.ralisin.littlefarmers.dao.ConnectionFactory;
 import it.ralisin.littlefarmers.enums.Regions;
+import it.ralisin.littlefarmers.exeptions.DAOException;
 import it.ralisin.littlefarmers.model.Product;
 import it.ralisin.littlefarmers.model.User;
 
@@ -15,7 +16,7 @@ import java.util.List;
 public class CustomerDAO {
     private CustomerDAO() {}
 
-    public static List<Product> getProductsByRegion(Regions region) {
+    public static List<Product> getProductsByRegion(Regions region) throws DAOException {
         Connection conn = ConnectionFactory.getConnection();
         CallableStatement cs = null;
         ResultSet rs = null;
@@ -47,13 +48,12 @@ public class CustomerDAO {
             // Close the ResultSet, CallableStatement, and Connection in the final block
             closeRs(rs);
             closeCs(cs);
-            closeConn(conn);
         }
 
         return productList;
     }
 
-    public static List<Product> getCart(User user) {
+    public static List<Product> getCart(User user) throws DAOException {
         Connection conn = ConnectionFactory.getConnection();
         CallableStatement cs = null;
         ResultSet rs = null;
@@ -85,13 +85,12 @@ public class CustomerDAO {
             // Close the ResultSet, CallableStatement, and Connection in the final block
             closeRs(rs);
             closeCs(cs);
-            closeConn(conn);
         }
 
         return productList;
     }
 
-    public static Boolean addToCart(User user, Product product, int quantity) {
+    public static Boolean addToCart(User user, Product product, int quantity) throws DAOException {
         Connection conn = ConnectionFactory.getConnection();
         CallableStatement cs = null;
 
@@ -111,13 +110,12 @@ public class CustomerDAO {
         } finally {
             // Close the CallableStatement, and Connection in the final block
             closeCs(cs);
-            closeConn(conn);
         }
 
         return false;
     }
 
-    public static Boolean removeFromCart(User user, Product product) {
+    public static Boolean removeFromCart(User user, Product product) throws DAOException {
         Connection conn = ConnectionFactory.getConnection();
         CallableStatement cs = null;
 
@@ -133,38 +131,27 @@ public class CustomerDAO {
             throw new RuntimeException(e);
         } finally {
             closeCs(cs);
-            closeConn(conn);
         }
 
         return false;
     }
 
-    private static void closeRs(ResultSet rs) {
+    private static void closeRs(ResultSet rs) throws DAOException {
         if (rs != null) {
             try {
                 rs.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new DAOException("Error closing connection instance");
             }
         }
     }
 
-    private static void closeCs(CallableStatement cs) {
+    private static void closeCs(CallableStatement cs) throws DAOException {
         if (cs != null) {
             try {
                 cs.close();
             } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private static void closeConn(Connection conn) {
-        if (conn != null) {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+                throw new DAOException("Error closing connection instance");
             }
         }
     }

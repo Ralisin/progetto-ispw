@@ -5,13 +5,13 @@ import it.ralisin.littlefarmers.dao.queries.CustomerDAO;
 import it.ralisin.littlefarmers.dao.queries.LoginDAO;
 import it.ralisin.littlefarmers.enums.Regions;
 import it.ralisin.littlefarmers.enums.UserRole;
+import it.ralisin.littlefarmers.exeptions.DAOException;
 import it.ralisin.littlefarmers.model.Product;
 import it.ralisin.littlefarmers.model.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
 public class DAOTest {
@@ -23,21 +23,27 @@ public class DAOTest {
     }
 
     @Test
-    void testGetUser() throws SQLException {
+    void testGetUser() throws DAOException {
+        ConnectionFactory.changeConnection("login", "login");
+
         User user = LoginDAO.getUser("customer1@gmail.com", "0000");
         assert user != null;
         Assertions.assertEquals(user.getRole(), UserRole.CUSTOMER);
+        LoginDAO.logOut();
 
         user = LoginDAO.getUser("company1@gmail.com", "0000");
         assert user != null;
         Assertions.assertEquals(user.getRole(), UserRole.COMPANY);
+        LoginDAO.logOut();
 
         user = LoginDAO.getUser("test@gmail.com", "0000");
         Assertions.assertNull(user);
     }
 
     @Test
-    void testCustomerDAO() throws SQLException {
+    void testCustomerDAO() throws DAOException {
+        ConnectionFactory.changeConnection("customer", "customer");
+
         // Check all regions
         for(Regions region : Regions.values()) {
             List<Product> productList = CustomerDAO.getProductsByRegion(region);
@@ -46,8 +52,8 @@ public class DAOTest {
     }
 
     @Test
-    void testCustomerGetCart() throws SQLException {
-        ConnectionFactory.changeConnection("root", "0000");
+    void testCustomerGetCart() throws DAOException {
+        ConnectionFactory.changeConnection("customer", "customer");
 
         List<Product> productList = CustomerDAO.getCart(new User("customer2@gmail.com", "0000", UserRole.CUSTOMER));
         Assertions.assertNotNull(productList);
@@ -56,8 +62,8 @@ public class DAOTest {
     }
 
     @Test
-    void testCustomerAddToCart() throws SQLException {
-        ConnectionFactory.changeConnection("root", "0000");
+    void testCustomerAddToCart() throws DAOException {
+        ConnectionFactory.changeConnection("customer", "customer");
 
         User user = new User("customer1@gmail.com", "0000", UserRole.CUSTOMER);
         Product product = new Product(1, "Macinato 500g", null, 6.90F, "carne", "https://i0.wp.com/www.alpassofood.com/wp-content/uploads/2022/07/Carne-macinata.jpeg?fit=853%2C853&ssl=1");
@@ -67,8 +73,8 @@ public class DAOTest {
     }
 
     @Test
-    void testCustomerRemoveFromCart() throws SQLException {
-        ConnectionFactory.changeConnection("root", "0000");
+    void testCustomerRemoveFromCart() throws DAOException {
+        ConnectionFactory.changeConnection("customer", "customer");
 
         User user = new User("customer1@gmail.com", "0000", UserRole.CUSTOMER);
         Product product = new Product(1, "Macinato 500g", null, 6.90F, "carne", "https://i0.wp.com/www.alpassofood.com/wp-content/uploads/2022/07/Carne-macinata.jpeg?fit=853%2C853&ssl=1");

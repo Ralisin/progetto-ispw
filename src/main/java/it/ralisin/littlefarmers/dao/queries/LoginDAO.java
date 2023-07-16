@@ -2,6 +2,7 @@ package it.ralisin.littlefarmers.dao.queries;
 
 import it.ralisin.littlefarmers.dao.ConnectionFactory;
 import it.ralisin.littlefarmers.enums.UserRole;
+import it.ralisin.littlefarmers.exeptions.DAOException;
 import it.ralisin.littlefarmers.model.User;
 
 import java.io.FileInputStream;
@@ -14,14 +15,14 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class LoginDAO {
-    public static User getUser(String email, String psw) {
+    public static User getUser(String email, String psw) throws DAOException {
         Connection conn = ConnectionFactory.getConnection();
-        CallableStatement cs = null;
-        ResultSet rs = null;
+        CallableStatement cs;
+        ResultSet rs;
 
         User user = null;
 
-        try(InputStream input = new FileInputStream("src/main/resources/it/ralisin/littlefarmers/conf/db.properties")) {
+        try (InputStream input = new FileInputStream("src/main/resources/it/ralisin/littlefarmers/conf/db.properties")) {
             Properties properties = new Properties();
             properties.load(input);
 
@@ -31,19 +32,19 @@ public class LoginDAO {
 
             rs = cs.executeQuery();
 
-            if(rs.next()) {
+            if (rs.next()) {
                 String emailDB = rs.getString("email");
                 String pswDB = rs.getString("password");
                 String roleDB = rs.getString("role");
 
-                if(roleDB.equals("customer")) {
+                if (roleDB.equals("customer")) {
                     String userCustomer = properties.getProperty("USER_CUSTOMER");
                     String pswCustomer = properties.getProperty("PASSWORD_CUSTOMER");
 
                     ConnectionFactory.changeConnection(userCustomer, pswCustomer);
 
                     user = new User(emailDB, pswDB, UserRole.CUSTOMER);
-                } else if(roleDB.equals("company")) {
+                } else if (roleDB.equals("company")) {
                     String userCompany = properties.getProperty("USER_COMPANY");
                     String pswCompany = properties.getProperty("PASSWORD_COMPANY");
 
@@ -54,32 +55,28 @@ public class LoginDAO {
             }
         } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+        }
 
-            if (cs != null) {
-                try {
-                    cs.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+        try {
+            rs.close();
+            cs.close();
+        } catch (SQLException e) {
+            throw new DAOException("Error closing instances");
         }
 
         return user;
+    }
+
+    public static void logOut() {
+        try (InputStream input = new FileInputStream("src/main/resources/it/ralisin/littlefarmers/conf/db.properties")) {
+            Properties properties = new Properties();
+            properties.load(input);
+
+            String userLogin = properties.getProperty("USER_LOGIN");
+            String pswLogin = properties.getProperty("PASSWORD_LOGIN");
+            ConnectionFactory.changeConnection(userLogin, pswLogin);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
