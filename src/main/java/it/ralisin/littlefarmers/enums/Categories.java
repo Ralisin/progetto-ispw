@@ -1,6 +1,6 @@
 package it.ralisin.littlefarmers.enums;
 
-public enum Category {
+public enum Categories {
     CARNE("carne"),
     FRUTTA("frutta"),
     VERDURA("verdura"),
@@ -10,7 +10,7 @@ public enum Category {
 
     private final String category;
 
-    Category(String category) {
+    Categories(String category) {
         this.category = category;
     }
 
