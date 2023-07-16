@@ -24,11 +24,10 @@ public class CustomerDAO {
                 "from products join (select * from company where region = ?) as companyParsed " +
                 "on products.companyEmail = companyParsed.email";
 
-        PreparedStatement ps = null;
+//        PreparedStatement ps = null;
         ResultSet rs = null;
         
-        try {
-            ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        try(PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
             ps.setString(1, region.getRegion());
             rs = ps.executeQuery();
 
@@ -45,9 +44,6 @@ public class CustomerDAO {
         } finally {
             if (rs != null) {
                 rs.close();
-            }
-            if (ps != null) {
-                ps.close();
             }
         }
 
