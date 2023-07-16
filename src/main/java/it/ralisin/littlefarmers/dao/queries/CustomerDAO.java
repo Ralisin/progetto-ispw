@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDAO {
+    private CustomerDAO() {}
+
     public static List<Product> getProductsByRegion(Regions region) {
         Connection conn = ConnectionFactory.getConnection();
         List<Product> productList = new ArrayList<>();
