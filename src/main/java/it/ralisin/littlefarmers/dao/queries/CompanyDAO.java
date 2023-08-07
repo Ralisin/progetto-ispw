@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CompanyDAO {
+    private CompanyDAO() {}
+
     public static List<Company> getCompanyList() throws DAOException, SQLException {
         List<Company> companyList = new ArrayList<>();
 
