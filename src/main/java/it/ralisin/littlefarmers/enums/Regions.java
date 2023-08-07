@@ -30,13 +30,13 @@ public enum Regions {
         this.region = region;
     }
 
-    public String getRegion() {
+    public String getRegionString() {
         return region;
     }
 
     public static Regions getByRegion(String region) {
         for(Regions r : Regions.values()) {
-            if(Objects.equals(r.getRegion(), region)) return r;
+            if(Objects.equals(r.getRegionString(), region)) return r;
         }
 
         throw new IllegalArgumentException("No enum constant with ID: " + region);

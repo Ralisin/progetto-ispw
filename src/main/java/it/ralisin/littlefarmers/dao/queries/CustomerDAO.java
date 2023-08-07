@@ -1,8 +1,8 @@
 package it.ralisin.littlefarmers.dao.queries;
 
 import it.ralisin.littlefarmers.dao.ConnectionFactory;
+import it.ralisin.littlefarmers.enums.Regions;
 import it.ralisin.littlefarmers.exeptions.DAOException;
-import it.ralisin.littlefarmers.model.Company;
 import it.ralisin.littlefarmers.model.Customer;
 import it.ralisin.littlefarmers.model.Product;
 import it.ralisin.littlefarmers.model.User;
@@ -17,7 +17,8 @@ import java.util.List;
 public class CustomerDAO {
     private CustomerDAO() {}
 
-    public static Customer getCustomerInfo(User user) throws DAOException, SQLException {
+    /** Method to get Customer by given User, needed on login action */
+    public static Customer getCustomer(User user) throws DAOException, SQLException {
         Connection conn = ConnectionFactory.getConnection();
         ResultSet rs = null;
 
@@ -52,7 +53,7 @@ public class CustomerDAO {
 
         Connection conn = ConnectionFactory.getConnection();
 
-        String sql = "select products.productId, productName, productDescription, price, category, imageLink " +
+        String sql = "select products.productId, productName, productDescription, price, region, category, imageLink " +
                 "from cart join products on cart.productId = products.productId " +
                 "where cart.customerEmail = ?";
 
@@ -64,14 +65,17 @@ public class CustomerDAO {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                int productId = rs.getInt("products.productId");
+                int productId = rs.getInt("productId");
                 String productName = rs.getString("productName");
                 String productDescription = rs.getString("productDescription");
                 float price = rs.getFloat("price");
+                String region = rs.getString("region");
                 String category = rs.getString("category");
                 String imageLink = rs.getString("imageLink");
 
-                productList.add(new Product(productId, productName, productDescription, price, category, imageLink));
+                Product product = new Product(productId, productName, productDescription, price, Regions.getByRegion(region), category, imageLink);
+
+                productList.add(product);
             }
         } catch (SQLException e) {
             throw new DAOException("Error on getting cart", e);
@@ -87,8 +91,8 @@ public class CustomerDAO {
     public static boolean addToCart(Customer customer, Product product, int quantity) throws DAOException {
         Connection conn = ConnectionFactory.getConnection();
 
-        String sql = "insert into cartItem (shoppingSession_id, productId, quantity) " +
-                "value ((select max(id) from shoppingSession where customer_email = ?), ?, ?) " +
+        String sql = "insert into cart(customerEmail, productId, quantity)" +
+                "value (?, ?, ?)" +
                 "on duplicate key update quantity = ?";
 
         int affectedRows;
@@ -110,7 +114,7 @@ public class CustomerDAO {
     public static boolean removeFromCart(Customer customer, Product product) throws DAOException {
         Connection conn = ConnectionFactory.getConnection();
 
-        String sql = "delete from cart where productId = ? and customerEmail = ?";
+            String sql = "delete from cart where productId = ? and customerEmail = ?";
         int affectedRows;
 
         try (PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
@@ -123,17 +127,5 @@ public class CustomerDAO {
         }
 
         return affectedRows > 0;
-    }
-
-    public static boolean requestCart(Customer customer) throws DAOException, SQLException {
-        Connection conn = ConnectionFactory.getConnection();
-
-        List<Company> companyList = CompanyDAO.getCompanyList();
-
-        for(Company company : companyList) {
-
-        }
-
-        return true;
     }
 }

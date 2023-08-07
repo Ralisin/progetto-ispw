@@ -7,11 +7,11 @@ public class Product {
     private final String name;
     private final String description;
     private float price;
+    private final Regions region;
     private final String category;
     private final String imageLink;
-    private final Regions region;
 
-    public Product(int productId, String name, String description, float price, String category, String imageLink, Regions region) {
+    public Product(int productId, String name, String description, float price, Regions region, String category, String imageLink) {
         this.productId = productId;
         this.name = name;
         this.description = description;
