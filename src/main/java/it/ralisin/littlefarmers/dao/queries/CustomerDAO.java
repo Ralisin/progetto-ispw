@@ -1,7 +1,6 @@
 package it.ralisin.littlefarmers.dao.queries;
 
 import it.ralisin.littlefarmers.dao.ConnectionFactory;
-import it.ralisin.littlefarmers.enums.Regions;
 import it.ralisin.littlefarmers.exeptions.DAOException;
 import it.ralisin.littlefarmers.model.Customer;
 import it.ralisin.littlefarmers.model.Product;
@@ -65,15 +64,7 @@ public class CustomerDAO {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                int productId = rs.getInt("productId");
-                String productName = rs.getString("productName");
-                String productDescription = rs.getString("productDescription");
-                float price = rs.getFloat("price");
-                String region = rs.getString("region");
-                String category = rs.getString("category");
-                String imageLink = rs.getString("imageLink");
-
-                Product product = new Product(productId, productName, productDescription, price, Regions.getByRegion(region), category, imageLink);
+                Product product = ProductsDAO.getProductFromResultSet(rs);
 
                 productList.add(product);
             }

@@ -13,21 +13,18 @@ import java.util.List;
 
 public class ProductsDAOTest {
     @Test
+    void testGetProducts() throws DAOException {
+        List<Product> productList = ProductsDAO.getProducts();
+        Assertions.assertNotNull(productList);
+    }
+
+    @Test
     void testGetProductsByRegion() throws SQLException, DAOException {
         // Check all regions
         for(Regions region : Regions.values()) {
             List<Product> productList = ProductsDAO.getProductsByRegion(region);
             Assertions.assertNotNull(productList);
         }
-    }
-
-    @Test
-    void testInsertNewProduct() throws DAOException {
-        Company company = new Company("company1@gmail.com", "test","test", "test", Regions.ABRUZZO);
-        Product product = new Product(0, "test", "test", 1f, Regions.ABRUZZO, "test", "test");
-
-        Boolean result = ProductsDAO.insertProduct(company, product);
-        Assertions.assertTrue(result);
     }
 
     @Test

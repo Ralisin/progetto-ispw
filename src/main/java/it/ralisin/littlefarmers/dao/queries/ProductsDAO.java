@@ -16,6 +16,27 @@ import java.util.List;
 public class ProductsDAO {
     private ProductsDAO() {}
 
+    public static List<Product> getProducts() throws DAOException {
+        List<Product> productList = new ArrayList<>();
+
+        Connection conn = ConnectionFactory.getConnection();
+
+        String sql = "select productId, productName, productDescription, price, region, category, imageLink\n" +
+                "from products";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Product product = getProductFromResultSet(rs);
+
+                productList.add(product);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Error on getting products by region", e);
+        }
+
+        return productList;
+    }
+
     public static List<Product> getProductsByRegion(Regions region) throws SQLException, DAOException {
         List<Product> productList = new ArrayList<>();
 
@@ -88,28 +109,15 @@ public class ProductsDAO {
         return productList;
     }
 
-    public static Boolean insertProduct(Company company, Product product) throws DAOException {
-        Connection conn = ConnectionFactory.getConnection();
+    public static Product getProductFromResultSet(ResultSet rs) throws SQLException {
+        int productId = rs.getInt("productId");
+        String productName = rs.getString("productName");
+        String productDescription = rs.getString("productDescription");
+        float price = rs.getFloat("price");
+        String productRegion = rs.getString("region");
+        String category = rs.getString("category");
+        String imageLink = rs.getString("imageLink");
 
-        String sql = "insert into products(companyEmail, productName, productDescription, price, region, category, imageLink) " +
-                "values (?, ?, ?, ?, ?, ?, ?)";
-
-        int affectedRows;
-
-        try(PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
-            ps.setString(1, company.getEmail());
-            ps.setString(2, product.getName());
-            ps.setString(3, product.getDescription());
-            ps.setFloat(4, product.getPrice());
-            ps.setString(5, product.getRegion().getRegionString());
-            ps.setString(6, product.getCategory());
-            ps.setString(7, product.getImageLink());
-
-            affectedRows = ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new DAOException("Error on adding to cart", e);
-        }
-
-        return affectedRows > 0;
+        return new Product(productId, productName, productDescription, price, Regions.getByRegion(productRegion), category, imageLink);
     }
 }
