@@ -1,5 +1,7 @@
 package it.ralisin.littlefarmers.enums;
 
+import java.util.Objects;
+
 public enum Regions {
     ABRUZZO("Abruzzo"),
     BASILICATA("Basilicata"),
@@ -30,5 +32,13 @@ public enum Regions {
 
     public String getRegion() {
         return region;
+    }
+
+    public static Regions getByRegion(String region) {
+        for(Regions r : Regions.values()) {
+            if(Objects.equals(r.getRegion(), region)) return r;
+        }
+
+        throw new IllegalArgumentException("No enum constant with ID: " + region);
     }
 }

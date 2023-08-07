@@ -1,13 +1,15 @@
 package it.ralisin.littlefarmers.model;
 
+import it.ralisin.littlefarmers.enums.Regions;
+
 public class Company {
     protected String email;
     protected String name;
     protected String iban;
-    protected String region;
     protected String address;
+    protected Regions region;
 
-    public Company(String email, String name, String iban, String region, String address) {
+    public Company(String email, String name, String iban, String address, Regions region) {
         this.email = email;
         this.name = name;
         this.iban = iban;
@@ -27,7 +29,7 @@ public class Company {
         return iban;
     }
 
-    public String getRegion() {
+    public Regions getRegion() {
         return region;
     }
 

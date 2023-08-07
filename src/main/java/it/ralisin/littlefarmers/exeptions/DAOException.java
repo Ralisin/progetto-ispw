@@ -1,7 +1,6 @@
 package it.ralisin.littlefarmers.exeptions;
 
 public class DAOException extends Exception {
-
     public DAOException() {
         super();
     }
