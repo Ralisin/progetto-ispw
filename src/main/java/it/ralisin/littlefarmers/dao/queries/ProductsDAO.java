@@ -85,15 +85,8 @@ public class ProductsDAO {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                int productId = rs.getInt("productId");
-                String productName = rs.getString("productName");
-                String productDescription = rs.getString("productDescription");
-                float price = rs.getFloat("price");
-                String imageLink = rs.getString("imageLink");
-                String productRegion = rs.getString("region");
-                String category = rs.getString("category");
-
-                productList.add(new Product(productId, productName, productDescription, price, Regions.getByRegion(productRegion), category, imageLink));
+                Product product = getProductFromResultSet(rs);
+                productList.add(product);
             }
         } catch (SQLException e) {
             throw new DAOException("Error on getting products by company", e);
