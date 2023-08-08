@@ -19,25 +19,17 @@ public class ProductsDAO {
     static final String SQL = "select productId, productName, productDescription, price, region, category, imageLink from products";
 
     public static List<Product> getProducts() throws DAOException {
-        List<Product> productList = new ArrayList<>();
-
         Connection conn = ConnectionFactory.getConnection();
 
         try (PreparedStatement ps = conn.prepareStatement(SQL, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                Product product = getProductFromResultSet(rs);
-
-                productList.add(product);
-            }
+            return getProductsList(rs);
         } catch (SQLException e) {
             throw new DAOException("Error on getting products", e);
         }
-
-        return productList;
     }
 
     public static List<Product> getProductsByRegion(Regions region) throws SQLException, DAOException {
-        List<Product> productList = new ArrayList<>();
+        List<Product> productList;
 
         Connection conn = ConnectionFactory.getConnection();
 
@@ -49,10 +41,7 @@ public class ProductsDAO {
             ps.setString(1, region.getRegionString());
             rs = ps.executeQuery();
 
-            while (rs.next()) {
-                Product product = getProductFromResultSet(rs);
-                productList.add(product);
-            }
+            productList = getProductsList(rs);
         } catch (SQLException e) {
             throw new DAOException("Error on getting products by region", e);
         }  finally {
@@ -65,7 +54,7 @@ public class ProductsDAO {
     }
 
     public static List<Product> getProductByCompany(Company company) throws DAOException, SQLException {
-        List<Product> productList = new ArrayList<>();
+        List<Product> productList;
 
         Connection conn = ConnectionFactory.getConnection();
 
@@ -77,10 +66,7 @@ public class ProductsDAO {
             ps.setString(1, company.getEmail());
             rs = ps.executeQuery();
 
-            while (rs.next()) {
-                Product product = getProductFromResultSet(rs);
-                productList.add(product);
-            }
+            productList = getProductsList(rs);
         } catch (SQLException e) {
             throw new DAOException("Error on getting products by company", e);
         }  finally {
@@ -103,5 +89,16 @@ public class ProductsDAO {
         String imageLink = rs.getString("imageLink");
 
         return new Product(companyEmail, productId, productName, productDescription, price, Regions.getByRegionString(productRegion), category, imageLink);
+    }
+
+    private static List<Product> getProductsList(ResultSet rs) throws SQLException {
+        List<Product> productList = new ArrayList<>();
+
+        while (rs.next()) {
+            Product product = getProductFromResultSet(rs);
+            productList.add(product);
+        }
+
+        return productList;
     }
 }
