@@ -48,6 +48,7 @@ public class CustomerDAO {
         return customer;
     }
 
+    /*
     public static List<Product> getCart(Customer customer) throws SQLException, DAOException {
         List<Product> productList = new ArrayList<>();
 
@@ -66,7 +67,6 @@ public class CustomerDAO {
 
             while (rs.next()) {
                 Product product = ProductsDAO.getProductFromResultSet(rs);
-
                 productList.add(product);
             }
         } catch (SQLException e) {
@@ -79,6 +79,7 @@ public class CustomerDAO {
 
         return productList;
     }
+     */
 
     // Valid also for updates
     public static boolean addToCart(Customer customer, Product product, int quantity) throws DAOException {
@@ -153,6 +154,7 @@ public class CustomerDAO {
         return orderList;
     }
 
+    /*
     public static List<Product> getOrderProducts(Order order) throws DAOException, SQLException {
         List<Product> productList = new ArrayList<>();
         Connection conn = ConnectionFactory.getConnection();
@@ -179,6 +181,45 @@ public class CustomerDAO {
         }
 
         return productList;
+    }
+     */
+
+    private static List<Product> executeQueryAndProcessProducts(Connection conn, String sql, Object... params) throws DAOException, SQLException {
+        List<Product> productList = new ArrayList<>();
+        ResultSet rs = null;
+
+        try (PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
+            for (int i = 0; i < params.length; i++) {
+                ps.setObject(i + 1, params[i]);
+            }
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Product product = ProductsDAO.getProductFromResultSet(rs);
+                productList.add(product);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Error while executing query and processing result set", e);
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+        }
+
+        return productList;
+    }
+
+    public static List<Product> getOrderProducts(Order order) throws DAOException, SQLException {
+        String sql = "select * from orderItems join products on orderItems.productId = products.productId where orderId = ?";
+        return executeQueryAndProcessProducts(ConnectionFactory.getConnection(), sql, order.getId());
+    }
+
+    public static List<Product> getCart(Customer customer) throws SQLException, DAOException {
+        String sql = "select companyEmail, products.productId, productName, productDescription, price, region, category, imageLink, quantity " +
+                "from cart join products on cart.productId = products.productId " +
+                "where cart.customerEmail = ?";
+        return executeQueryAndProcessProducts(ConnectionFactory.getConnection(), sql, customer.getEmail());
     }
 
     /** Make an order based on cart */

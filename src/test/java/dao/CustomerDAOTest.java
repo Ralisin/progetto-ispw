@@ -73,3 +73,4 @@ class CustomerDAOTest {
         Assertions.assertTrue(CustomerDAO.makeOrder(customer));
     }
 }
+
