@@ -13,7 +13,7 @@ public class Product {
     private final String imageLink;
     private int quantity = -1;
 
-    public Product(String companyEmail, int productId, String name, String description, float price, int quantity, Regions region, String category, String imageLink) {
+    public Product(String companyEmail, int productId, String name, String description, float price, Regions region, String category, String imageLink, int quantity) {
         this.companyEmail = companyEmail;
         this.productId = productId;
         this.name = name;
@@ -79,8 +79,8 @@ public class Product {
     @Override
     public String toString() {
         return String.format(
-                "[id: %d, name: %s, description: %s, price: %f, category: %s, imageLink: %s, region: %s]",
-                productId, name, description, price, category, imageLink, region
+                "[companyEmail: %s, id: %d, name: %s, description: %s, price: %f, category: %s, imageLink: %s, region: %s]",
+                companyEmail, productId, name, description, price, category, imageLink, region
         );
     }
 }

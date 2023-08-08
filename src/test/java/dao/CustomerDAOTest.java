@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
-import java.util.List;
+import java.util.*;
 
 class CustomerDAOTest {
     private final User user = new User("customer1@gmail.com", "0000", UserRole.CUSTOMER);
@@ -40,7 +40,7 @@ class CustomerDAOTest {
 
     @Test
     void testCustomerAddToCart() throws DAOException {
-        boolean result = CustomerDAO.addToCart(customer, product, 5);
+        boolean result = CustomerDAO.addToCart(customer, product, 2);
 
         Assertions.assertTrue(result);
     }
@@ -58,7 +58,7 @@ class CustomerDAOTest {
     void testGetOrders() throws DAOException, SQLException {
         List<Order> orderList = CustomerDAO.getOrders(customer);
 
-        Assertions.assertTrue(orderList.isEmpty());
+        Assertions.assertFalse(orderList.isEmpty());
     }
 
     @Test
@@ -66,5 +66,10 @@ class CustomerDAOTest {
         List<Product> productList = CustomerDAO.getOrderProducts(order);
 
         Assertions.assertNotNull(productList);
+    }
+
+    @Test
+    void testMakeOrder() throws DAOException, SQLException {
+        Assertions.assertTrue(CustomerDAO.makeOrder(customer));
     }
 }

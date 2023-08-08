@@ -16,12 +16,15 @@ import java.util.List;
 public class ProductsDAO {
     private ProductsDAO() {}
 
-    static final String SQL = "select productId, productName, productDescription, price, region, category, imageLink from products";
+    static final String SQL = "select * from products";
 
     public static List<Product> getProducts() throws DAOException {
         Connection conn = ConnectionFactory.getConnection();
 
-        try (PreparedStatement ps = conn.prepareStatement(SQL, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); ResultSet rs = ps.executeQuery()) {
+        try (
+                PreparedStatement ps = conn.prepareStatement(SQL, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                ResultSet rs = ps.executeQuery()
+        ) {
             return getProductsList(rs);
         } catch (SQLException e) {
             throw new DAOException("Error on getting products", e);
@@ -81,22 +84,23 @@ public class ProductsDAO {
     public static Product getProductFromResultSet(ResultSet rs) throws SQLException {
         String companyEmail = rs.getString("companyEmail");
         int productId = rs.getInt("productId");
-        String productName = rs.getString("productName");
-        String productDescription = rs.getString("productDescription");
+        String name = rs.getString("productName");
+        String description = rs.getString("productDescription");
         float price = rs.getFloat("price");
-        String productRegion = rs.getString("region");
+        int quantity = 0;
+        try { quantity = rs.getInt("quantity"); } catch (SQLException ignored) {}
+        Regions region = Regions.getByRegionString(rs.getString("region"));
         String category = rs.getString("category");
         String imageLink = rs.getString("imageLink");
 
-        return new Product(companyEmail, productId, productName, productDescription, price, Regions.getByRegionString(productRegion), category, imageLink);
+        return new Product(companyEmail, productId, name, description, price, region, category, imageLink, quantity);
     }
 
     private static List<Product> getProductsList(ResultSet rs) throws SQLException {
         List<Product> productList = new ArrayList<>();
 
         while (rs.next()) {
-            Product product = getProductFromResultSet(rs);
-            productList.add(product);
+            productList.add(getProductFromResultSet(rs));
         }
 
         return productList;

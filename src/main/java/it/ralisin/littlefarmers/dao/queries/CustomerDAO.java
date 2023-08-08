@@ -2,7 +2,6 @@ package it.ralisin.littlefarmers.dao.queries;
 
 import it.ralisin.littlefarmers.dao.ConnectionFactory;
 import it.ralisin.littlefarmers.enums.OrderStatus;
-import it.ralisin.littlefarmers.enums.Regions;
 import it.ralisin.littlefarmers.exeptions.DAOException;
 import it.ralisin.littlefarmers.model.Customer;
 import it.ralisin.littlefarmers.model.Order;
@@ -11,7 +10,9 @@ import it.ralisin.littlefarmers.model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CustomerDAO {
     private CustomerDAO() {}
@@ -52,7 +53,7 @@ public class CustomerDAO {
 
         Connection conn = ConnectionFactory.getConnection();
 
-        String sql = "select products.productId, productName, productDescription, price, region, category, imageLink " +
+        String sql = "select companyEmail, products.productId, productName, productDescription, price, region, category, imageLink, quantity " +
                 "from cart join products on cart.productId = products.productId " +
                 "where cart.customerEmail = ?";
 
@@ -79,12 +80,11 @@ public class CustomerDAO {
         return productList;
     }
 
+    // Valid also for updates
     public static boolean addToCart(Customer customer, Product product, int quantity) throws DAOException {
         Connection conn = ConnectionFactory.getConnection();
 
-        String sql = "insert into cart(customerEmail, productId, quantity)" +
-                "value (?, ?, ?)" +
-                "on duplicate key update quantity = ?";
+        String sql = "insert into cart(customerEmail, productId, quantity) value (?, ?, ?) on duplicate key update quantity = ?";
 
         int affectedRows;
 
@@ -167,17 +167,8 @@ public class CustomerDAO {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                String email = rs.getString("companyEmail");
-                int productId = rs.getInt("productId");
-                String name = rs.getString("productName");
-                String description = rs.getString("productDescription");
-                float price = rs.getFloat("price");
-                int quantity = rs.getInt("quantity");
-                String region = rs.getString("region");
-                String category = rs.getString("category");
-                String imageLink = rs.getString("imageLink");
-
-                productList.add(new Product(email, productId, name, description, price, quantity, Regions.getByRegionString(region), category, imageLink));
+                Product product = ProductsDAO.getProductFromResultSet(rs);
+                productList.add(product);
             }
         } catch (SQLException e) {
             throw new DAOException("Error on getting orders", e);
@@ -190,9 +181,83 @@ public class CustomerDAO {
         return productList;
     }
 
-    /*
-    * Sql to insert order:
-    *   INSERT INTO orders (`id`, `companyEmail`, `customerEmail`, `date`, `status`)
-        VALUES ('0', 'company2@gmail.com', 'customer2@gmail.com', current_date(), 'waiting');
-    * */
+    /** Make an order based on cart */
+    public static boolean makeOrder(Customer customer) throws DAOException, SQLException {
+        // Get cart products
+        List<Product> cart = getCart(customer);
+        if(cart.isEmpty()) throw new DAOException("Error, cart is empty, impossible to make an order");
+
+        // Map company to products
+        Map<String, List<Product>> companyEmailToProductsMap = new HashMap<>();
+        for(Product p : cart) {
+            String companyEmail = p.getCompanyEmail();
+            companyEmailToProductsMap.putIfAbsent(companyEmail, new ArrayList<>());
+            companyEmailToProductsMap.get(companyEmail).add(p);
+        }
+
+        // Insert all products into order
+        for(String key : companyEmailToProductsMap.keySet()) {
+            if(!insertOrderProducts(customer, companyEmailToProductsMap.get(key))) return false;
+        }
+
+        return true;
+    }
+
+    private static boolean insertOrderProducts(Customer customer, List<Product> productList) throws DAOException {
+        if(productList.isEmpty()) throw new DAOException("Error, productList is empty");
+
+        Connection conn = ConnectionFactory.getConnection();
+
+        // Insert new order in list requests
+        String sql = "insert into orders (id, companyEmail, customerEmail, date, status) " +
+                "values ('0', ?, ?, current_date(), 'waiting')";
+
+        String companyEmail = productList.get(0).getCompanyEmail();
+        int orderId;
+
+        try(PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, companyEmail);
+            ps.setString(2, customer.getEmail());
+
+            int affectedRows = ps.executeUpdate();
+
+            if(affectedRows < 1) return false;
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if(rs.next()) orderId = rs.getInt(1);
+            else return false;
+        } catch (SQLException e) {
+            throw new DAOException("Error on inserting new order", e);
+        }
+
+        sql = "insert into orderitems (orderId, productId, quantity) values (?, ?, ?)";
+
+        for(Product p : productList) {
+            try(PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
+                ps.setInt(1, orderId);
+                ps.setInt(2, p.getProductId());
+                ps.setInt(3, p.getQuantity());
+
+                int affectedRows = ps.executeUpdate();
+
+                if(affectedRows < 1) return false;
+            } catch (SQLException e) {
+                throw new DAOException("Error on inserting new order", e);
+            }
+        }
+
+        sql = "delete from cart where customerEmail = ?";
+
+        try(PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
+            ps.setString(1, customer.getEmail());
+
+            int affectedRows = ps.executeUpdate();
+
+            if(affectedRows <= 0) return false;
+        } catch (SQLException e) {
+            throw new DAOException("Error on cleaning cart for customer " + customer.getEmail(), e);
+        }
+
+        return true;
+    }
 }

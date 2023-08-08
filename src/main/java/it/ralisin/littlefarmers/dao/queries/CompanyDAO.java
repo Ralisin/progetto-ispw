@@ -1,7 +1,6 @@
 package it.ralisin.littlefarmers.dao.queries;
 
 import it.ralisin.littlefarmers.dao.ConnectionFactory;
-import it.ralisin.littlefarmers.enums.Regions;
 import it.ralisin.littlefarmers.exeptions.DAOException;
 import it.ralisin.littlefarmers.model.Company;
 import it.ralisin.littlefarmers.model.Product;
@@ -25,13 +24,12 @@ public class CompanyDAO {
         try (PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                String emailDb = rs.getString("email");
-                String nameDb = rs.getString("name");
-                String ibanDb = rs.getString("iban");
-                String addressDb = rs.getString("address");
-                Regions regionDb = Regions.getByRegionString(rs.getString("region"));
+                String email = rs.getString("email");
+                String name = rs.getString("name");
+                String iban = rs.getString("iban");
+                String address = rs.getString("address");
 
-                Company company = new Company(emailDb, nameDb, ibanDb, addressDb, regionDb);
+                Company company = new Company(email, name, iban, address);
                 companyList.add(company);
             }
         } catch (SQLException e) {

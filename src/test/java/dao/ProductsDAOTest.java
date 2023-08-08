@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 class ProductsDAOTest {
+    Company company = new Company("company1@gmail.com", "test","test", "test");
+
     @Test
     void testGetProducts() throws DAOException {
         List<Product> productList = ProductsDAO.getProducts();
@@ -29,8 +31,6 @@ class ProductsDAOTest {
 
     @Test
     void testGetProductsByCompany() throws DAOException, SQLException {
-        Company company = new Company("company1@gmail.com", "test","test", "test", Regions.ABRUZZO);
-
         List<Product> productList = ProductsDAO.getProductByCompany(company);
 
         Assertions.assertNotNull(productList);
