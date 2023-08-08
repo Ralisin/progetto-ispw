@@ -22,8 +22,8 @@ public class ProductsDAO {
         Connection conn = ConnectionFactory.getConnection();
 
         try (
-                PreparedStatement ps = conn.prepareStatement(SQL, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-                ResultSet rs = ps.executeQuery()
+            PreparedStatement ps = conn.prepareStatement(SQL, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = ps.executeQuery()
         ) {
             return getProductsList(rs);
         } catch (SQLException e) {
