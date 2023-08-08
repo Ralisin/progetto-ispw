@@ -30,7 +30,7 @@ public class ProductsDAO {
                 productList.add(product);
             }
         } catch (SQLException e) {
-            throw new DAOException("Error on getting products by region", e);
+            throw new DAOException("Error on getting products", e);
         }
 
         return productList;
@@ -96,7 +96,7 @@ public class ProductsDAO {
                 productList.add(new Product(productId, productName, productDescription, price, Regions.getByRegion(productRegion), category, imageLink));
             }
         } catch (SQLException e) {
-            throw new DAOException("Error on getting products by region", e);
+            throw new DAOException("Error on getting products by company", e);
         }  finally {
             if (rs != null) {
                 rs.close();
