@@ -41,7 +41,7 @@ public class ProductsDAO {
 
         Connection conn = ConnectionFactory.getConnection();
 
-        String sql = "select productId, productName, productDescription, price, region, category, imageLink from products where region = ?";
+        String sql = "select companyEmail, productId, productName, productDescription, price, region, category, imageLink from products where region = ?";
 
         ResultSet rs = null;
 
@@ -50,15 +50,8 @@ public class ProductsDAO {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                int productId = rs.getInt("productId");
-                String productName = rs.getString("productName");
-                String productDescription = rs.getString("productDescription");
-                float price = rs.getFloat("price");
-                String productRegion = rs.getString("region");
-                String imageLink = rs.getString("imageLink");
-                String category = rs.getString("category");
-
-                productList.add(new Product(productId, productName, productDescription, price, Regions.getByRegion(productRegion), category, imageLink));
+                Product product = getProductFromResultSet(rs);
+                productList.add(product);
             }
         } catch (SQLException e) {
             throw new DAOException("Error on getting products by region", e);
@@ -100,6 +93,7 @@ public class ProductsDAO {
     }
 
     public static Product getProductFromResultSet(ResultSet rs) throws SQLException {
+        String companyEmail = rs.getString("companyEmail");
         int productId = rs.getInt("productId");
         String productName = rs.getString("productName");
         String productDescription = rs.getString("productDescription");
@@ -108,6 +102,6 @@ public class ProductsDAO {
         String category = rs.getString("category");
         String imageLink = rs.getString("imageLink");
 
-        return new Product(productId, productName, productDescription, price, Regions.getByRegion(productRegion), category, imageLink);
+        return new Product(companyEmail, productId, productName, productDescription, price, Regions.getByRegionString(productRegion), category, imageLink);
     }
 }

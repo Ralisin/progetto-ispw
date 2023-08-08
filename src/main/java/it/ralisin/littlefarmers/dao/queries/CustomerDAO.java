@@ -1,15 +1,15 @@
 package it.ralisin.littlefarmers.dao.queries;
 
 import it.ralisin.littlefarmers.dao.ConnectionFactory;
+import it.ralisin.littlefarmers.enums.OrderStatus;
+import it.ralisin.littlefarmers.enums.Regions;
 import it.ralisin.littlefarmers.exeptions.DAOException;
 import it.ralisin.littlefarmers.model.Customer;
+import it.ralisin.littlefarmers.model.Order;
 import it.ralisin.littlefarmers.model.Product;
 import it.ralisin.littlefarmers.model.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,7 +105,7 @@ public class CustomerDAO {
     public static boolean removeFromCart(Customer customer, Product product) throws DAOException {
         Connection conn = ConnectionFactory.getConnection();
 
-            String sql = "delete from cart where productId = ? and customerEmail = ?";
+        String sql = "delete from cart where productId = ? and customerEmail = ?";
         int affectedRows;
 
         try (PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
@@ -119,4 +119,80 @@ public class CustomerDAO {
 
         return affectedRows > 0;
     }
+
+    public static List<Order> getOrders(Customer customer) throws DAOException, SQLException {
+        List<Order> orderList = new ArrayList<>();
+        Connection conn = ConnectionFactory.getConnection();
+
+        String sql = "select * from orders where customerEmail = ?";
+
+        ResultSet rs = null;
+
+        try(PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
+            ps.setString(1, customer.getEmail());
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String companyEmail = rs.getString("companyEmail");
+                String customerEmail = rs.getString("customerEmail");
+                String date = rs.getString("date");
+                String status = rs.getString("status");
+
+                orderList.add(new Order(id, companyEmail, customerEmail, date, OrderStatus.getByString(status)));
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Error on getting orders", e);
+        }  finally {
+            if (rs != null) {
+                rs.close();
+            }
+        }
+
+        return orderList;
+    }
+
+    public static List<Product> getOrderProducts(Order order) throws DAOException, SQLException {
+        List<Product> productList = new ArrayList<>();
+        Connection conn = ConnectionFactory.getConnection();
+
+        ResultSet rs = null;
+
+        String sql = "select * from orderItems join products on orderItems.productId = products.productId where orderId = ?";
+
+        try(PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
+            ps.setInt(1, order.getId());
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String email = rs.getString("companyEmail");
+                int productId = rs.getInt("productId");
+                String name = rs.getString("productName");
+                String description = rs.getString("productDescription");
+                float price = rs.getFloat("price");
+                int quantity = rs.getInt("quantity");
+                String region = rs.getString("region");
+                String category = rs.getString("category");
+                String imageLink = rs.getString("imageLink");
+
+                productList.add(new Product(email, productId, name, description, price, quantity, Regions.getByRegionString(region), category, imageLink));
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Error on getting orders", e);
+        }  finally {
+            if (rs != null) {
+                rs.close();
+            }
+        }
+
+        return productList;
+    }
+
+    /*
+    * Sql to insert order:
+    *   INSERT INTO orders (`id`, `companyEmail`, `customerEmail`, `date`, `status`)
+        VALUES ('0', 'company2@gmail.com', 'customer2@gmail.com', current_date(), 'waiting');
+    * */
 }

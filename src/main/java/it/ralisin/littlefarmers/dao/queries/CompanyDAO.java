@@ -29,7 +29,7 @@ public class CompanyDAO {
                 String nameDb = rs.getString("name");
                 String ibanDb = rs.getString("iban");
                 String addressDb = rs.getString("address");
-                Regions regionDb = Regions.getByRegion(rs.getString("region"));
+                Regions regionDb = Regions.getByRegionString(rs.getString("region"));
 
                 Company company = new Company(emailDb, nameDb, ibanDb, addressDb, regionDb);
                 companyList.add(company);

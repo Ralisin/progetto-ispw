@@ -1,9 +1,12 @@
 package dao;
 
 import it.ralisin.littlefarmers.dao.queries.CustomerDAO;
+import it.ralisin.littlefarmers.enums.OrderStatus;
+import it.ralisin.littlefarmers.enums.Regions;
 import it.ralisin.littlefarmers.enums.UserRole;
 import it.ralisin.littlefarmers.exeptions.DAOException;
 import it.ralisin.littlefarmers.model.Customer;
+import it.ralisin.littlefarmers.model.Order;
 import it.ralisin.littlefarmers.model.Product;
 import it.ralisin.littlefarmers.model.User;
 import org.junit.jupiter.api.Assertions;
@@ -13,10 +16,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 class CustomerDAOTest {
+    private final User user = new User("customer1@gmail.com", "0000", UserRole.CUSTOMER);
+    private final Customer customer = new Customer("customer1@gmail.com", null, null, null);
+    private final Product product = new Product("company1@gmail.com", 1, "Macinato 500g", null, 6.90F, Regions.ABRUZZO, "carne", "https://i0.wp.com/www.alpassofood.com/wp-content/uploads/2022/07/Carne-macinata.jpeg?fit=853%2C853&ssl=1");
+    private final Order order = new Order(1, "company1@gmail.com", "customer1@gmail.com", "2023-08-08", OrderStatus.WAITING);
+
     @Test
     void testGetCustomer() throws DAOException, SQLException {
-        User user = new User("customer1@gmail.com", "0000", UserRole.CUSTOMER);
-
         Customer customer = CustomerDAO.getCustomer(user);
 
         Assertions.assertNotNull(customer);
@@ -24,8 +30,6 @@ class CustomerDAOTest {
 
     @Test
     void testCustomerGetCart() throws DAOException, SQLException {
-        Customer customer = new Customer("customer1@gmail.com", null, null, null);
-        Product product = new Product(1, "Macinato 500g", null, 6.90F, "carne", "https://i0.wp.com/www.alpassofood.com/wp-content/uploads/2022/07/Carne-macinata.jpeg?fit=853%2C853&ssl=1");
         CustomerDAO.addToCart(customer, product, 5);
 
         List<Product> productList = CustomerDAO.getCart(customer);
@@ -36,9 +40,6 @@ class CustomerDAOTest {
 
     @Test
     void testCustomerAddToCart() throws DAOException {
-        Customer customer = new Customer("customer1@gmail.com", null, null, null);
-        Product product = new Product(1, "Macinato 500g", null, 6.90F, "carne", "https://i0.wp.com/www.alpassofood.com/wp-content/uploads/2022/07/Carne-macinata.jpeg?fit=853%2C853&ssl=1");
-
         boolean result = CustomerDAO.addToCart(customer, product, 5);
 
         Assertions.assertTrue(result);
@@ -46,12 +47,24 @@ class CustomerDAOTest {
 
     @Test
     void testCustomerRemoveFromCart() throws DAOException {
-        Customer customer = new Customer("customer1@gmail.com", null, null, null);
-        Product product = new Product(1, "Macinato 500g", null, 6.90F, "carne", "https://i0.wp.com/www.alpassofood.com/wp-content/uploads/2022/07/Carne-macinata.jpeg?fit=853%2C853&ssl=1");
         CustomerDAO.addToCart(customer, product, 5);
 
         boolean result = CustomerDAO.removeFromCart(customer, product);
 
         Assertions.assertTrue(result);
+    }
+
+    @Test
+    void testGetOrders() throws DAOException, SQLException {
+        List<Order> orderList = CustomerDAO.getOrders(customer);
+
+        Assertions.assertTrue(orderList.isEmpty());
+    }
+
+    @Test
+    void testGetOrderProducts() throws DAOException, SQLException {
+        List<Product> productList = CustomerDAO.getOrderProducts(order);
+
+        Assertions.assertNotNull(productList);
     }
 }

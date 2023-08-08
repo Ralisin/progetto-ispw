@@ -21,7 +21,7 @@ class CompanyDAOTest {
     @Test
     void testInsertNewProduct() throws DAOException {
         Company company = new Company("company1@gmail.com", "test","test", "test", Regions.ABRUZZO);
-        Product product = new Product(0, "test", "test", 1f, Regions.ABRUZZO, "test", "test");
+        Product product = new Product("company1@gmail.com", 0, "test", "test", 1f, Regions.ABRUZZO, "test", "test");
 
         boolean result = CompanyDAO.insertProduct(company, product);
         Assertions.assertTrue(result);

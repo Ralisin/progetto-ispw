@@ -3,6 +3,7 @@ package it.ralisin.littlefarmers.model;
 import it.ralisin.littlefarmers.enums.Regions;
 
 public class Product {
+    private final String companyEmail;
     private final int productId;
     private final String name;
     private final String description;
@@ -10,8 +11,22 @@ public class Product {
     private final Regions region;
     private final String category;
     private final String imageLink;
+    private int quantity = -1;
 
-    public Product(int productId, String name, String description, float price, Regions region, String category, String imageLink) {
+    public Product(String companyEmail, int productId, String name, String description, float price, int quantity, Regions region, String category, String imageLink) {
+        this.companyEmail = companyEmail;
+        this.productId = productId;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.quantity = quantity;
+        this.category = category;
+        this.imageLink = imageLink;
+        this.region = region;
+    }
+
+    public Product(String companyEmail, int productId, String name, String description, float price, Regions region, String category, String imageLink) {
+        this.companyEmail = companyEmail;
         this.productId = productId;
         this.name = name;
         this.description = description;
@@ -21,14 +36,8 @@ public class Product {
         this.region = region;
     }
 
-    public Product(int productId, String name, String description, float price, String category, String imageLink) {
-        this.productId = productId;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.category = category;
-        this.imageLink = imageLink;
-        this.region = null;
+    public String getCompanyEmail() {
+        return companyEmail;
     }
 
     public int getProductId() {
@@ -49,6 +58,10 @@ public class Product {
 
     public float getPrice() {
         return price;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 
     public String getCategory() {
