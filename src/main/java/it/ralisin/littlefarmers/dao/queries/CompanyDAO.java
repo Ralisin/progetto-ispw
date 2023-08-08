@@ -41,7 +41,7 @@ public class CompanyDAO {
         return companyList;
     }
 
-    public static Boolean insertProduct(Company company, Product product) throws DAOException {
+    public static boolean insertProduct(Company company, Product product) throws DAOException {
         Connection conn = ConnectionFactory.getConnection();
 
         String sql = "insert into products(companyEmail, productName, productDescription, price, region, category, imageLink) " +

@@ -21,8 +21,7 @@ public class ProductsDAO {
 
         Connection conn = ConnectionFactory.getConnection();
 
-        String sql = "select productId, productName, productDescription, price, region, category, imageLink\n" +
-                "from products";
+        String sql = "select productId, productName, productDescription, price, region, category, imageLink from products";
 
         try (PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -42,8 +41,7 @@ public class ProductsDAO {
 
         Connection conn = ConnectionFactory.getConnection();
 
-        String sql = "select productId, productName, productDescription, price, region, category, imageLink\n" +
-                "from products where region = ?";
+        String sql = "select productId, productName, productDescription, price, region, category, imageLink from products where region = ?";
 
         ResultSet rs = null;
 
@@ -78,8 +76,7 @@ public class ProductsDAO {
 
         Connection conn = ConnectionFactory.getConnection();
 
-        String sql = "select productId, productName, productDescription, price, region, category, imageLink\n" +
-                "from products where companyEmail = ?";
+        String sql = "select productId, productName, productDescription, price, region, category, imageLink from products where companyEmail = ?";
 
         ResultSet rs = null;
 

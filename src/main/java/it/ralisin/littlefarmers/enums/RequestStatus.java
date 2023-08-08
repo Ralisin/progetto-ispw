@@ -1,15 +1,13 @@
 package it.ralisin.littlefarmers.enums;
 
 public enum RequestStatus {
-    SENT("sent"),
+    WAITING("waiting"),
     ACCEPTED("accepted"),
     DENIED("denied"),
-    ACCEPTEDNOTIFIED("acceptedNotified"),
-    DENIEDNOTIFIED("deniedNotified"),
     SHIPPED("shipped"),
     DELIVERED("delivered");
 
-    String status;
+    final String status;
 
     RequestStatus(String status) {
         this.status = status;
