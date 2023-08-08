@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class DAOTest {
+class DAOTest {
     @Test
     void testConnectionFactory() {
         Connection conn = ConnectionFactory.getConnection();

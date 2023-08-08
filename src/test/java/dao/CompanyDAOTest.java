@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class CompanyDAOTest {
+class CompanyDAOTest {
     @Test
-    public void getCompanyList() throws DAOException {
+    void getCompanyList() throws DAOException {
         List<Company> cl = CompanyDAO.getCompanyList();
 
         Assertions.assertNotNull(cl);
@@ -23,7 +23,7 @@ public class CompanyDAOTest {
         Company company = new Company("company1@gmail.com", "test","test", "test", Regions.ABRUZZO);
         Product product = new Product(0, "test", "test", 1f, Regions.ABRUZZO, "test", "test");
 
-        Boolean result = CompanyDAO.insertProduct(company, product);
+        boolean result = CompanyDAO.insertProduct(company, product);
         Assertions.assertTrue(result);
     }
 }

@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ProductsDAOTest {
+class ProductsDAOTest {
     @Test
     void testGetProducts() throws DAOException {
         List<Product> productList = ProductsDAO.getProducts();
