@@ -16,14 +16,14 @@ import java.util.List;
 public class ProductsDAO {
     private ProductsDAO() {}
 
-    static final String SQLSELECT = "select productId, productName, productDescription, price, region, category, imageLink from products";
+    static final String SQL = "select productId, productName, productDescription, price, region, category, imageLink from products";
 
     public static List<Product> getProducts() throws DAOException {
         List<Product> productList = new ArrayList<>();
 
         Connection conn = ConnectionFactory.getConnection();
 
-        try (PreparedStatement ps = conn.prepareStatement(SQLSELECT, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement ps = conn.prepareStatement(SQL, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Product product = getProductFromResultSet(rs);
 
@@ -41,7 +41,7 @@ public class ProductsDAO {
 
         Connection conn = ConnectionFactory.getConnection();
 
-        String sql = SQLSELECT + " where region = ?";
+        String sql = SQL + " where region = ?";
 
         ResultSet rs = null;
 
@@ -69,7 +69,7 @@ public class ProductsDAO {
 
         Connection conn = ConnectionFactory.getConnection();
 
-        String sql = SQLSELECT + " where companyEmail = ?";
+        String sql = SQL + " where companyEmail = ?";
 
         ResultSet rs = null;
 
