@@ -196,7 +196,8 @@ public class CustomerDAO {
         }
 
         // Insert all products into order
-        for(String key : companyEmailToProductsMap.keySet()) {
+        for(Map.Entry<String, List<Product>> entry : companyEmailToProductsMap.entrySet()) {
+            String key = entry.getKey();
             if(!insertOrderProducts(customer, companyEmailToProductsMap.get(key))) return false;
         }
 
