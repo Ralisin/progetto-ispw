@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CustomerDAO {
+public class CustomerDAO extends OrderDAO {
     private CustomerDAO() {}
 
     /** Method to get Customer by given User, needed on login action */
@@ -96,41 +96,15 @@ public class CustomerDAO {
     }
 
     public static List<Order> getOrders(Customer customer) throws DAOException, SQLException {
-        List<Order> orderList = new ArrayList<>();
-        Connection conn = ConnectionFactory.getConnection();
-
         String sql = "select * from orders where customerEmail = ?";
 
-        ResultSet rs = null;
-
-        try(PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
-            ps.setString(1, customer.getEmail());
-
-            rs = ps.executeQuery();
-
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String companyEmail = rs.getString("companyEmail");
-                String customerEmail = rs.getString("customerEmail");
-                String date = rs.getString("date");
-                String status = rs.getString("status");
-
-                orderList.add(new Order(id, companyEmail, customerEmail, date, OrderStatus.getByString(status)));
-            }
-        } catch (SQLException e) {
-            throw new DAOException("Error on getting orders", e);
-        }  finally {
-            if (rs != null) {
-                rs.close();
-            }
-        }
-
-        return orderList;
+        return getOrders(customer.getEmail(), sql);
     }
 
-    public static List<Product> getOrderProducts(Order order) throws DAOException, SQLException {
-        String sql = "select * from orderItems join products on orderItems.productId = products.productId where orderId = ?";
-        return executeQueryAndProcessProducts(ConnectionFactory.getConnection(), sql, order.getId());
+    public static List<Order> getOrdersByStatus(Customer customer, OrderStatus status) throws DAOException, SQLException {
+        String sql = "select * from orders where customerEmail = ? and status = '" + status.getStatus() + "'";
+
+        return getOrders(customer.getEmail(), sql);
     }
 
     /** Make an order based on cart */
@@ -214,29 +188,5 @@ public class CustomerDAO {
         return true;
     }
 
-    private static List<Product> executeQueryAndProcessProducts(Connection conn, String sql, Object... params) throws DAOException, SQLException {
-        List<Product> productList = new ArrayList<>();
-        ResultSet rs = null;
 
-        try (PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
-            for (int i = 0; i < params.length; i++) {
-                ps.setObject(i + 1, params[i]);
-            }
-
-            rs = ps.executeQuery();
-
-            while (rs.next()) {
-                Product product = ProductsDAO.getProductFromResultSet(rs);
-                productList.add(product);
-            }
-        } catch (SQLException e) {
-            throw new DAOException("Error while executing query and processing result set", e);
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-        }
-
-        return productList;
-    }
 }

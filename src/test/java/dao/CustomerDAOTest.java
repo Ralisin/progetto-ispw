@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
-import java.util.*;
+import java.util.List;
 
 class CustomerDAOTest {
     private final User user = new User("customer1@gmail.com", "0000", UserRole.CUSTOMER);
@@ -71,6 +71,13 @@ class CustomerDAOTest {
     @Test
     void testMakeOrder() throws DAOException, SQLException {
         Assertions.assertTrue(CustomerDAO.makeOrder(customer));
+    }
+
+    @Test
+    void testGetOrdersByStatus() throws DAOException, SQLException {
+        List<Order> orderList = CustomerDAO.getOrdersByStatus(customer, OrderStatus.WAITING);
+
+        Assertions.assertFalse(orderList.isEmpty());
     }
 }
 
