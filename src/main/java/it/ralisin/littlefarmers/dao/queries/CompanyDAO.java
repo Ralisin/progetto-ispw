@@ -6,39 +6,48 @@ import it.ralisin.littlefarmers.exeptions.DAOException;
 import it.ralisin.littlefarmers.model.Company;
 import it.ralisin.littlefarmers.model.Order;
 import it.ralisin.littlefarmers.model.Product;
+import it.ralisin.littlefarmers.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CompanyDAO extends OrderDAO {
     private CompanyDAO() {}
 
-    public static List<Company> getCompanyList() throws DAOException {
-        List<Company> companyList = new ArrayList<>();
-
+    public static Company getCompany(User user) throws DAOException, SQLException {
         Connection conn = ConnectionFactory.getConnection();
 
-        String sql = "select * from company";
-        try (PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); ResultSet rs = ps.executeQuery()) {
+        String sql = "select * from company where email = ?";
 
-            while (rs.next()) {
+        Company company = null;
+
+        ResultSet rs = null;
+
+        try (PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
+            ps.setString(1, user.getEmail());
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
                 String email = rs.getString("email");
                 String name = rs.getString("name");
                 String iban = rs.getString("iban");
                 String address = rs.getString("address");
 
-                Company company = new Company(email, name, iban, address);
-                companyList.add(company);
+                company = new Company(email, name, iban, address);
             }
         } catch (SQLException e) {
-            throw new DAOException("Error on getting companies list", e);
+            throw new DAOException("Error on getting company", e);
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
         }
 
-        return companyList;
+        return company;
     }
 
     // Valid also for updates

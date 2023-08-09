@@ -38,7 +38,7 @@ public class OrderDAO extends AbsDAO {
             }
         } catch (SQLException e) {
             throw new DAOException("Error on getting orders", e);
-        }  finally {
+        } finally {
             if (rs != null) {
                 rs.close();
             }
