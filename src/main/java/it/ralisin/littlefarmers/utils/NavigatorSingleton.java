@@ -10,7 +10,6 @@ import java.util.Objects;
 
 public class NavigatorSingleton {
     private static NavigatorSingleton instance = null;
-
     protected Stage stg;
 
     public Stage getStg() {return stg;}

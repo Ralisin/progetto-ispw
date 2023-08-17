@@ -1,6 +1,7 @@
 package it.ralisin.littlefarmers.controller.graphic_controller;
 
-import it.ralisin.littlefarmers.Main;
+import it.ralisin.littlefarmers.beans.RegionBean;
+import it.ralisin.littlefarmers.utils.AbsGraphicController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,7 +9,7 @@ import javafx.scene.control.Button;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class RegionListControllerGUI {
+public class RegionListControllerGUI extends AbsGraphicController {
     @FXML
     private Button loginBtn;
     @FXML
@@ -24,12 +25,10 @@ public class RegionListControllerGUI {
         cartBtn.setOnMouseClicked(mouseEvent -> Logger.getAnonymousLogger().log(Level.INFO, "RegionList cartBtn clicked"));
     }
 
-    public String onClickRegionButton(ActionEvent event) {
+    public void onClickRegionButton(ActionEvent event) {
         String str = event.getSource().toString();
         String regionName = str.substring(str.indexOf("'")+1, str.lastIndexOf("'"));
 
-        Logger.getAnonymousLogger().log(Level.INFO, regionName);
-
-        return regionName;
+        gotoPage(REGION_PRODUCT, new RegionBean(regionName));
     }
 }
