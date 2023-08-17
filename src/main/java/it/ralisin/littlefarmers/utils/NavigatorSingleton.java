@@ -3,6 +3,7 @@ package it.ralisin.littlefarmers.utils;
 import it.ralisin.littlefarmers.Main;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -10,21 +11,46 @@ import java.util.Objects;
 
 public class NavigatorSingleton {
     private static NavigatorSingleton instance = null;
-    protected Stage stg;
+    private final Stage mainStg;
+    private Stage loginStg;
+    private Stage cartStg;
+    private Stage ordersStg;
 
-    public Stage getStg() {return stg;}
+    public Stage getMainStg() {
+        return mainStg;
+    }
 
-    protected NavigatorSingleton(Stage stg) {this.stg = stg;}
+    protected NavigatorSingleton(Stage stg) {
+        this.mainStg = stg;
+    }
 
-    public static synchronized NavigatorSingleton getInstance() {return instance;}
+    public static synchronized NavigatorSingleton getInstance() {
+        return instance;
+    }
 
     public static synchronized NavigatorSingleton getInstance(Stage stg) {
         if(instance == null) instance = new NavigatorSingleton(stg);
         return instance;
     }
 
-    public void gotoPage(String fxml) throws IOException {
-        Parent newRoot = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxml)));
-        stg.getScene().setRoot(newRoot);
+    public void gotoTopPageMain(String fxml) throws IOException {
+        BorderPane bP = (BorderPane) mainStg.getScene().lookup("#borderPane");
+
+        Parent newCenter = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxml)));
+        bP.setTop(newCenter);
+    }
+
+    public void gotoCenterPageMain(String fxml) throws IOException {
+        BorderPane bP = (BorderPane) mainStg.getScene().lookup("#borderPane");
+
+        Parent newCenter = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxml)));
+        bP.setCenter(newCenter);
+    }
+
+    public void gotoLeftPageMain(String fxml) throws IOException {
+        BorderPane bP = (BorderPane) mainStg.getScene().lookup("borderPane");
+
+        Parent newCenter = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxml)));
+        bP.setLeft(newCenter);
     }
 }
