@@ -43,7 +43,7 @@ public abstract class AbsCustomerGraphicController {
         try {
             NavigatorSingleton.getInstance().gotoLeftPageMain(page);
         } catch (IOException e) {
-            Logger.getAnonymousLogger().log(Level.INFO, "Error gotoPageLeft " + e.getMessage());
+            Logger.getAnonymousLogger().log(Level.INFO, String.format("Error gotoPageLeft %s", e.getMessage()));
         }
     }
 
