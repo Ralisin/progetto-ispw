@@ -22,7 +22,7 @@ public class RegionProductsController {
         try {
             productList = ProductsDAO.getProductsByRegion(region);
         } catch (SQLException | DAOException e) {
-            Logger.getAnonymousLogger().log(Level.INFO, "loadRegionProducts failed" + e);
+            Logger.getAnonymousLogger().log(Level.INFO, String.format("loadRegionProducts failed %s", e));
         }
 
         return new ProductBean(productList);
