@@ -17,7 +17,7 @@ public abstract class AbsCustomerGraphicController {
         try {
             NavigatorSingleton.getInstance().gotoTopPageMain(page);
         } catch (IOException e) {
-            Logger.getAnonymousLogger().log(Level.INFO, "Error gotoPageTop " + e.getMessage());
+            Logger.getAnonymousLogger().log(Level.INFO, String.format("Error gotoPageTop %s", e.getMessage()));
         }
     }
 
@@ -25,7 +25,7 @@ public abstract class AbsCustomerGraphicController {
         try {
             NavigatorSingleton.getInstance().gotoCenterPageMain(page);
         } catch (IOException e) {
-            Logger.getAnonymousLogger().log(Level.INFO, "Error gotoPageCenter " + e.getMessage());
+            Logger.getAnonymousLogger().log(Level.INFO, String.format("Error gotoPageCenter %s", e.getMessage()));
         }
     }
 
@@ -35,7 +35,7 @@ public abstract class AbsCustomerGraphicController {
             NavigatorSingleton.getInstance().getMainStg().setUserData(o);
             NavigatorSingleton.getInstance().gotoCenterPageMain(page);
         } catch (IOException e) {
-            Logger.getAnonymousLogger().log(Level.INFO, "Error gotoPageCenter (with object) " + e.getMessage());
+            Logger.getAnonymousLogger().log(Level.INFO, String.format("Error gotoPageCenter (with object) %s", e.getMessage()));
         }
     }
 
