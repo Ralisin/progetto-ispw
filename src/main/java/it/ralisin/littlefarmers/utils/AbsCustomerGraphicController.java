@@ -11,6 +11,7 @@ public abstract class AbsCustomerGraphicController {
     protected static final String CUSTOMER_REGION_LIST_CENTER = "RegionList.fxml";
     protected static final String CUSTOMER_REGION_PRODUCTS_CENTER = "RegionProductsCenter.fxml";
     protected static final String CUSTOMER_REGION_PRODUCTS_FILTER_LEFT = "RegionProductsFilter.fxml";
+    protected static final String LOGIN_SIGN_UP = "LoginSignUp.fxml";
     protected static final String REMOVE_ELEMENT = null;
 
     protected void gotoPageTop(String page) {
@@ -49,5 +50,21 @@ public abstract class AbsCustomerGraphicController {
 
     protected Stage getMainStg() {
         return NavigatorSingleton.getInstance().getMainStg();
+    }
+
+    protected void gotoLoginPage() {
+        try {
+            NavigatorSingleton.getInstance().gotoLoginSignUpPage("LoginSignUp.fxml", false);
+        } catch (IOException e) {
+            Logger.getAnonymousLogger().log(Level.INFO, String.format("Error gotoLoginPage %s", e.getMessage()));
+        }
+    }
+
+    protected void gotoSignUpPage() {
+        try {
+            NavigatorSingleton.getInstance().gotoLoginSignUpPage("LoginSignUp.fxml", true);
+        } catch (IOException e) {
+            Logger.getAnonymousLogger().log(Level.INFO, String.format("Error gotoLoginPage %s", e.getMessage()));
+        }
     }
 }

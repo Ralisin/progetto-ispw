@@ -14,12 +14,8 @@ public class HomeTopControllerGUI extends AbsCustomerGraphicController {
     private Button loginBtn;
 
     public void initialize() {
-        signUpBtn.setOnMouseClicked(mouseEvent -> {
-            Logger.getAnonymousLogger().log(Level.INFO, "Home signUpBtn clicked"); // TODO: implement goto(COMPANY_LOGIN)
-        });
+        signUpBtn.setOnMouseClicked(mouseEvent -> gotoSignUpPage());
 
-        loginBtn.setOnMouseClicked(mouseEvent -> {
-            Logger.getAnonymousLogger().log(Level.INFO, "Home loginBtn clicked"); // TODO: implement goto(COMPANY_LOGIN)
-        });
+        loginBtn.setOnMouseClicked(mouseEvent -> gotoLoginPage());
     }
 }
