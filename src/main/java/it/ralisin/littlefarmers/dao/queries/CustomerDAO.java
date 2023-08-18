@@ -187,6 +187,4 @@ public class CustomerDAO extends OrderDAO {
 
         return true;
     }
-
-
 }

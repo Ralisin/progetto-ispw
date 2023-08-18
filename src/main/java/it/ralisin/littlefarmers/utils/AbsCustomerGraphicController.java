@@ -9,8 +9,9 @@ import java.util.logging.Logger;
 public abstract class AbsCustomerGraphicController {
     protected static final String CUSTOMER_TOP_BAR = "CustomerTopBar.fxml";
     protected static final String CUSTOMER_REGION_LIST_CENTER = "RegionList.fxml";
-    protected static final String CUSTOMER_REGION_PRODUCTS_CENTER = "RegionProducts.fxml";
+    protected static final String CUSTOMER_REGION_PRODUCTS_CENTER = "RegionProductsCenter.fxml";
     protected static final String CUSTOMER_REGION_PRODUCTS_FILTER_LEFT = "RegionProductsFilter.fxml";
+    protected static final String REMOVE_ELEMENT = null;
 
     protected void gotoPageTop(String page) {
         try {
@@ -44,5 +45,9 @@ public abstract class AbsCustomerGraphicController {
         } catch (IOException e) {
             Logger.getAnonymousLogger().log(Level.INFO, "Error gotoPageLeft " + e.getMessage());
         }
+    }
+
+    protected Stage getMainStg() {
+        return NavigatorSingleton.getInstance().getMainStg();
     }
 }

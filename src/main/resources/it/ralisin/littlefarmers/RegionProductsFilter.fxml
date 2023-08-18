@@ -12,111 +12,114 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
-   <content>
-      <VBox>
-         <padding>
-            <Insets left="5.0" right="5.0" />
-         </padding>
-         <children>
-            <Label text="FILTRI">
-               <font>
-                  <Font name="Arial Black" size="12.0" />
-               </font>
-            </Label>
-            <Label text="Nome prodotto">
-               <font>
-                  <Font name="Times New Roman" size="13.0" />
-               </font>
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ralisin.littlefarmers.controller.graphic_controller.RegionProductsFilterControllerGUI">
+   <children>
+      <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" vbarPolicy="NEVER">
+         <content>
+            <VBox>
                <padding>
-                  <Insets bottom="2.0" />
+                  <Insets left="5.0" right="5.0" />
                </padding>
-            </Label>
-            <HBox alignment="CENTER_LEFT" spacing="5.0">
                <children>
-                  <TextField promptText="Nome del prodotto" />
-                  <Button mnemonicParsing="false" text="Cerca" />
+                  <Label text="FILTRI">
+                     <font>
+                        <Font name="Arial Black" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="Nome prodotto">
+                     <font>
+                        <Font name="Times New Roman" size="13.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="2.0" />
+                     </padding>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" spacing="5.0">
+                     <children>
+                        <TextField promptText="Nome del prodotto" />
+                        <Button mnemonicParsing="false" text="Cerca" />
+                     </children>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </HBox>
+                  <Separator>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </Separator>
+                  <Label text="Distanza:">
+                     <padding>
+                        <Insets bottom="3.0" />
+                     </padding>
+                  </Label>
+                  <Slider>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Slider>
+                  <Separator>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </Separator>
+                  <Label text="Tipo">
+                     <padding>
+                        <Insets bottom="3.0" />
+                     </padding>
+                  </Label>
+                  <CheckBox mnemonicParsing="false" text="Carne">
+                     <padding>
+                        <Insets bottom="3.0" left="5.0" />
+                     </padding>
+                  </CheckBox>
+                  <CheckBox mnemonicParsing="false" text="Frutta">
+                     <padding>
+                        <Insets bottom="3.0" left="5.0" />
+                     </padding>
+                  </CheckBox>
+                  <CheckBox mnemonicParsing="false" text="Verdura">
+                     <padding>
+                        <Insets bottom="3.0" left="5.0" />
+                     </padding>
+                  </CheckBox>
+                  <CheckBox mnemonicParsing="false" text="Formaggio">
+                     <padding>
+                        <Insets bottom="3.0" left="5.0" />
+                     </padding>
+                  </CheckBox>
+                  <CheckBox mnemonicParsing="false" text="Pasta">
+                     <padding>
+                        <Insets bottom="3.0" left="5.0" />
+                     </padding>
+                  </CheckBox>
+                  <CheckBox mnemonicParsing="false" text="Legumi">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </CheckBox>
+                  <Separator>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </Separator>
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <Label text="In offerta" />
+                        <CheckBox mnemonicParsing="false" />
+                     </children>
+                  </HBox>
+                  <Separator>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </Separator>
                </children>
-               <padding>
-                  <Insets left="5.0" />
-               </padding>
-            </HBox>
-            <Separator prefWidth="200.0">
-               <padding>
-                  <Insets top="5.0" />
-               </padding>
-            </Separator>
-            <Label text="Distanza:">
-               <padding>
-                  <Insets bottom="3.0" />
-               </padding>
-            </Label>
-            <Slider>
-               <padding>
-                  <Insets left="5.0" />
-               </padding>
-            </Slider>
-            <Separator prefWidth="200.0">
-               <padding>
-                  <Insets top="5.0" />
-               </padding>
-            </Separator>
-            <Label text="Tipo">
-               <padding>
-                  <Insets bottom="3.0" />
-               </padding>
-            </Label>
-            <CheckBox mnemonicParsing="false" text="Carne">
-               <padding>
-                  <Insets bottom="3.0" left="5.0" />
-               </padding>
-            </CheckBox>
-            <CheckBox mnemonicParsing="false" text="Frutta">
-               <padding>
-                  <Insets bottom="3.0" left="5.0" />
-               </padding>
-            </CheckBox>
-            <CheckBox mnemonicParsing="false" text="Verdura">
-               <padding>
-                  <Insets bottom="3.0" left="5.0" />
-               </padding>
-            </CheckBox>
-            <CheckBox mnemonicParsing="false" text="Formaggio">
-               <padding>
-                  <Insets bottom="3.0" left="5.0" />
-               </padding>
-            </CheckBox>
-            <CheckBox mnemonicParsing="false" text="Pasta">
-               <padding>
-                  <Insets bottom="3.0" left="5.0" />
-               </padding>
-            </CheckBox>
-            <CheckBox mnemonicParsing="false" text="Legumi">
-               <padding>
-                  <Insets left="5.0" />
-               </padding>
-            </CheckBox>
-            <Separator prefWidth="200.0">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <padding>
-                  <Insets top="5.0" />
-               </padding>
-            </Separator>
-            <HBox alignment="CENTER_LEFT" spacing="10.0">
-               <children>
-                  <Label text="In offerta" />
-                  <CheckBox mnemonicParsing="false" />
-               </children>
-            </HBox>
-            <Separator prefWidth="200.0">
-               <padding>
-                  <Insets top="5.0" />
-               </padding>
-            </Separator>
-         </children>
-      </VBox>
-   </content>
-</ScrollPane>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+</VBox>

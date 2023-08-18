@@ -34,23 +34,35 @@ public class NavigatorSingleton {
     }
 
     public void gotoTopPageMain(String fxml) throws IOException {
+        // lookup is a CSS selector, '#' is used to target elements by their id
         BorderPane bP = (BorderPane) mainStg.getScene().lookup("#borderPane");
 
-        Parent newCenter = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxml)));
+        Parent newCenter = null;
+        if(fxml != null)
+            newCenter = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxml)));
+
         bP.setTop(newCenter);
     }
 
     public void gotoCenterPageMain(String fxml) throws IOException {
+        // lookup is a CSS selector, '#' is used to target elements by their id
         BorderPane bP = (BorderPane) mainStg.getScene().lookup("#borderPane");
 
-        Parent newCenter = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxml)));
+        Parent newCenter = null;
+        if(fxml != null)
+            newCenter = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxml)));
+
         bP.setCenter(newCenter);
     }
 
     public void gotoLeftPageMain(String fxml) throws IOException {
-        BorderPane bP = (BorderPane) mainStg.getScene().lookup("borderPane");
+        // lookup is a CSS selector, '#' is used to target elements by their id
+        BorderPane bP = (BorderPane) mainStg.getScene().lookup("#borderPane");
 
-        Parent newCenter = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxml)));
+        Parent newCenter = null;
+        if(fxml != null)
+            newCenter = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxml)));
+
         bP.setLeft(newCenter);
     }
 }
