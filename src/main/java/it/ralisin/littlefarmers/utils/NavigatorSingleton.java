@@ -11,12 +11,12 @@ import java.util.Objects;
 
 public class NavigatorSingleton {
     private static NavigatorSingleton instance = null;
+    private static final String borderPane = "#borderPane";
     private final Stage mainStg;
     private Stage loginStg;
     private Stage cartStg;
     private Stage ordersStg;
 
-    private final String borderPane = "#borderPane";
     public Stage getMainStg() {
         return mainStg;
     }
