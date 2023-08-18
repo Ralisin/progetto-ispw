@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public class NavigatorSingleton {
     private static NavigatorSingleton instance = null;
-    private static final String BORDER_PANE = "#BORDERPANE";
+    private static final String BORDER_PANE = "#borderPane";
     private final Stage mainStg;
     private Stage loginStg;
     private Stage cartStg;

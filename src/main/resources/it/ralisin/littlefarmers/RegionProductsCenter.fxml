@@ -38,7 +38,7 @@
       </StackPane>
       <ScrollPane hbarPolicy="NEVER" prefHeight="554.0" prefWidth="681.0">
          <content>
-            <VBox fx:id="vBoxProducts" />
+            <VBox fx:id="vBoxProducts" alignment="TOP_CENTER" prefWidth="681.0" spacing="5.0" />
          </content>
       </ScrollPane>
    </children>

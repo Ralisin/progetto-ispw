@@ -1,6 +1,6 @@
 package it.ralisin.littlefarmers.controller.app_controller;
 
-import it.ralisin.littlefarmers.beans.ProductBean;
+import it.ralisin.littlefarmers.beans.ProductsListBean;
 import it.ralisin.littlefarmers.dao.queries.ProductsDAO;
 import it.ralisin.littlefarmers.enums.Regions;
 import it.ralisin.littlefarmers.exeptions.DAOException;
@@ -16,7 +16,7 @@ public class RegionProductsController {
      * @param region the region from which to take products
      * @return "List<Product>" if no error occurred,
      *         "null" if some error occurred */
-    public ProductBean loadRegionProducts(Regions region) {
+    public ProductsListBean loadRegionProducts(Regions region) {
         List<Product> productList = null;
 
         try {
@@ -25,6 +25,6 @@ public class RegionProductsController {
             Logger.getAnonymousLogger().log(Level.INFO, String.format("loadRegionProducts failed %s", e));
         }
 
-        return new ProductBean(productList);
+        return new ProductsListBean(productList);
     }
 }

@@ -2,16 +2,34 @@ package it.ralisin.littlefarmers.beans;
 
 import it.ralisin.littlefarmers.model.Product;
 
-import java.util.List;
-
 public class ProductBean {
-    List<Product> productList;
+    private final Product product;
 
-    public ProductBean(List<Product> productList) {
-        this.productList = productList;
+    public ProductBean(Product product) {
+        this.product = product;
     }
 
-    public List<Product> getProductList() {
-        return productList;
+    public String getProductName() {
+        return product.getName();
+    }
+
+    public String getProductDescription() {
+        return product.getDescription();
+    }
+
+    public String getProductCategory() {
+        return product.getCategory();
+    }
+
+    public String getProductRegion() {
+        return product.getRegion().getRegionString();
+    }
+
+    public String getProductPrice() {
+        return String.format("%.2f€", product.getPrice());
+    }
+
+    public String getProductImageLink() {
+        return product.getImageLink();
     }
 }
