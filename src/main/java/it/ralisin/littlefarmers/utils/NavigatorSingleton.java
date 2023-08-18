@@ -16,6 +16,7 @@ public class NavigatorSingleton {
     private Stage cartStg;
     private Stage ordersStg;
 
+    private final String BORDER_PANE = "#borderPane";
     public Stage getMainStg() {
         return mainStg;
     }
@@ -35,7 +36,7 @@ public class NavigatorSingleton {
 
     public void gotoTopPageMain(String fxml) throws IOException {
         // lookup is a CSS selector, '#' is used to target elements by their id
-        BorderPane bP = (BorderPane) mainStg.getScene().lookup("#borderPane");
+        BorderPane bP = (BorderPane) mainStg.getScene().lookup(BORDER_PANE);
 
         Parent newCenter = null;
         if(fxml != null)
@@ -46,7 +47,7 @@ public class NavigatorSingleton {
 
     public void gotoCenterPageMain(String fxml) throws IOException {
         // lookup is a CSS selector, '#' is used to target elements by their id
-        BorderPane bP = (BorderPane) mainStg.getScene().lookup("#borderPane");
+        BorderPane bP = (BorderPane) mainStg.getScene().lookup(BORDER_PANE);
 
         Parent newCenter = null;
         if(fxml != null)
@@ -57,7 +58,7 @@ public class NavigatorSingleton {
 
     public void gotoLeftPageMain(String fxml) throws IOException {
         // lookup is a CSS selector, '#' is used to target elements by their id
-        BorderPane bP = (BorderPane) mainStg.getScene().lookup("#borderPane");
+        BorderPane bP = (BorderPane) mainStg.getScene().lookup(BORDER_PANE);
 
         Parent newCenter = null;
         if(fxml != null)
