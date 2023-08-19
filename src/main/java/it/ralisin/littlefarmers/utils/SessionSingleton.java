@@ -7,10 +7,6 @@ public class SessionSingleton {
     private static SessionSingleton instance;
     private User user;
 
-    private SessionSingleton(User user) {
-        this.user = user;
-    }
-
     private SessionSingleton() {this.user = null;}
 
     public static synchronized SessionSingleton getInstance() {
