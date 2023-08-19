@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 public abstract class AbsCustomerGraphicController {
     protected static final String CUSTOMER_TOP_BAR = "TopBarCustomer.fxml";
+    protected static final String CUSTOMER_LOGGED_TOP_BAR = "TopBarCustomerLogged.fxml";
     protected static final String CUSTOMER_REGION_LIST_CENTER = "RegionList.fxml";
     protected static final String CUSTOMER_REGION_PRODUCTS_CENTER = "RegionProductsCenter.fxml";
     protected static final String CUSTOMER_REGION_PRODUCTS_FILTER_LEFT = "RegionProductsFilter.fxml";

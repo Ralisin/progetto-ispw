@@ -11,18 +11,17 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<TabPane prefHeight="297.0" prefWidth="233.0" tabClosingPolicy="UNAVAILABLE" tabMinHeight="24.0" tabMinWidth="96.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ralisin.littlefarmers.controller.graphic_controller.LoginControllerGUI">
+<TabPane prefHeight="297.0" prefWidth="233.0" tabClosingPolicy="UNAVAILABLE" tabMinHeight="24.0" tabMinWidth="96.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ralisin.littlefarmers.controller.graphic_controller.LoginSignUpHomeControllerGUI">
   <tabs>
     <Tab closable="false" text="Login">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="268.0" prefWidth="229.0">
                <children>
                   <Label layoutX="43.0" layoutY="27.0" text="Email:" />
-                  <TextField layoutX="43.0" layoutY="45.0" promptText="Email" />
+                  <TextField fx:id="emailTextField" layoutX="43.0" layoutY="45.0" promptText="Email" />
                   <Label layoutX="43.0" layoutY="84.0" text="Password:" />
-                  <PasswordField layoutX="43.0" layoutY="102.0" promptText="Password" />
-                  <Button layoutX="91.0" layoutY="144.0" mnemonicParsing="false" text="Accedi" />
+                  <PasswordField fx:id="pwdTextField" layoutX="43.0" layoutY="102.0" promptText="Password" />
+                  <Button fx:id="accessBtn" layoutX="91.0" layoutY="144.0" mnemonicParsing="false" text="Accedi" />
                   <Separator layoutX="18.0" layoutY="187.0" prefWidth="200.0" />
                   <Button layoutX="46.0" layoutY="211.0" mnemonicParsing="false" text="Accedi con Google">
                      <graphic>

@@ -44,5 +44,25 @@ public class LoginDAO {
         return user;
     }
 
+    public static boolean addUser(String email, String psw, UserRole role) throws DAOException {
+        Connection conn = ConnectionFactory.getConnection();
 
+        ResultSet rs = null;
+
+        String sql = "insert into users (email, password, role) VALUES (?, ?, ?)";
+
+        int affectedRows;
+
+        try(PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
+            ps.setString(1, email);
+            ps.setString(2, psw);
+            ps.setString(3, role.name());
+
+            affectedRows = ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Error inserting product", e);
+        }
+
+        return affectedRows > 0;
+    }
 }

@@ -23,6 +23,10 @@ public class NavigatorSingleton {
         return mainStg;
     }
 
+    public Stage getLoginStg() {
+        return loginStg;
+    }
+
     protected NavigatorSingleton(Stage stg) {
         this.mainStg = stg;
     }
