@@ -7,7 +7,9 @@ public class SessionSingleton {
     private static SessionSingleton instance;
     private User user;
 
-    private SessionSingleton() {this.user = null;}
+    private SessionSingleton() {
+        this.user = null;
+    }
 
     public static synchronized SessionSingleton getInstance() {
         if(instance == null) instance = new SessionSingleton();

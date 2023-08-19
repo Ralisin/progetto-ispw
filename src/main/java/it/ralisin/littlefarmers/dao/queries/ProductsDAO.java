@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ProductsDAO {
     private ProductsDAO() {}
@@ -88,7 +90,8 @@ public class ProductsDAO {
         String description = rs.getString("productDescription");
         float price = rs.getFloat("price");
         int quantity = 0;
-        try { quantity = rs.getInt("quantity"); } catch (SQLException ignored) {}
+        try { quantity = rs.getInt("quantity"); } catch (SQLException ignored) {
+            Logger.getAnonymousLogger().log(Level.INFO, ignored.getMessage());}
         Regions region = Regions.getByRegionString(rs.getString("region"));
         String category = rs.getString("category");
         String imageLink = rs.getString("imageLink");
