@@ -55,7 +55,7 @@ public abstract class AbsCustomerGraphicController {
 
     protected void gotoLoginPage() {
         try {
-            NavigatorSingleton.getInstance().gotoLoginSignUpPage("LoginSignUp.fxml", false);
+            NavigatorSingleton.getInstance().gotoLoginSignUpPage(LOGIN_SIGN_UP, false);
         } catch (IOException e) {
             Logger.getAnonymousLogger().log(Level.INFO, String.format("Error gotoLoginPage %s", e.getMessage()));
         }
@@ -63,7 +63,7 @@ public abstract class AbsCustomerGraphicController {
 
     protected void gotoSignUpPage() {
         try {
-            NavigatorSingleton.getInstance().gotoLoginSignUpPage("LoginSignUp.fxml", true);
+            NavigatorSingleton.getInstance().gotoLoginSignUpPage(LOGIN_SIGN_UP, true);
         } catch (IOException e) {
             Logger.getAnonymousLogger().log(Level.INFO, String.format("Error gotoLoginPage %s", e.getMessage()));
         }
