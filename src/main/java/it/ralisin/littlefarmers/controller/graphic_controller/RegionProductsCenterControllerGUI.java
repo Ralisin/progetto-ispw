@@ -58,6 +58,4 @@ public class RegionProductsCenterControllerGUI extends AbsCustomerGraphicControl
             return null;
         }
     }
-
-
 }
