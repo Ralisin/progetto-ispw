@@ -90,8 +90,8 @@ public class ProductsDAO {
         String description = rs.getString("productDescription");
         float price = rs.getFloat("price");
         int quantity = 0;
-        try { quantity = rs.getInt("quantity"); } catch (SQLException ignored) {
-            Logger.getAnonymousLogger().log(Level.INFO, ignored.getMessage());}
+        try { quantity = rs.getInt("quantity"); }
+        catch (SQLException e) {Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());}
         Regions region = Regions.getByRegionString(rs.getString("region"));
         String category = rs.getString("category");
         String imageLink = rs.getString("imageLink");
