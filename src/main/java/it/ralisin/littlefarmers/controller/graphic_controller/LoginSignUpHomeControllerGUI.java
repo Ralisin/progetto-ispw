@@ -65,8 +65,6 @@ public class LoginSignUpHomeControllerGUI extends AbsCustomerGraphicController {
             setLoginError();
 
             Logger.getAnonymousLogger().log(Level.INFO, String.format("Invalid data inserted %s", e));
-
-            System.out.println(e.getMessage());
         } catch (DAOException | SQLException e) {
             setLoginError();
 
