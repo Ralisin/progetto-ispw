@@ -10,6 +10,7 @@ import it.ralisin.littlefarmers.utils.NavigatorSingleton;
 import it.ralisin.littlefarmers.utils.SessionSingleton;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -20,11 +21,26 @@ import java.util.logging.Logger;
 
 public class LoginSignUpHomeControllerGUI extends AbsCustomerGraphicController {
     @FXML
-    TextField emailTextField;
+    private TextField emailLoginTxtFld;
     @FXML
-    TextField pwdTextField;
+    private TextField pwdLoginTxtFld;
     @FXML
-    Button accessBtn;
+    private Button accessBtn;
+
+    @FXML
+    private TextField emailSignUpTxtFld;
+    @FXML
+    private TextField emailRepSignUpTxtFld;
+    @FXML
+    private TextField pwdSignUpTxtFld;
+    @FXML
+    private TextField pwdRepSignUpTxtFld;
+    @FXML
+    private RadioButton customerRB;
+    @FXML
+    private RadioButton companyRB;
+    @FXML
+    private Button signUpBtn;
 
     private LoginSignUpController loginSignUpController;
 
@@ -32,31 +48,34 @@ public class LoginSignUpHomeControllerGUI extends AbsCustomerGraphicController {
         loginSignUpController = new LoginSignUpController();
 
         accessBtn.setOnMouseClicked(mouseEvent -> {
-            boolean result = userLogin();
+            if(userLogin()) {
+                triggerLoginStgClose();
 
-            Stage loginStg = NavigatorSingleton.getInstance().getLoginStg();
-            if(result && loginStg != null) {
-                loginStg.fireEvent(new WindowEvent(loginStg, WindowEvent.WINDOW_CLOSE_REQUEST));
+                userLoggedSignedUp();
+            }
+        });
 
-                UserRole role = SessionSingleton.getInstance().getUser().getRole();
-                if(role == UserRole.CUSTOMER) {
-                    gotoPageTop(CUSTOMER_LOGGED_TOP_BAR);
-                    gotoPageCenter(CUSTOMER_REGION_LIST_CENTER);
-                } else if (role == UserRole.COMPANY) {
-                    // TODO
-                    Logger.getAnonymousLogger().log(Level.INFO, "User logged is a company, goto...");
-                } else {
-                    Logger.getAnonymousLogger().log(Level.INFO, "User logged is boh...");
-                }
+        signUpBtn.setOnMouseClicked(mouseEvent -> {
+            if(userSignUp()) {
+                triggerLoginStgClose();
+
+                userLoggedSignedUp();
             }
         });
     }
 
-    public boolean userLogin() {
+    private void triggerLoginStgClose() {
+        Stage loginStg = NavigatorSingleton.getInstance().getLoginStg();
+        if(loginStg != null) {
+            loginStg.fireEvent(new WindowEvent(loginStg, WindowEvent.WINDOW_CLOSE_REQUEST));
+        }
+    }
+
+    private boolean userLogin() {
         boolean result = false;
 
         try {
-            LoginCredentialsBean credentials = new LoginCredentialsBean(emailTextField.getText(), pwdTextField.getText());
+            LoginCredentialsBean credentials = new LoginCredentialsBean(emailLoginTxtFld.getText(), pwdLoginTxtFld.getText());
 
             result = loginSignUpController.login(credentials);
 
@@ -74,8 +93,63 @@ public class LoginSignUpHomeControllerGUI extends AbsCustomerGraphicController {
         return result;
     }
 
+    private boolean userSignUp() {
+        boolean result = false;
+
+        try {
+            UserRole role;
+
+            if(customerRB.selectedProperty().get()) role = UserRole.CUSTOMER;
+            else if(companyRB.selectedProperty().get()) role = UserRole.COMPANY;
+            else role = UserRole.NONE;
+
+            LoginCredentialsBean credentials =
+                    new LoginCredentialsBean(
+                            emailSignUpTxtFld.getText(),
+                            emailRepSignUpTxtFld.getText(),
+                            pwdSignUpTxtFld.getText(),
+                            pwdRepSignUpTxtFld.getText(),
+                            role
+                    );
+
+            result = loginSignUpController.signUp(credentials);
+
+            if(!result) setSignUpError();
+        } catch (InvalidFormatException e) {
+            setSignUpError();
+
+            Logger.getAnonymousLogger().log(Level.INFO, String.format("Invalid data inserted %s", e));
+        } catch (DAOException e) {
+            setSignUpError();
+
+            Logger.getAnonymousLogger().log(Level.INFO, String.format("Error on login %s", e));
+        }
+
+        return result;
+    }
+
     private void setLoginError() {
-        emailTextField.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
-        pwdTextField.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
+        emailLoginTxtFld.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
+        pwdLoginTxtFld.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
+    }
+
+    private void setSignUpError() {
+        emailSignUpTxtFld.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
+        emailRepSignUpTxtFld.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
+        pwdSignUpTxtFld.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
+        pwdRepSignUpTxtFld.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
+    }
+
+    private void userLoggedSignedUp() {
+        UserRole role = SessionSingleton.getInstance().getUser().getRole();
+        if(role == UserRole.CUSTOMER) {
+            gotoPageTop(CUSTOMER_LOGGED_TOP_BAR);
+            gotoPageCenter(CUSTOMER_REGION_LIST_CENTER);
+        } else if (role == UserRole.COMPANY) {
+            // TODO
+            Logger.getAnonymousLogger().log(Level.INFO, "User logged is a company, goto...");
+        } else {
+            Logger.getAnonymousLogger().log(Level.INFO, "User logged is boh...");
+        }
     }
 }

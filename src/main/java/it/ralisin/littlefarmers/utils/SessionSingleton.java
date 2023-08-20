@@ -1,6 +1,5 @@
 package it.ralisin.littlefarmers.utils;
 
-import it.ralisin.littlefarmers.enums.UserRole;
 import it.ralisin.littlefarmers.model.User;
 
 public class SessionSingleton {
@@ -23,9 +22,5 @@ public class SessionSingleton {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public UserRole getUserRole() {
-        return user.getRole();
     }
 }

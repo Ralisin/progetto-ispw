@@ -17,11 +17,15 @@ public class LoginSignUpController {
         return user != null;
     }
 
-    public void signUp(LoginCredentialsBean credentials) throws DAOException {
+    public boolean signUp(LoginCredentialsBean credentials) throws DAOException {
         boolean result = LoginDAO.addUser(credentials.getEmail(), credentials.getPassword(), credentials.getRole());
+
         if(result) {
             User user = new User(credentials.getEmail(), credentials.getPassword(), credentials.getRole());
+
             SessionSingleton.getInstance().setUser(user);
         }
+
+        return result;
     }
 }

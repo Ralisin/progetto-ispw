@@ -79,7 +79,7 @@ public class NavigatorSingleton {
         TabPane tabPane = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxml)));
         if(signUp) tabPane.getSelectionModel().selectLast();
 
-        Scene scene = new Scene(tabPane, 233, 297);
+        Scene scene = new Scene(tabPane, 233, 327);
 
         loginStg = new Stage();
         loginStg.setResizable(false);

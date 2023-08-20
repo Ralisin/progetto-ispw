@@ -3,27 +3,29 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TabPane prefHeight="297.0" prefWidth="233.0" tabClosingPolicy="UNAVAILABLE" tabMinHeight="24.0" tabMinWidth="96.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ralisin.littlefarmers.controller.graphic_controller.LoginSignUpHomeControllerGUI">
+<TabPane prefHeight="327.0" prefWidth="233.0" tabClosingPolicy="UNAVAILABLE" tabMinHeight="24.0" tabMinWidth="96.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ralisin.littlefarmers.controller.graphic_controller.LoginSignUpHomeControllerGUI">
   <tabs>
     <Tab closable="false" text="Login">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="268.0" prefWidth="229.0">
                <children>
                   <Label layoutX="43.0" layoutY="27.0" text="Email:" />
-                  <TextField fx:id="emailTextField" layoutX="43.0" layoutY="45.0" promptText="Email" />
-                  <Label layoutX="43.0" layoutY="84.0" text="Password:" />
-                  <PasswordField fx:id="pwdTextField" layoutX="43.0" layoutY="102.0" promptText="Password" />
-                  <Button fx:id="accessBtn" layoutX="91.0" layoutY="144.0" mnemonicParsing="false" text="Accedi" />
-                  <Separator layoutX="18.0" layoutY="187.0" prefWidth="200.0" />
-                  <Button layoutX="46.0" layoutY="211.0" mnemonicParsing="false" text="Accedi con Google">
+                  <TextField fx:id="emailLoginTxtFld" layoutX="42.0" layoutY="45.0" promptText="Email" />
+                  <Label layoutX="43.0" layoutY="86.0" text="Password:" />
+                  <PasswordField fx:id="pwdLoginTxtFld" layoutX="43.0" layoutY="104.0" promptText="Password" />
+                  <Button fx:id="accessBtn" layoutX="91.0" layoutY="155.0" mnemonicParsing="false" text="Accedi" />
+                  <Separator layoutX="18.0" layoutY="210.0" prefWidth="200.0" />
+                  <Button layoutX="45.0" layoutY="238.0" mnemonicParsing="false" text="Accedi con Google">
                      <graphic>
                         <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -38,17 +40,23 @@
     </Tab>
     <Tab closable="false" text="SignUp">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="293.0" prefWidth="234.0">
                <children>
                   <Label layoutX="42.0" layoutY="14.0" text="Email:" />
-                  <TextField layoutX="42.0" layoutY="32.0" promptText="Email" />
-                  <Label layoutX="42.0" layoutY="114.0" text="Password:" />
-                  <PasswordField layoutX="42.0" layoutY="132.0" promptText="Password" />
-                  <Button layoutX="83.0" layoutY="219.0" mnemonicParsing="false" text="Registrati" />
+                  <TextField fx:id="emailSignUpTxtFld" layoutX="42.0" layoutY="32.0" promptText="Email" />
                   <Label layoutX="42.0" layoutY="64.0" text="Ripeti email:" />
-                  <TextField layoutX="42.0" layoutY="82.0" promptText="Email" />
+                  <TextField fx:id="emailRepSignUpTxtFld" layoutX="42.0" layoutY="82.0" promptText="Email" />
+                  <Label layoutX="42.0" layoutY="114.0" text="Password:" />
+                  <PasswordField fx:id="pwdSignUpTxtFld" layoutX="42.0" layoutY="132.0" promptText="Password" />
                   <Label layoutX="42.0" layoutY="164.0" text="Ripeti password:" />
-                  <PasswordField layoutX="42.0" layoutY="182.0" promptText="Password" />
+                  <PasswordField fx:id="pwdRepSignUpTxtFld" layoutX="42.0" layoutY="182.0" promptText="Password" />
+                  <RadioButton fx:id="customerRB" layoutX="32.0" layoutY="225.0" mnemonicParsing="false" selected="true" text="Customer">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="userType" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="companyRB" layoutX="129.0" layoutY="225.0" mnemonicParsing="false" text="Company" toggleGroup="$userType" />
+                  <Button fx:id="signUpBtn" layoutX="83.0" layoutY="257.0" mnemonicParsing="false" text="Registrati" />
                </children>
             </AnchorPane>
       </content>
