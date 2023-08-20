@@ -4,15 +4,16 @@ import it.ralisin.littlefarmers.enums.UserRole;
 import it.ralisin.littlefarmers.model.User;
 
 public class SessionSingleton {
-    private static SessionSingleton instance;
+    private static SessionSingleton instance = null;
     private User user;
 
     private SessionSingleton() {
-        this.user = null;
+        user = null;
     }
 
     public static synchronized SessionSingleton getInstance() {
-        if(instance == null) instance = new SessionSingleton();
+        if(SessionSingleton.instance == null)
+            SessionSingleton.instance = new SessionSingleton();
         return instance;
     }
 
