@@ -19,7 +19,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class LoginSignUpHomeControllerGUI extends AbsCustomerGraphicController {
+public class LoginSignUpControllerGUI extends AbsCustomerGraphicController {
     @FXML
     private TextField emailLoginTxtFld;
     @FXML
@@ -48,27 +48,12 @@ public class LoginSignUpHomeControllerGUI extends AbsCustomerGraphicController {
         loginSignUpController = new LoginSignUpController();
 
         accessBtn.setOnMouseClicked(mouseEvent -> {
-            if(userLogin()) {
-                triggerLoginStgClose();
-
-                userLoggedSignedUp();
-            }
+            if(userLogin()) userLoggedSignedUp();
         });
 
         signUpBtn.setOnMouseClicked(mouseEvent -> {
-            if(userSignUp()) {
-                triggerLoginStgClose();
-
-                userLoggedSignedUp();
-            }
+            if(userSignUp()) userLoggedSignedUp();
         });
-    }
-
-    private void triggerLoginStgClose() {
-        Stage loginStg = NavigatorSingleton.getInstance().getLoginStg();
-        if(loginStg != null) {
-            loginStg.fireEvent(new WindowEvent(loginStg, WindowEvent.WINDOW_CLOSE_REQUEST));
-        }
     }
 
     private boolean userLogin() {
@@ -141,15 +126,23 @@ public class LoginSignUpHomeControllerGUI extends AbsCustomerGraphicController {
     }
 
     private void userLoggedSignedUp() {
+        Stage loginStg = NavigatorSingleton.getInstance().getLoginStg();
+        if(loginStg != null) loginStg.fireEvent(new WindowEvent(loginStg, WindowEvent.WINDOW_CLOSE_REQUEST));
+
         UserRole role = SessionSingleton.getInstance().getUser().getRole();
         if(role == UserRole.CUSTOMER) {
             gotoPageTop(CUSTOMER_LOGGED_TOP_BAR);
-            gotoPageCenter(CUSTOMER_REGION_LIST_CENTER);
+
+            String currCenterPage = NavigatorSingleton.getInstance().getCurrCenterPage();
+
+            if(currCenterPage == null || currCenterPage.equals(HOME_CENTER)) gotoPageCenter(CUSTOMER_REGION_LIST_CENTER);
         } else if (role == UserRole.COMPANY) {
-            // TODO
+            /* TODO COMPANY home page
+            // gotoPageTop(COMPANY_LOGGED_TOP_BAR);
+            // gotoPageCenter(COMPANY_HOME); */
             Logger.getAnonymousLogger().log(Level.INFO, "User logged is a company, goto...");
         } else {
-            Logger.getAnonymousLogger().log(Level.INFO, "User logged is boh...");
+            Logger.getAnonymousLogger().log(Level.INFO, "Invalid user, contact LittleFarmer assistance");
         }
     }
 }

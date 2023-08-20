@@ -12,6 +12,9 @@ public abstract class AbsCustomerGraphicController {
     protected static final String CUSTOMER_REGION_LIST_CENTER = "RegionList.fxml";
     protected static final String CUSTOMER_REGION_PRODUCTS_CENTER = "RegionProductsCenter.fxml";
     protected static final String CUSTOMER_REGION_PRODUCTS_FILTER_LEFT = "RegionProductsFilter.fxml";
+    protected static final String COMPANY_LOGGED_TOP_BAR = ""; // TODO
+    protected static final String COMPANY_HOME_CENTER = ""; // TODO
+    protected static final String HOME_CENTER = "HomeCenter.fxml"; // TODO
     protected static final String LOGIN_SIGN_UP = "LoginSignUp.fxml";
     protected static final String REMOVE_ELEMENT = null;
 

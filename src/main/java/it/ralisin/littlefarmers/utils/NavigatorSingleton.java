@@ -14,6 +14,7 @@ import java.util.Objects;
 public class NavigatorSingleton {
     private static NavigatorSingleton instance = null;
     private static final String BORDER_PANE = "#borderPane";
+    private String currCenterPage = null;
     private final Stage mainStg;
     private Stage loginStg = null;
     private Stage cartStg = null;
@@ -56,8 +57,11 @@ public class NavigatorSingleton {
         BorderPane bP = (BorderPane) mainStg.getScene().lookup(BORDER_PANE);
 
         Parent newCenter = null;
-        if(fxml != null)
+        if(fxml != null) {
             newCenter = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxml)));
+
+            currCenterPage = fxml;
+        }
 
         bP.setCenter(newCenter);
     }
@@ -96,5 +100,9 @@ public class NavigatorSingleton {
 
         mainStg.getScene().getRoot().setDisable(true);
         loginStg.show();
+    }
+
+    public String getCurrCenterPage() {
+        return currCenterPage;
     }
 }

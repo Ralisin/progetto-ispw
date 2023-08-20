@@ -4,9 +4,6 @@ import it.ralisin.littlefarmers.utils.AbsCustomerGraphicController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public class HomeCenterControllerGUI extends AbsCustomerGraphicController {
     @FXML
     private Button companyBtn;
@@ -14,9 +11,7 @@ public class HomeCenterControllerGUI extends AbsCustomerGraphicController {
     private Button customerBtn;
 
     public void initialize() {
-        companyBtn.setOnMouseClicked(mouseEvent -> {
-            Logger.getAnonymousLogger().log(Level.INFO, "Home companyBtn clicked"); // TODO: implement goto(COMPANY_LOGIN)
-        });
+        companyBtn.setOnMouseClicked(mouseEvent -> gotoSignUpPage());
 
         customerBtn.setOnMouseClicked(mouseEvent -> {
             gotoPageTop(CUSTOMER_TOP_BAR);
