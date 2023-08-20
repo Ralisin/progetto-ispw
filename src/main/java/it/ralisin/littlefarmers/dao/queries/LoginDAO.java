@@ -47,8 +47,6 @@ public class LoginDAO {
     public static boolean addUser(String email, String psw, UserRole role) throws DAOException {
         Connection conn = ConnectionFactory.getConnection();
 
-        ResultSet rs = null;
-
         String sql = "insert into users (email, password, role) VALUES (?, ?, ?)";
 
         int affectedRows;
