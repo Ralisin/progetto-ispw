@@ -17,8 +17,6 @@ public class NavigatorSingleton {
     private String currCenterPage = null;
     private final Stage mainStg;
     private Stage loginStg = null;
-    private Stage cartStg = null;
-    private Stage ordersStg = null;
 
     public Stage getMainStg() {
         return mainStg;
