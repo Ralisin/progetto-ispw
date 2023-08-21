@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ProductsDAOFactory {
 
@@ -17,7 +19,7 @@ public class ProductsDAOFactory {
 
             properties.load(input);
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            Logger.getAnonymousLogger().log(Level.INFO, String.format("File db.properties not found, %s", e));
         } finally {
             if (input != null) input.close();
         }
