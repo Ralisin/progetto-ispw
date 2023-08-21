@@ -20,8 +20,7 @@ public class CartManagement {
     }
 
     public static synchronized CartManagement getInstance() {
-        if(CartManagement.instance == null)
-            CartManagement.instance = new CartManagement();
+        if(CartManagement.instance == null) instance = new CartManagement();
         return instance;
     }
 

@@ -17,8 +17,7 @@ public class SessionManagement implements Observable {
     }
 
     public static synchronized SessionManagement getInstance() {
-        if(SessionManagement.instance == null)
-            SessionManagement.instance = new SessionManagement();
+        if(SessionManagement.instance == null) instance = new SessionManagement();
         return instance;
     }
 
