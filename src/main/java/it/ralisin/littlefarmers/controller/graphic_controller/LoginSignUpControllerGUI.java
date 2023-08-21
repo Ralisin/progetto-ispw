@@ -138,9 +138,9 @@ public class LoginSignUpControllerGUI extends AbsCustomerGraphicController {
 
             if(currCenterPage == null || currCenterPage.equals(HOME_CENTER)) gotoPageCenter(CUSTOMER_REGION_LIST_CENTER);
         } else if (role == UserRole.COMPANY) {
-            /* TODO COMPANY home page
-            // gotoPageTop(COMPANY_LOGGED_TOP_BAR);
-            // gotoPageCenter(COMPANY_HOME); */
+            // TODO COMPANY home page
+             gotoPageTop(COMPANY_LOGGED_TOP_BAR);
+             gotoPageCenter(COMPANY_HOME_CENTER);
             Logger.getAnonymousLogger().log(Level.INFO, "User logged is a company, goto...");
         } else {
             Logger.getAnonymousLogger().log(Level.INFO, "Invalid user, contact LittleFarmer assistance");
