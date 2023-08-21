@@ -43,7 +43,7 @@ public class LoginSignUpControllerGUI extends AbsCustomerGraphicController {
 
     private LoginSignUpController loginSignUpController;
 
-    private final static String CSS_STYLE = "-fx-text-box-border: red; -fx-focus-color: red;";
+    private static final String CSS_STYLE = "-fx-text-box-border: red; -fx-focus-color: red;";
 
     public void initialize() {
         loginSignUpController = new LoginSignUpController();
