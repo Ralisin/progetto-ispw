@@ -7,8 +7,6 @@ import it.ralisin.littlefarmers.model.User;
 import java.util.List;
 
 public class ProductsDAOCsv implements ProductDAO{
-    public ProductsDAOCsv() {}
-
     @Override
     public List<Product> getProducts() {
         return null;
