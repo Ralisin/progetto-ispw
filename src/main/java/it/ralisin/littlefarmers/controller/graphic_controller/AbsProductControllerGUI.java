@@ -29,7 +29,7 @@ public abstract class AbsProductControllerGUI {
     protected Label productPrice;
     protected final ProductBean productBean;
 
-    public AbsProductControllerGUI(ProductBean product) {
+    protected AbsProductControllerGUI(ProductBean product) {
         this.productBean = product;
     }
 
