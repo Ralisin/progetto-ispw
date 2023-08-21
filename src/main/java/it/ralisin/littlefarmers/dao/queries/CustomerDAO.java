@@ -3,7 +3,6 @@ package it.ralisin.littlefarmers.dao.queries;
 import it.ralisin.littlefarmers.dao.ConnectionFactory;
 import it.ralisin.littlefarmers.enums.OrderStatus;
 import it.ralisin.littlefarmers.exeptions.DAOException;
-import it.ralisin.littlefarmers.model.Customer;
 import it.ralisin.littlefarmers.model.Order;
 import it.ralisin.littlefarmers.model.Product;
 import it.ralisin.littlefarmers.model.User;
@@ -17,38 +16,7 @@ import java.util.Map;
 public class CustomerDAO extends OrderDAO {
     private CustomerDAO() {}
 
-    /** Method to get Customer by given User, needed on login action */
-    public static Customer getCustomer(User user) throws DAOException, SQLException {
-        Connection conn = ConnectionFactory.getConnection();
-        ResultSet rs = null;
-
-        String sql = "select * from customer where email = ?";
-        Customer customer = null;
-
-        try (PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
-            ps.setString(1, user.getEmail());
-            rs = ps.executeQuery();
-
-            if (rs.next()) {
-                String emailDb = rs.getString("email");
-                String nameDb = rs.getString("name");
-                String surnameDb = rs.getString("surname");
-                String addressDb = rs.getString("address");
-
-                customer = new Customer(emailDb, nameDb, surnameDb, addressDb);
-            }
-        } catch (SQLException e) {
-            throw new DAOException("Error on getting products by region", e);
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-        }
-
-        return customer;
-    }
-
-    public static List<Product> getCart(Customer customer) throws SQLException, DAOException {
+    public static List<Product> getCart(User customer) throws SQLException, DAOException {
         String sql = "select companyEmail, products.productId, productName, productDescription, price, region, category, imageLink, quantity " +
                 "from cart join products on cart.productId = products.productId " +
                 "where cart.customerEmail = ?";
@@ -56,7 +24,7 @@ public class CustomerDAO extends OrderDAO {
     }
 
     // Valid also for updates
-    public static boolean addToCart(Customer customer, Product product, int quantity) throws DAOException {
+    public static boolean addToCart(User customer, Product product, int quantity) throws DAOException {
         Connection conn = ConnectionFactory.getConnection();
 
         String sql = "insert into cart(customerEmail, productId, quantity) value (?, ?, ?) on duplicate key update quantity = ?";
@@ -77,7 +45,7 @@ public class CustomerDAO extends OrderDAO {
         return affectedRows > 0;
     }
 
-    public static boolean removeFromCart(Customer customer, Product product) throws DAOException {
+    public static boolean removeFromCart(User customer, Product product) throws DAOException {
         Connection conn = ConnectionFactory.getConnection();
 
         String sql = "delete from cart where productId = ? and customerEmail = ?";
@@ -95,20 +63,20 @@ public class CustomerDAO extends OrderDAO {
         return affectedRows > 0;
     }
 
-    public static List<Order> getOrders(Customer customer) throws DAOException, SQLException {
+    public static List<Order> getOrders(User customer) throws DAOException, SQLException {
         String sql = "select * from orders where customerEmail = ?";
 
         return getOrders(customer.getEmail(), sql);
     }
 
-    public static List<Order> getOrdersByStatus(Customer customer, OrderStatus status) throws DAOException, SQLException {
+    public static List<Order> getOrdersByStatus(User customer, OrderStatus status) throws DAOException, SQLException {
         String sql = "select * from orders where customerEmail = ? and status = '" + status.getStatus() + "'";
 
         return getOrders(customer.getEmail(), sql);
     }
 
     /** Make an order based on cart */
-    public static boolean makeOrder(Customer customer) throws DAOException, SQLException {
+    public static boolean makeOrder(User customer) throws DAOException, SQLException {
         // Get cart products
         List<Product> cart = getCart(customer);
         if(cart.isEmpty()) throw new DAOException("Error, cart is empty, impossible to make an order");
@@ -130,7 +98,7 @@ public class CustomerDAO extends OrderDAO {
         return true;
     }
 
-    private static boolean insertOrderProducts(Customer customer, List<Product> productList) throws DAOException {
+    private static boolean insertOrderProducts(User customer, List<Product> productList) throws DAOException {
         if(productList.isEmpty()) throw new DAOException("Error, productList is empty");
 
         Connection conn = ConnectionFactory.getConnection();

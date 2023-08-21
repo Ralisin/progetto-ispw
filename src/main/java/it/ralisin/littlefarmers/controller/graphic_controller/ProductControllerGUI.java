@@ -1,6 +1,7 @@
 package it.ralisin.littlefarmers.controller.graphic_controller;
 
 import it.ralisin.littlefarmers.beans.ProductBean;
+import it.ralisin.littlefarmers.utils.CartManagement;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -29,21 +30,21 @@ public class ProductControllerGUI {
     @FXML
     private Label productCategory;
     @FXML
-    private Button addToCart;
-    private final ProductBean product;
+    private Button addToCartBtn;
+    private final ProductBean productBean;
 
     public ProductControllerGUI(ProductBean product) {
-        this.product = product;
+        this.productBean = product;
     }
 
     public void initialize() {
-        productName.setText(product.getProductName());
-        productDescription.setText(product.getProductDescription());
-        productPrice.setText(product.getProductPrice());
-        productCategory.setText(product.getProductCategory());
-        productRegion.setText(product.getProductRegion());
+        productName.setText(productBean.getProductName());
+        productDescription.setText(productBean.getProductDescription());
+        productPrice.setText(productBean.getProductPrice());
+        productCategory.setText(productBean.getProductCategory());
+        productRegion.setText(productBean.getProductRegion());
 
-        String imageLink = product.getProductImageLink();
+        String imageLink = productBean.getProductImageLink();
         if(imageLink != null) {
             // Create a Task to load the image from a URL
             Task<Image> loadImageTask = new Task<>() {
@@ -74,5 +75,11 @@ public class ProductControllerGUI {
 
             new Thread(loadImageTask).start();
         }
+
+        addToCartBtn.setOnMouseClicked(mouseEvent -> {
+            CartManagement.getInstance().addProduct(productBean.getProduct());
+
+            System.out.println(CartManagement.getInstance().getCart());
+        });
     }
 }

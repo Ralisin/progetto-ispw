@@ -76,11 +76,15 @@ public class Product {
         this.price = price;
     }
 
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     @Override
     public String toString() {
         return String.format(
-                "[companyEmail: %s, id: %d, name: %s, description: %s, price: %f, category: %s, imageLink: %s, region: %s]",
-                companyEmail, productId, name, description, price, category, imageLink, region
+                "[companyEmail: %s, id: %d, name: %s, description: %s, price: %f, quantity: %d, category: %s, imageLink: %s, region: %s]",
+                companyEmail, productId, name, description, price, quantity, category, imageLink, region
         );
     }
 }

@@ -1,10 +1,10 @@
 package it.ralisin.littlefarmers.dao.queries;
 
+import it.ralisin.littlefarmers.dao.AbsDAOJdbc;
 import it.ralisin.littlefarmers.dao.ConnectionFactory;
 import it.ralisin.littlefarmers.enums.Regions;
-import it.ralisin.littlefarmers.exeptions.DAOException;
-import it.ralisin.littlefarmers.model.Company;
 import it.ralisin.littlefarmers.model.Product;
+import it.ralisin.littlefarmers.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,12 +15,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ProductsDAO {
-    private ProductsDAO() {}
+public class ProductsDAOJdbc extends AbsDAOJdbc implements ProductDAO {
+    public ProductsDAOJdbc() {}
 
     static final String SQL = "select * from products";
 
-    public static List<Product> getProducts() throws DAOException {
+    public List<Product> getProducts() {
         Connection conn = ConnectionFactory.getConnection();
 
         try (
@@ -29,12 +29,14 @@ public class ProductsDAO {
         ) {
             return getProductsList(rs);
         } catch (SQLException e) {
-            throw new DAOException("Error on getting products", e);
+            Logger.getAnonymousLogger().log(Level.INFO, String.format("Error on getting products %s", e));
         }
+
+        return null;
     }
 
-    public static List<Product> getProductsByRegion(Regions region) throws SQLException, DAOException {
-        List<Product> productList;
+    public List<Product> getProductsByRegion(Regions region) {
+        List<Product> productList = new ArrayList<>();
 
         Connection conn = ConnectionFactory.getConnection();
 
@@ -48,18 +50,22 @@ public class ProductsDAO {
 
             productList = getProductsList(rs);
         } catch (SQLException e) {
-            throw new DAOException("Error on getting products by region", e);
+            Logger.getAnonymousLogger().log(Level.INFO, String.format("Error on getting products by region %s", e));
         }  finally {
             if (rs != null) {
-                rs.close();
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    Logger.getAnonymousLogger().log(Level.INFO, String.format("Error on closing rs %s", e));
+                }
             }
         }
 
         return productList;
     }
 
-    public static List<Product> getProductByCompany(Company company) throws DAOException, SQLException {
-        List<Product> productList;
+    public List<Product> getProductByCompany(User company) {
+        List<Product> productList = new ArrayList<>();
 
         Connection conn = ConnectionFactory.getConnection();
 
@@ -73,37 +79,25 @@ public class ProductsDAO {
 
             productList = getProductsList(rs);
         } catch (SQLException e) {
-            throw new DAOException("Error on getting products by company", e);
+            Logger.getAnonymousLogger().log(Level.INFO, String.format("Error on getting products by company %s", e));
         }  finally {
             if (rs != null) {
-                rs.close();
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    Logger.getAnonymousLogger().log(Level.INFO, String.format("Error on closing rs %s", e));
+                }
             }
         }
 
         return productList;
     }
 
-    public static Product getProductFromResultSet(ResultSet rs) throws SQLException {
-        String companyEmail = rs.getString("companyEmail");
-        int productId = rs.getInt("productId");
-        String name = rs.getString("productName");
-        String description = rs.getString("productDescription");
-        float price = rs.getFloat("price");
-        int quantity = 0;
-        try { quantity = rs.getInt("quantity"); }
-        catch (SQLException e) {Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());}
-        Regions region = Regions.getByRegionString(rs.getString("region"));
-        String category = rs.getString("category");
-        String imageLink = rs.getString("imageLink");
-
-        return new Product(companyEmail, productId, name, description, price, region, category, imageLink, quantity);
-    }
-
     private static List<Product> getProductsList(ResultSet rs) throws SQLException {
         List<Product> productList = new ArrayList<>();
 
         while (rs.next()) {
-            productList.add(getProductFromResultSet(rs));
+            productList.add(getProductFromResultSet(rs, false));
         }
 
         return productList;

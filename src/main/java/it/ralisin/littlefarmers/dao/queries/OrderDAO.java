@@ -1,6 +1,6 @@
 package it.ralisin.littlefarmers.dao.queries;
 
-import it.ralisin.littlefarmers.dao.AbsDAO;
+import it.ralisin.littlefarmers.dao.AbsDAOJdbc;
 import it.ralisin.littlefarmers.dao.ConnectionFactory;
 import it.ralisin.littlefarmers.enums.OrderStatus;
 import it.ralisin.littlefarmers.exeptions.DAOException;
@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderDAO extends AbsDAO {
+public class OrderDAO extends AbsDAOJdbc {
 
     protected static List<Order> getOrders(String email, String sql) throws DAOException, SQLException {
         List<Order> orderList = new ArrayList<>();

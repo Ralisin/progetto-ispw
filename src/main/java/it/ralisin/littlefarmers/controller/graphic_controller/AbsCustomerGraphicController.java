@@ -1,5 +1,6 @@
-package it.ralisin.littlefarmers.utils;
+package it.ralisin.littlefarmers.controller.graphic_controller;
 
+import it.ralisin.littlefarmers.utils.NavigatorSingleton;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -12,9 +13,11 @@ public abstract class AbsCustomerGraphicController {
     protected static final String CUSTOMER_REGION_LIST_CENTER = "RegionList.fxml";
     protected static final String CUSTOMER_REGION_PRODUCTS_CENTER = "RegionProductsCenter.fxml";
     protected static final String CUSTOMER_REGION_PRODUCTS_FILTER_LEFT = "RegionProductsFilter.fxml";
+    protected static final String CUSTOMER_CART_CENTER = "CartCenter.fxml";
     protected static final String COMPANY_LOGGED_TOP_BAR = ""; // TODO
     protected static final String COMPANY_HOME_CENTER = ""; // TODO
-    protected static final String HOME_CENTER = "HomeCenter.fxml"; // TODO
+    protected static final String HOME_TOP = "HomeTop.fxml";
+    protected static final String HOME_CENTER = "HomeCenter.fxml";
     protected static final String LOGIN_SIGN_UP = "LoginSignUp.fxml";
     protected static final String REMOVE_ELEMENT = null;
 
@@ -35,12 +38,12 @@ public abstract class AbsCustomerGraphicController {
     }
 
     /** Used if needed to pass some data to next page */
-    protected void gotoPageCenter(String page, Object o) {
+    protected void gotoPageCenterWithArg(String page, Object arg) {
         try {
-            NavigatorSingleton.getInstance().getMainStg().setUserData(o);
+            NavigatorSingleton.getInstance().getMainStg().setUserData(arg);
             NavigatorSingleton.getInstance().gotoCenterPageMain(page);
         } catch (IOException e) {
-            Logger.getAnonymousLogger().log(Level.INFO, String.format("Error gotoPageCenter (with object) %s", e.getMessage()));
+            Logger.getAnonymousLogger().log(Level.INFO, String.format("Error gotoPageCenterWithArg %s", e.getMessage()));
         }
     }
 

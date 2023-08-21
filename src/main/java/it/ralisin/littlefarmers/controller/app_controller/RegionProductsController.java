@@ -1,12 +1,12 @@
 package it.ralisin.littlefarmers.controller.app_controller;
 
 import it.ralisin.littlefarmers.beans.ProductsListBean;
-import it.ralisin.littlefarmers.dao.queries.ProductsDAO;
+import it.ralisin.littlefarmers.dao.queries.ProductDAO;
+import it.ralisin.littlefarmers.dao.queries.ProductsDAOFactory;
 import it.ralisin.littlefarmers.enums.Regions;
-import it.ralisin.littlefarmers.exeptions.DAOException;
 import it.ralisin.littlefarmers.model.Product;
 
-import java.sql.SQLException;
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,8 +20,9 @@ public class RegionProductsController {
         List<Product> productList = null;
 
         try {
-            productList = ProductsDAO.getProductsByRegion(region);
-        } catch (SQLException | DAOException e) {
+            ProductDAO productDAO = new ProductsDAOFactory().createProductsDAO();
+            productList = productDAO.getProductsByRegion(region);
+        } catch (IOException e) {
             Logger.getAnonymousLogger().log(Level.INFO, String.format("loadRegionProducts failed %s", e));
         }
 

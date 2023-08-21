@@ -1,11 +1,17 @@
 package it.ralisin.littlefarmers.controller.graphic_controller;
 
-import it.ralisin.littlefarmers.utils.AbsCustomerGraphicController;
+import it.ralisin.littlefarmers.Main;
+import it.ralisin.littlefarmers.utils.NavigatorSingleton;
+import it.ralisin.littlefarmers.utils.SessionManagement;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.IOException;
+import java.util.Objects;
 
 public class CustomerTopBarControllerGUI extends AbsCustomerGraphicController {
     @FXML
@@ -18,15 +24,11 @@ public class CustomerTopBarControllerGUI extends AbsCustomerGraphicController {
     public void initialize() {
         signUpBtn.setOnMouseClicked(mouseEvent -> gotoSignUpPage());
 
-        loginBtn.setOnMouseClicked(mouseEvent -> {
-            gotoLoginPage();
-
-            Logger.getAnonymousLogger().log(Level.INFO, "CustomerTopBarControllerGUI loginBtn clicked"); // TODO: implement open another scene
-
-        });
+        loginBtn.setOnMouseClicked(mouseEvent -> gotoLoginPage());
 
         cartBtn.setOnMouseClicked(mouseEvent -> {
-            Logger.getAnonymousLogger().log(Level.INFO, "CustomerTopBarControllerGUI cartBtn clicked"); // TODO: implement open another scene
+            gotoPageCenter(CUSTOMER_CART_CENTER);
+            gotoPageLeft(REMOVE_ELEMENT);
         });
     }
 }

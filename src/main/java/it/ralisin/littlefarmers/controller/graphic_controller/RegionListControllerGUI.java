@@ -2,7 +2,6 @@ package it.ralisin.littlefarmers.controller.graphic_controller;
 
 import it.ralisin.littlefarmers.beans.RegionBean;
 import it.ralisin.littlefarmers.enums.Regions;
-import it.ralisin.littlefarmers.utils.AbsCustomerGraphicController;
 import javafx.event.ActionEvent;
 
 public class RegionListControllerGUI extends AbsCustomerGraphicController {
@@ -13,7 +12,7 @@ public class RegionListControllerGUI extends AbsCustomerGraphicController {
         Regions region = Regions.getByRegionString(regionName);
 
         RegionBean regionBean = new RegionBean(region);
-        gotoPageCenter(CUSTOMER_REGION_PRODUCTS_CENTER, regionBean);
+        gotoPageCenterWithArg(CUSTOMER_REGION_PRODUCTS_CENTER, regionBean);
         gotoPageLeft(CUSTOMER_REGION_PRODUCTS_FILTER_LEFT);
     }
 }

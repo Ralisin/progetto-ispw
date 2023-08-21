@@ -9,6 +9,10 @@ public class ProductBean {
         this.product = product;
     }
 
+    public Product getProduct() {
+        return product;
+    }
+
     public String getProductName() {
         return product.getName();
     }

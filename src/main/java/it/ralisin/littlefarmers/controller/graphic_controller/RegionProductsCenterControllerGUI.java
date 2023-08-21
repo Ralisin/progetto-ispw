@@ -7,7 +7,6 @@ import it.ralisin.littlefarmers.beans.RegionBean;
 import it.ralisin.littlefarmers.controller.app_controller.RegionProductsController;
 import it.ralisin.littlefarmers.enums.Regions;
 import it.ralisin.littlefarmers.model.Product;
-import it.ralisin.littlefarmers.utils.AbsCustomerGraphicController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

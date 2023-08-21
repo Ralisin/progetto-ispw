@@ -53,6 +53,8 @@ public class NavigatorSingleton {
     }
 
     public void gotoCenterPageMain(String fxml) throws IOException {
+        if(Objects.equals(currCenterPage, fxml)) return;
+
         // lookup is a CSS selector, '#' is used to target elements by their id
         BorderPane bP = (BorderPane) mainStg.getScene().lookup(BORDER_PANE);
 

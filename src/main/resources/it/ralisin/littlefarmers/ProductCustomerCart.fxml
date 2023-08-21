@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="162.0" prefWidth="681.0" style="-fx-background-color: rgba(112, 174, 110, 0.1);" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <ImageView fx:id="productImage" fitHeight="130.0" fitWidth="130.0" pickOnBounds="true" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="16.0">
+            <image>
+                <Image url="@images/def_product.png" />
+            </image>
+        </ImageView>
+        <Label fx:id="productName" layoutX="167.0" layoutY="20.0" text="Product name" AnchorPane.leftAnchor="167.0" AnchorPane.topAnchor="20.0">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <Label fx:id="productDescription" layoutX="167.0" layoutY="42.0" prefHeight="83.0" prefWidth="373.0" text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborumnumquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentiumoptio, eaque rerum! Provident similique accusantium nemo autem. Veritatisobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquamnihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit,quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos sapiente officiis modi at sunt excepturi expedita sint? Sed quibusdamrecusandae alias error harum maxime adipisci amet laborum. Perspiciatis minima nesciunt dolorem! Officiis iure rerum voluptates a cumque velit quibusdam sed amet tempora. Sit laborum ab, eius fugit doloribus tenetur fugiat, temporibus enim commodi iusto libero magni deleniti quod quam consequuntur! Commodi minima excepturi repudiandae velit hic maximedoloremque. Quaerat provident commodi consectetur veniam similique ad earum omnis ipsum saepe, voluptas, hic voluptates pariatur est explicabo fugiat, dolorum eligendi quam cupiditate excepturi mollitia maiores labore suscipit quas? Nulla, placeat. Voluptatem quaerat non architecto ab laudantiummodi minima sunt esse temporibus sint culpa, recusandae aliquam numquam totam ratione voluptas quod exercitationem fuga. Possimus quis earum veniam quasi aliquam eligendi, placeat qui corporis!" wrapText="true" AnchorPane.leftAnchor="167.0" AnchorPane.rightAnchor="141.0" AnchorPane.topAnchor="42.0" />
+        <Label fx:id="productRegion" layoutX="474.0" layoutY="21.0" text="Regione" AnchorPane.rightAnchor="163.0" AnchorPane.topAnchor="21.0" />
+        <Label fx:id="productCategory" layoutX="167.0" layoutY="130.0" text="Categoria" AnchorPane.leftAnchor="167.0" AnchorPane.topAnchor="130.0" />
+        <VBox alignment="TOP_CENTER" layoutX="554.0" layoutY="53.0" spacing="5.0" AnchorPane.rightAnchor="26.200000000000045" AnchorPane.topAnchor="53.0">
+            <children>
+            <HBox alignment="TOP_CENTER" spacing="5.0">
+               <children>
+                  <Button fx:id="removeQuantityBtn" mnemonicParsing="false" text="-" />
+                      <Label fx:id="productPrice" text="Price" textFill="#71ad6f">
+                          <font>
+                              <Font name="Arial Black" size="16.0" />
+                          </font>
+                      </Label>
+                  <Button fx:id="addQuantityBtn" mnemonicParsing="false" text="+" />
+               </children>
+            </HBox>
+                <Button fx:id="deleteBtn" mnemonicParsing="false" text="Delete product" />
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

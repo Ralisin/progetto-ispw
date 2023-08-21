@@ -1,6 +1,5 @@
 package it.ralisin.littlefarmers.controller.graphic_controller;
 
-import it.ralisin.littlefarmers.utils.AbsCustomerGraphicController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 

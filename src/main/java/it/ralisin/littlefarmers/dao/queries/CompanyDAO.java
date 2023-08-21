@@ -3,7 +3,6 @@ package it.ralisin.littlefarmers.dao.queries;
 import it.ralisin.littlefarmers.dao.ConnectionFactory;
 import it.ralisin.littlefarmers.enums.OrderStatus;
 import it.ralisin.littlefarmers.exeptions.DAOException;
-import it.ralisin.littlefarmers.model.Company;
 import it.ralisin.littlefarmers.model.Order;
 import it.ralisin.littlefarmers.model.Product;
 import it.ralisin.littlefarmers.model.User;
@@ -17,41 +16,8 @@ import java.util.List;
 public class CompanyDAO extends OrderDAO {
     private CompanyDAO() {}
 
-    public static Company getCompany(User user) throws DAOException, SQLException {
-        Connection conn = ConnectionFactory.getConnection();
-
-        String sql = "select * from company where email = ?";
-
-        Company company = null;
-
-        ResultSet rs = null;
-
-        try (PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
-            ps.setString(1, user.getEmail());
-
-            rs = ps.executeQuery();
-
-            if (rs.next()) {
-                String email = rs.getString("email");
-                String name = rs.getString("name");
-                String iban = rs.getString("iban");
-                String address = rs.getString("address");
-
-                company = new Company(email, name, iban, address);
-            }
-        } catch (SQLException e) {
-            throw new DAOException("Error on getting company", e);
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-        }
-
-        return company;
-    }
-
     // Valid also for updates
-    public static boolean insertProduct(Company company, Product product) throws DAOException {
+    public static boolean insertProduct(User company, Product product) throws DAOException {
         Connection conn = ConnectionFactory.getConnection();
 
         String sql = "insert into products(companyEmail, productId, productName, productDescription, price, region, category, imageLink) " +
@@ -85,7 +51,7 @@ public class CompanyDAO extends OrderDAO {
         return affectedRows > 0;
     }
 
-    public static boolean deleteProduct(Company company, Product product) throws DAOException {
+    public static boolean deleteProduct(User company, Product product) throws DAOException {
         Connection conn = ConnectionFactory.getConnection();
 
         String sql = "delete from products where productId = ? and companyEmail = ?";
@@ -104,19 +70,19 @@ public class CompanyDAO extends OrderDAO {
         return affectedRows > 0;
     }
 
-    public static List<Order> getOrders(Company company) throws DAOException, SQLException {
+    public static List<Order> getOrders(User company) throws DAOException, SQLException {
         String sql = "select * from orders where companyEmail = ?";
 
         return getOrders(company.getEmail(), sql);
     }
 
-    public static List<Order> getOrdersByStatus(Company company, OrderStatus status) throws DAOException, SQLException {
+    public static List<Order> getOrdersByStatus(User company, OrderStatus status) throws DAOException, SQLException {
         String sql = "select * from orders where companyEmail = ? and status = '" + status.getStatus() + "'";
 
         return getOrders(company.getEmail(), sql);
     }
 
-    public static boolean updateOrderStatus(Company company, Order order, OrderStatus newStatus) throws DAOException {
+    public static boolean updateOrderStatus(User company, Order order, OrderStatus newStatus) throws DAOException {
         Connection conn = ConnectionFactory.getConnection();
 
         String sql = "update orders set status = ? where companyEmail = ? and id = ?";

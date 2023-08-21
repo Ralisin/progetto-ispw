@@ -1,5 +1,6 @@
 package it.ralisin.littlefarmers;
 
+import it.ralisin.littlefarmers.controller.graphic_controller.AbsCustomerGraphicController;
 import it.ralisin.littlefarmers.utils.NavigatorSingleton;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
