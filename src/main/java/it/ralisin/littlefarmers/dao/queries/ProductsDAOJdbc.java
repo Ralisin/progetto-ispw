@@ -36,6 +36,24 @@ public class ProductsDAOJdbc extends AbsDAOJdbc implements ProductDAO {
     }
 
     public List<Product> getProductsByRegion(Regions region) {
+        return executeQuery(region.getRegionString());
+    }
+
+    public List<Product> getProductByCompany(User company) {
+        return executeQuery(company.getEmail());
+    }
+
+    private static List<Product> getProductsList(ResultSet rs) throws SQLException {
+        List<Product> productList = new ArrayList<>();
+
+        while (rs.next()) {
+            productList.add(getProductFromResultSet(rs, false));
+        }
+
+        return productList;
+    }
+
+    private List<Product> executeQuery(String toBeInserted) {
         List<Product> productList = new ArrayList<>();
 
         Connection conn = ConnectionFactory.getConnection();
@@ -45,7 +63,7 @@ public class ProductsDAOJdbc extends AbsDAOJdbc implements ProductDAO {
         ResultSet rs = null;
 
         try(PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
-            ps.setString(1, region.getRegionString());
+            ps.setString(1, toBeInserted);
             rs = ps.executeQuery();
 
             productList = getProductsList(rs);
@@ -59,45 +77,6 @@ public class ProductsDAOJdbc extends AbsDAOJdbc implements ProductDAO {
                     Logger.getAnonymousLogger().log(Level.INFO, String.format("Error on closing rs %s", e));
                 }
             }
-        }
-
-        return productList;
-    }
-
-    public List<Product> getProductByCompany(User company) {
-        List<Product> productList = new ArrayList<>();
-
-        Connection conn = ConnectionFactory.getConnection();
-
-        String sql = SQL + " where companyEmail = ?";
-
-        ResultSet rs = null;
-
-        try(PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
-            ps.setString(1, company.getEmail());
-            rs = ps.executeQuery();
-
-            productList = getProductsList(rs);
-        } catch (SQLException e) {
-            Logger.getAnonymousLogger().log(Level.INFO, String.format("Error on getting products by company %s", e));
-        }  finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                    Logger.getAnonymousLogger().log(Level.INFO, String.format("Error on closing rs %s", e));
-                }
-            }
-        }
-
-        return productList;
-    }
-
-    private static List<Product> getProductsList(ResultSet rs) throws SQLException {
-        List<Product> productList = new ArrayList<>();
-
-        while (rs.next()) {
-            productList.add(getProductFromResultSet(rs, false));
         }
 
         return productList;
