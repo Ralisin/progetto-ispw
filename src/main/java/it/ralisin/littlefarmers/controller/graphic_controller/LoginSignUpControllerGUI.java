@@ -43,6 +43,8 @@ public class LoginSignUpControllerGUI extends AbsCustomerGraphicController {
 
     private LoginSignUpController loginSignUpController;
 
+    private final String CSS_STYLE = "-fx-text-box-border: red; -fx-focus-color: red;";
+
     public void initialize() {
         loginSignUpController = new LoginSignUpController();
 
@@ -113,15 +115,15 @@ public class LoginSignUpControllerGUI extends AbsCustomerGraphicController {
     }
 
     private void setLoginError() {
-        emailLoginTxtFld.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
-        pwdLoginTxtFld.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
+        emailLoginTxtFld.setStyle(CSS_STYLE);
+        pwdLoginTxtFld.setStyle(CSS_STYLE);
     }
 
     private void setSignUpError() {
-        emailSignUpTxtFld.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
-        emailRepSignUpTxtFld.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
-        pwdSignUpTxtFld.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
-        pwdRepSignUpTxtFld.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
+        emailSignUpTxtFld.setStyle(CSS_STYLE);
+        emailRepSignUpTxtFld.setStyle(CSS_STYLE);
+        pwdSignUpTxtFld.setStyle(CSS_STYLE);
+        pwdRepSignUpTxtFld.setStyle(CSS_STYLE);
     }
 
     private void userLoggedSignedUp() {
