@@ -49,7 +49,7 @@ public class RegionProductsCenterControllerGUI extends AbsCustomerGraphicControl
 
     private static Parent productCustomerLoader(ProductBean pB) {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("ProductCustomer.fxml"));
-        fxmlLoader.setController(new ProductControllerGUI(pB));
+        fxmlLoader.setController(new ProductRegionProductsControllerGUI(pB));
 
         try {
             return fxmlLoader.load();

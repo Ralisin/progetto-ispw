@@ -12,6 +12,9 @@ public class ProductBean {
     public Product getProduct() {
         return product;
     }
+    public int getProductId() {
+        return product.getProductId();
+    }
 
     public String getProductName() {
         return product.getName();
@@ -35,5 +38,13 @@ public class ProductBean {
 
     public String getProductImageLink() {
         return product.getImageLink();
+    }
+
+    public int getProductQuantity() {
+        return product.getQuantity();
+    }
+
+    public void setProductQuantity(int quantity) {
+        product.setQuantity(quantity);
     }
 }

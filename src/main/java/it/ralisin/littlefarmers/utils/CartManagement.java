@@ -6,6 +6,7 @@ import it.ralisin.littlefarmers.exeptions.DAOException;
 import it.ralisin.littlefarmers.model.Product;
 import it.ralisin.littlefarmers.model.User;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -27,6 +28,14 @@ public class CartManagement {
     public List<Product> getCart() {
         return cart;
     }
+
+    public float getTotal() {
+        float totalPrice = 0F;
+        for(Product p : cart) totalPrice += p.getPrice() * p.getQuantity();
+
+        return totalPrice;
+    }
+
 
     public void addProduct(Product product) {
         for(Product p : cart)
@@ -80,6 +89,12 @@ public class CartManagement {
         cart.clear();
     }
 
+    public void buyCart() {
+        makeOrder();
+
+        deleteCart();
+    }
+
     private void updateRemoteCart() {
         User currUser = SessionManagement.getInstance().getUser();
         if(currUser != null && currUser.getRole() == UserRole.CUSTOMER)
@@ -99,6 +114,17 @@ public class CartManagement {
                 CustomerDAO.removeFromCart(currUser, product);
             } catch (DAOException e) {
                 Logger.getAnonymousLogger().log(Level.INFO, String.format("Error removing product %s from cart %s", product, e));
+            }
+        }
+    }
+
+    private void makeOrder() {
+        User currUser = SessionManagement.getInstance().getUser();
+        if(currUser != null && currUser.getRole() == UserRole.CUSTOMER && !cart.isEmpty()) {
+            try {
+                CustomerDAO.makeOrder(currUser);
+            } catch (DAOException | SQLException e) {
+                Logger.getAnonymousLogger().log(Level.INFO, String.format("Error making order for user %s: %s", currUser, e));
             }
         }
     }

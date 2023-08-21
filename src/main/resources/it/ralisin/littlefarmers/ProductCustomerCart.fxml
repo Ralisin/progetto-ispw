@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="162.0" prefWidth="681.0" style="-fx-background-color: rgba(112, 174, 110, 0.1);" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="productId" prefHeight="162.0" prefWidth="681.0" style="-fx-background-color: rgba(112, 174, 110, 0.1);" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <ImageView fx:id="productImage" fitHeight="130.0" fitWidth="130.0" pickOnBounds="true" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="16.0">
             <image>
@@ -26,14 +26,15 @@
         <Label fx:id="productCategory" layoutX="167.0" layoutY="130.0" text="Categoria" AnchorPane.leftAnchor="167.0" AnchorPane.topAnchor="130.0" />
         <VBox alignment="TOP_CENTER" layoutX="554.0" layoutY="53.0" spacing="5.0" AnchorPane.rightAnchor="26.200000000000045" AnchorPane.topAnchor="53.0">
             <children>
+                <Label fx:id="productPrice" text="Price" textFill="#71ad6f">
+                    <font>
+                        <Font name="Arial Black" size="16.0" />
+                    </font>
+                </Label>
             <HBox alignment="TOP_CENTER" spacing="5.0">
                <children>
                   <Button fx:id="removeQuantityBtn" mnemonicParsing="false" text="-" />
-                      <Label fx:id="productPrice" text="Price" textFill="#71ad6f">
-                          <font>
-                              <Font name="Arial Black" size="16.0" />
-                          </font>
-                      </Label>
+                  <Label fx:id="productQuantity" text="Label" />
                   <Button fx:id="addQuantityBtn" mnemonicParsing="false" text="+" />
                </children>
             </HBox>
