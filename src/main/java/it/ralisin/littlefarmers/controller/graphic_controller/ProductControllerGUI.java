@@ -78,8 +78,6 @@ public class ProductControllerGUI {
 
         addToCartBtn.setOnMouseClicked(mouseEvent -> {
             CartManagement.getInstance().addProduct(productBean.getProduct());
-
-            System.out.println(CartManagement.getInstance().getCart());
         });
     }
 }

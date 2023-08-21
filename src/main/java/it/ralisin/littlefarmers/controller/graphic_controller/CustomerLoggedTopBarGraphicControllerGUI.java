@@ -32,7 +32,7 @@ public class CustomerLoggedTopBarGraphicControllerGUI extends AbsCustomerGraphic
 
         cartBtn.setOnMouseClicked(mouseEvent -> {
             gotoPageCenter(CUSTOMER_CART_CENTER);
-//            gotoPageLeft(REMOVE_ELEMENT);
+            gotoPageLeft(REMOVE_ELEMENT);
         });
     }
 }
