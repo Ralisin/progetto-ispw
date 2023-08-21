@@ -30,7 +30,7 @@ public class ProductsDAOJdbc extends AbsDAOJdbc implements ProductDAO {
             Logger.getAnonymousLogger().log(Level.INFO, String.format("Error on getting products %s", e));
         }
 
-        return null;
+        return new ArrayList<>();
     }
 
     public List<Product> getProductsByRegion(Regions region) {
