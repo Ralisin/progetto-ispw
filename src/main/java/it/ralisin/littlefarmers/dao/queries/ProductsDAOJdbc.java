@@ -16,8 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ProductsDAOJdbc extends AbsDAOJdbc implements ProductDAO {
-    public ProductsDAOJdbc() {}
-
     static final String SQL = "select * from products";
 
     public List<Product> getProducts() {
