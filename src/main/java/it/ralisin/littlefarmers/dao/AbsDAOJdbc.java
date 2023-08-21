@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbsDAOJdbc {
-    private AbsDAOJdbc() {}
+    public AbsDAOJdbc() {}
 
     protected static List<Product> executeQueryAndProcessProducts(Connection conn, String sql, Object... params) throws DAOException, SQLException {
         List<Product> productList = new ArrayList<>();
