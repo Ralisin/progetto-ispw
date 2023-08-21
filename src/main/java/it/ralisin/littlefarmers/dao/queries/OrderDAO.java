@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDAO extends AbsDAOJdbc {
-
     protected static List<Order> getOrders(String email, String sql) throws DAOException, SQLException {
         List<Order> orderList = new ArrayList<>();
         Connection conn = ConnectionFactory.getConnection();

@@ -31,11 +31,14 @@ public class SessionManagement implements Observable {
         notifyObservers();
     }
 
+    public void clear() {
+        this.user = null;
+        this.observerList = new ArrayList<>();
+    }
+
     @Override
     public void registerObserver(Observer observer) {
         observerList.add(observer);
-
-        System.out.println(observerList);
     }
 
     @Override
@@ -46,10 +49,5 @@ public class SessionManagement implements Observable {
     @Override
     public void notifyObservers() {
         if(observerList != null) for(Observer o : observerList) o.update();
-    }
-
-    public void clear() {
-        this.user = null;
-        this.observerList = new ArrayList<>();
     }
 }
