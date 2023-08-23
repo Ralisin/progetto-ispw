@@ -26,7 +26,7 @@ public class ProductOrderCenterControllerGUI extends AbsProductControllerGUI {
     public void initialize() {
         setProductUI();
 
-        this.productPrice.setText("Quantity");
+        setProductPriceLabel("Quantity");
         productQuantity.setText(String.format("%d", productBean.getProductQuantity()));
 
         removeQuantityBtn.setVisible(false);

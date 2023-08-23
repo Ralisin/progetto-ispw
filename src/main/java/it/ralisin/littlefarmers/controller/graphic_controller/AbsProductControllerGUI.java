@@ -43,6 +43,7 @@ public abstract class AbsProductControllerGUI {
         String imageLink = productBean.getProductImageLink();
         if(imageLink != null) loadImage(imageLink);
     }
+
     protected void loadImage(String imageLink) {
         // Create a Task to load the image from a URL
         Task<Image> loadImageTask = new Task<>() {
@@ -70,5 +71,9 @@ public abstract class AbsProductControllerGUI {
                 productImage.setImage(loadedImage);
             }
         });
+    }
+
+    protected void setProductPriceLabel(String priceText) {
+        productPrice.setText(priceText);
     }
 }
