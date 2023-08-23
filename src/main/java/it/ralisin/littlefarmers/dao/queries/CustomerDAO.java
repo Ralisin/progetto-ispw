@@ -146,9 +146,7 @@ public class CustomerDAO extends OrderDAO {
         try(PreparedStatement ps = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
             ps.setString(1, customer.getEmail());
 
-            int affectedRows = ps.executeUpdate();
-
-            if(affectedRows <= 0) return;
+            ps.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Error on cleaning cart for customer " + customer.getEmail(), e);
         }
