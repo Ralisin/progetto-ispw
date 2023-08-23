@@ -19,12 +19,13 @@ public class OrderCustomerCenterControllerGUI extends AbsCustomerGraphicControll
     @FXML
     private VBox ordersCenterVBox;
     private final OrderController controller = new OrderController();
+
     public void initialize() {
         OrderBean orderBean = controller.getOrdersList();
         List<Order> orderList = orderBean.getOrderList();
 
         for(Order order : orderList) {
-            Parent p = orderLoader(new OrderBean(order));
+            Parent p = orderLoader(new OrderBean(order), controller);
             ordersCenterVBox.getChildren().add(p);
         }
 
@@ -34,9 +35,9 @@ public class OrderCustomerCenterControllerGUI extends AbsCustomerGraphicControll
         });
     }
 
-    private Parent orderLoader(OrderBean oB) {
+    private Parent orderLoader(OrderBean oB, OrderController controller) {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("OrderCustomer.fxml"));
-        fxmlLoader.setController(new OrderCustomerControllerGUI(oB));
+        fxmlLoader.setController(new OrderCustomerControllerGUI(oB, controller));
 
         try {
             return fxmlLoader.load();

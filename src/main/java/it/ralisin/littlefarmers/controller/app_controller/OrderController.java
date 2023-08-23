@@ -1,6 +1,8 @@
 package it.ralisin.littlefarmers.controller.app_controller;
 
 import it.ralisin.littlefarmers.beans.OrderBean;
+import it.ralisin.littlefarmers.beans.ProductBean;
+import it.ralisin.littlefarmers.beans.ProductsListBean;
 import it.ralisin.littlefarmers.dao.queries.CustomerDAO;
 import it.ralisin.littlefarmers.exeptions.DAOException;
 import it.ralisin.littlefarmers.model.Order;
@@ -30,5 +32,20 @@ public class OrderController {
         }
 
         return orderBean;
+    }
+
+    public ProductsListBean getOrderProducts(OrderBean orderBean) {
+        Order order = orderBean.getOrder();
+
+        ProductsListBean productsListBean;
+        try {
+            productsListBean = new ProductsListBean(CustomerDAO.getOrderProducts(order));
+        } catch (DAOException | SQLException e) {
+            productsListBean = new ProductsListBean(new ArrayList<>());
+
+            Logger.getAnonymousLogger().log(Level.INFO, "Error on get order products");
+        }
+
+        return productsListBean;
     }
 }
