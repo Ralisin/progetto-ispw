@@ -72,8 +72,4 @@ public abstract class AbsProductControllerGUI {
             }
         });
     }
-
-    protected void setProductPriceLabel(String priceText) {
-        productPrice.setText(priceText);
-    }
 }
