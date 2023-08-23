@@ -8,8 +8,6 @@ import javafx.scene.layout.AnchorPane;
 
 public class ProductOrderCenterControllerGUI extends AbsProductControllerGUI {
     @FXML
-    private Label productPrice;
-    @FXML
     private Label productQuantity;
     @FXML
     private Button removeQuantityBtn;
@@ -26,7 +24,8 @@ public class ProductOrderCenterControllerGUI extends AbsProductControllerGUI {
     public void initialize() {
         setProductUI();
 
-        setProductPriceLabel("Quantity");
+
+        productPrice.setText("Quantity");
         productQuantity.setText(String.format("%d", productBean.getProductQuantity()));
 
         removeQuantityBtn.setVisible(false);
