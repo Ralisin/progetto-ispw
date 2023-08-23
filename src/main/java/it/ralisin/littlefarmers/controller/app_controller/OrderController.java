@@ -3,6 +3,7 @@ package it.ralisin.littlefarmers.controller.app_controller;
 import it.ralisin.littlefarmers.beans.OrderBean;
 import it.ralisin.littlefarmers.beans.ProductsListBean;
 import it.ralisin.littlefarmers.dao.queries.CustomerDAO;
+import it.ralisin.littlefarmers.dao.queries.OrderDAO;
 import it.ralisin.littlefarmers.exeptions.DAOException;
 import it.ralisin.littlefarmers.model.Order;
 import it.ralisin.littlefarmers.model.User;
@@ -38,7 +39,7 @@ public class OrderController {
 
         ProductsListBean productsListBean;
         try {
-            productsListBean = new ProductsListBean(CustomerDAO.getOrderProducts(order));
+            productsListBean = new ProductsListBean(OrderDAO.getOrderProducts(order));
         } catch (DAOException | SQLException e) {
             productsListBean = new ProductsListBean(new ArrayList<>());
 
