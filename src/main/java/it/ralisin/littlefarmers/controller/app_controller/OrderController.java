@@ -1,7 +1,6 @@
 package it.ralisin.littlefarmers.controller.app_controller;
 
 import it.ralisin.littlefarmers.beans.OrderBean;
-import it.ralisin.littlefarmers.beans.ProductBean;
 import it.ralisin.littlefarmers.beans.ProductsListBean;
 import it.ralisin.littlefarmers.dao.queries.CustomerDAO;
 import it.ralisin.littlefarmers.exeptions.DAOException;
