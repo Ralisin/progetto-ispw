@@ -1,10 +1,11 @@
 package it.ralisin.littlefarmers.controller.graphic_controller;
 
 import it.ralisin.littlefarmers.Main;
+import it.ralisin.littlefarmers.beans.CartBean;
 import it.ralisin.littlefarmers.beans.ProductBean;
 import it.ralisin.littlefarmers.model.Product;
 import it.ralisin.littlefarmers.patterns.Observer;
-import it.ralisin.littlefarmers.utils.CartManagement;
+import it.ralisin.littlefarmers.controller.app_controller.CartController;
 import it.ralisin.littlefarmers.utils.SessionManagement;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,20 +28,21 @@ public class CartCenterGraphicControllerGUI extends AbsCustomerGraphicController
     private Button buyCartBtn;
     @FXML
     private Label priceLabel;
-    private final Set<Integer> ids = new HashSet<>();
+    private final Set<Integer> idsProductsUI = new HashSet<>();
 
     public void initialize() {
         SessionManagement.getInstance().registerObserver(this);
 
         if (SessionManagement.getInstance().getUser() == null) buyCartBtn.setDisable(true);
 
-        List<Product> productList = CartManagement.getInstance().getCart();
+        CartBean cartBean = CartController.getInstance().getCart();
+        List<Product> productList = cartBean.getProductList();
+
         for(Product product : productList) {
             Parent p = productCartLoader(new ProductBean(product), this);
 
-            ids.add(product.getProductId());
-            p.setId(String.format("%d", product.getProductId()));
-
+            idsProductsUI.add(product.getProductId());
+            if(p != null) p.setId(String.format("%d", product.getProductId()));
             cartCenterVBox.getChildren().add(p);
         }
 
@@ -54,29 +56,29 @@ public class CartCenterGraphicControllerGUI extends AbsCustomerGraphicController
         });
 
         buyCartBtn.setOnMouseClicked(mouseEvent -> {
-            CartManagement.getInstance().buyCart();
+            CartController.getInstance().buyCart();
 
-            for(int id : ids)
+            for(int id : idsProductsUI)
                 cartCenterVBox.getChildren().remove(cartCenterVBox.lookup(String.format("#%d", id)));
-
-            ids.clear();
+            idsProductsUI.clear();
 
             setPriceLabelUI();
         });
     }
 
     public void setPriceLabelUI() {
-        priceLabel.setText(String.format("%.2f€", CartManagement.getInstance().getTotal()));
+        CartBean cartBean = CartController.getInstance().getTotal();
+
+        priceLabel.setText(String.format("%.2f€", cartBean.getCartPrice()));
     }
 
     public void removeProductById(int id) {
         cartCenterVBox.getChildren().remove(cartCenterVBox.lookup(String.format("#%d", id)));
-
-        ids.remove(id);
+        idsProductsUI.remove(id);
     }
 
-    public Parent productCartLoader(ProductBean pB, CartCenterGraphicControllerGUI controller) {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("ProductCustomerCart.fxml"));
+    private Parent productCartLoader(ProductBean pB, CartCenterGraphicControllerGUI controller) {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CartProduct.fxml"));
         fxmlLoader.setController(new ProductCartCenterControllerGUI(pB, controller));
 
         try {

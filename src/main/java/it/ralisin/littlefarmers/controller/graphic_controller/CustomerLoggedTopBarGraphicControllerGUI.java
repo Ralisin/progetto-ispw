@@ -1,12 +1,9 @@
 package it.ralisin.littlefarmers.controller.graphic_controller;
 
-import it.ralisin.littlefarmers.utils.CartManagement;
+import it.ralisin.littlefarmers.controller.app_controller.CartController;
 import it.ralisin.littlefarmers.utils.SessionManagement;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class CustomerLoggedTopBarGraphicControllerGUI extends AbsCustomerGraphicController {
     @FXML
@@ -19,7 +16,7 @@ public class CustomerLoggedTopBarGraphicControllerGUI extends AbsCustomerGraphic
     public void initialize() {
         logOutBtn.setOnMouseClicked(mouseEvent -> {
             SessionManagement.getInstance().clear();
-            CartManagement.getInstance().deleteCart();
+            CartController.getInstance().deleteCart();
 
             gotoPageTop(HOME_TOP);
             gotoPageCenter(HOME_CENTER);
@@ -27,7 +24,8 @@ public class CustomerLoggedTopBarGraphicControllerGUI extends AbsCustomerGraphic
         });
 
         ordersBtn.setOnMouseClicked(mouseEvent -> {
-            Logger.getAnonymousLogger().log(Level.INFO, "CustomerLoggedTopBarGraphicControllerGUI ordersBtn clicked");
+            gotoPageCenter(CUSTOMER_ORDER_CENTER);
+            gotoPageLeft(REMOVE_ELEMENT);
         });
 
         cartBtn.setOnMouseClicked(mouseEvent -> {

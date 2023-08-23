@@ -11,7 +11,7 @@
    <children>
       <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hvalue="0.5" style="-fx-border-color: transparent;">
          <content>
-            <VBox fx:id="cartCenterVBox" alignment="CENTER" focusTraversable="true">
+            <VBox fx:id="cartCenterVBox" alignment="CENTER" focusTraversable="true" spacing="5.0">
                <children>
                   <AnchorPane prefHeight="45.0">
                      <children>

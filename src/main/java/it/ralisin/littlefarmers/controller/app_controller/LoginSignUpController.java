@@ -1,11 +1,11 @@
 package it.ralisin.littlefarmers.controller.app_controller;
 
+import it.ralisin.littlefarmers.beans.CartBean;
 import it.ralisin.littlefarmers.beans.LoginCredentialsBean;
 import it.ralisin.littlefarmers.dao.queries.CustomerDAO;
 import it.ralisin.littlefarmers.dao.queries.LoginDAO;
 import it.ralisin.littlefarmers.exeptions.DAOException;
 import it.ralisin.littlefarmers.model.User;
-import it.ralisin.littlefarmers.utils.CartManagement;
 import it.ralisin.littlefarmers.utils.SessionManagement;
 
 import java.sql.SQLException;
@@ -16,8 +16,13 @@ public class LoginSignUpController {
 
         SessionManagement.getInstance().setUser(user);
 
-        CartManagement instance = CartManagement.getInstance();
-        if(user != null) instance.addProductList(CustomerDAO.getCart(user));
+        CartController instance = CartController.getInstance();
+        if(user != null) {
+            CartBean cartBean = new CartBean();
+            cartBean.setProductList(CustomerDAO.getCart(user));
+
+            instance.addProductList(cartBean);
+        }
 
         return user != null;
     }

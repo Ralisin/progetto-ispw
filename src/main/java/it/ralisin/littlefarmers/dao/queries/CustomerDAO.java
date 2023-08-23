@@ -64,7 +64,7 @@ public class CustomerDAO extends OrderDAO {
     }
 
     public static List<Order> getOrders(User customer) throws DAOException, SQLException {
-        String sql = "select * from orders where customerEmail = ?";
+        final String sql = "select * from orders where customerEmail = ?";
 
         return getOrders(customer.getEmail(), sql);
     }
@@ -89,16 +89,20 @@ public class CustomerDAO extends OrderDAO {
             companyEmailToProductsMap.get(companyEmail).add(p);
         }
 
+        System.out.println(companyEmailToProductsMap);
+        System.out.println(companyEmailToProductsMap.entrySet());
+
         // Insert all products into order
         for(Map.Entry<String, List<Product>> entry : companyEmailToProductsMap.entrySet()) {
             String key = entry.getKey();
-            if(!insertOrderProducts(customer, companyEmailToProductsMap.get(key))) return false;
+            System.out.println(key);
+            insertOrderProducts(customer, companyEmailToProductsMap.get(key));
         }
 
         return true;
     }
 
-    private static boolean insertOrderProducts(User customer, List<Product> productList) throws DAOException {
+    private static void insertOrderProducts(User customer, List<Product> productList) throws DAOException {
         if(productList.isEmpty()) throw new DAOException("Error, productList is empty");
 
         Connection conn = ConnectionFactory.getConnection();
@@ -116,11 +120,11 @@ public class CustomerDAO extends OrderDAO {
 
             int affectedRows = ps.executeUpdate();
 
-            if(affectedRows < 1) return false;
+            if(affectedRows < 1) return;
 
             ResultSet rs = ps.getGeneratedKeys();
             if(rs.next()) orderId = rs.getInt(1);
-            else return false;
+            else return;
         } catch (SQLException e) {
             throw new DAOException("Error on inserting new order", e);
         }
@@ -135,7 +139,7 @@ public class CustomerDAO extends OrderDAO {
 
                 int affectedRows = ps.executeUpdate();
 
-                if(affectedRows < 1) return false;
+                if(affectedRows < 1) return;
             } catch (SQLException e) {
                 throw new DAOException("Error on inserting new order", e);
             }
@@ -148,11 +152,9 @@ public class CustomerDAO extends OrderDAO {
 
             int affectedRows = ps.executeUpdate();
 
-            if(affectedRows <= 0) return false;
+            if(affectedRows <= 0) return;
         } catch (SQLException e) {
             throw new DAOException("Error on cleaning cart for customer " + customer.getEmail(), e);
         }
-
-        return true;
     }
 }

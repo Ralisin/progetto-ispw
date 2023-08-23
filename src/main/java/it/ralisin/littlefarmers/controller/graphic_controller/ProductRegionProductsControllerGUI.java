@@ -1,7 +1,8 @@
 package it.ralisin.littlefarmers.controller.graphic_controller;
 
+import it.ralisin.littlefarmers.beans.CartBean;
 import it.ralisin.littlefarmers.beans.ProductBean;
-import it.ralisin.littlefarmers.utils.CartManagement;
+import it.ralisin.littlefarmers.controller.app_controller.CartController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -17,7 +18,10 @@ public class ProductRegionProductsControllerGUI extends AbsProductControllerGUI 
         setProductUI();
 
         addToCartBtn.setOnMouseClicked(mouseEvent -> {
-            CartManagement.getInstance().addProduct(productBean.getProduct());
+            CartBean cartBean = new CartBean();
+            cartBean.setProduct(productBean.getProduct());
+
+            CartController.getInstance().addProduct(cartBean);
         });
     }
 }

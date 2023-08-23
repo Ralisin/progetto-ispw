@@ -1,7 +1,8 @@
 package it.ralisin.littlefarmers.controller.graphic_controller;
 
+import it.ralisin.littlefarmers.beans.CartBean;
 import it.ralisin.littlefarmers.beans.ProductBean;
-import it.ralisin.littlefarmers.utils.CartManagement;
+import it.ralisin.littlefarmers.controller.app_controller.CartController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -33,9 +34,15 @@ public class ProductCartCenterControllerGUI extends AbsProductControllerGUI {
 
                 productQuantity.setText(String.format("%d", productBean.getProductQuantity()));
 
-                CartManagement.getInstance().updateProduct(productBean.getProduct());
+                CartBean cartBean = new CartBean();
+                cartBean.setProduct(productBean.getProduct());
+
+                CartController.getInstance().updateProduct(cartBean);
             } else if(productBean.getProductQuantity() == 1) {
-                CartManagement.getInstance().removeProduct(productBean.getProduct());
+                CartBean cartBean = new CartBean();
+                cartBean.setProduct(productBean.getProduct());
+
+                CartController.getInstance().removeProduct(cartBean);
 
                 controller.removeProductById(productBean.getProductId());
             }
@@ -48,13 +55,18 @@ public class ProductCartCenterControllerGUI extends AbsProductControllerGUI {
 
             productQuantity.setText(String.format("%d", productBean.getProductQuantity()));
 
-            CartManagement.getInstance().updateProduct(productBean.getProduct());
+            CartBean cartBean = new CartBean();
+            cartBean.setProduct(productBean.getProduct());
+            CartController.getInstance().updateProduct(cartBean);
 
             controller.setPriceLabelUI();
         });
 
         deleteBtn.setOnMouseClicked(mouseEvent -> {
-            CartManagement.getInstance().removeProduct(productBean.getProduct());
+            CartBean cartBean = new CartBean();
+            cartBean.setProduct(productBean.getProduct());
+
+            CartController.getInstance().removeProduct(cartBean);
 
             controller.removeProductById(productBean.getProductId());
 

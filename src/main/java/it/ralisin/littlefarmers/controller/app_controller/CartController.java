@@ -1,10 +1,12 @@
-package it.ralisin.littlefarmers.utils;
+package it.ralisin.littlefarmers.controller.app_controller;
 
+import it.ralisin.littlefarmers.beans.CartBean;
 import it.ralisin.littlefarmers.dao.queries.CustomerDAO;
 import it.ralisin.littlefarmers.enums.UserRole;
 import it.ralisin.littlefarmers.exeptions.DAOException;
 import it.ralisin.littlefarmers.model.Product;
 import it.ralisin.littlefarmers.model.User;
+import it.ralisin.littlefarmers.utils.SessionManagement;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,36 +14,46 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class CartManagement {
-    private static CartManagement instance = null;
+public class CartController {
+    private static CartController instance = null;
     private final List<Product> cart;
 
-    private CartManagement() {
+    private CartController() {
         this.cart = new ArrayList<>();
     }
 
-    public static synchronized CartManagement getInstance() {
-        if(CartManagement.instance == null) instance = new CartManagement();
+    public static synchronized CartController getInstance() {
+        if(CartController.instance == null) instance = new CartController();
         return instance;
     }
 
-    public List<Product> getCart() {
-        return cart;
+    public CartBean getCart() {
+        CartBean cartBean = new CartBean();
+        cartBean.setProductList(cart);
+
+        return cartBean;
     }
 
-    public float getTotal() {
+    public CartBean getTotal() {
+        CartBean cartBean = new CartBean();
+
         float totalPrice = 0F;
         for(Product p : cart) totalPrice += p.getPrice() * p.getQuantity();
 
-        return totalPrice;
+        cartBean.setCartPrice(totalPrice);
+
+        return cartBean;
     }
 
+    public void addProduct(CartBean cartBean) {
+        Product product = cartBean.getProduct();
 
-    public void addProduct(Product product) {
         for(Product p : cart)
             if(p.getProductId() == product.getProductId()) {
                 p.setQuantity(p.getQuantity()+1);
-                updateProduct(p);
+
+                cartBean.setProduct(p);
+                updateProduct(cartBean);
 
                 updateRemoteCart();
 
@@ -54,7 +66,9 @@ public class CartManagement {
         updateRemoteCart();
     }
 
-    public void addProductList(List<Product> productList) {
+    public void addProductList(CartBean cartBean) {
+        List<Product> productList = cartBean.getProductList();
+
         for(Product p : productList) {
             boolean found = false;
 
@@ -73,13 +87,17 @@ public class CartManagement {
         updateRemoteCart();
     }
 
-    public void removeProduct(Product product) {
+    public void removeProduct(CartBean cartBean) {
+        Product product = cartBean.getProduct();
+
         cart.remove(product);
 
         removeFromRemoteCart(product);
     }
 
-    public void updateProduct(Product product) {
+    public void updateProduct(CartBean cartBean) {
+        Product product = cartBean.getProduct();
+
         for(int i = 0; i < cart.size(); i++) {
             if(cart.get(i).getProductId() == product.getProductId()) cart.set(i, product);
         }

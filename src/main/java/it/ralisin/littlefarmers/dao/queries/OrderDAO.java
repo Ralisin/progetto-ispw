@@ -17,6 +17,7 @@ import java.util.List;
 public class OrderDAO extends AbsDAOJdbc {
     protected static List<Order> getOrders(String email, String sql) throws DAOException, SQLException {
         List<Order> orderList = new ArrayList<>();
+        if(sql == null || sql.isBlank() || sql.isEmpty()) return orderList;
         Connection conn = ConnectionFactory.getConnection();
 
         ResultSet rs = null;
