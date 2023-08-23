@@ -89,13 +89,9 @@ public class CustomerDAO extends OrderDAO {
             companyEmailToProductsMap.get(companyEmail).add(p);
         }
 
-        System.out.println(companyEmailToProductsMap);
-        System.out.println(companyEmailToProductsMap.entrySet());
-
         // Insert all products into order
         for(Map.Entry<String, List<Product>> entry : companyEmailToProductsMap.entrySet()) {
             String key = entry.getKey();
-            System.out.println(key);
             insertOrderProducts(customer, companyEmailToProductsMap.get(key));
         }
 
