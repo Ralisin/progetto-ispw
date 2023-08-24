@@ -2,8 +2,11 @@ package it.ralisin.littlefarmers.controller.app_controller;
 
 import it.ralisin.littlefarmers.beans.OrderBean;
 import it.ralisin.littlefarmers.beans.ProductsListBean;
+import it.ralisin.littlefarmers.dao.queries.CompanyDAO;
 import it.ralisin.littlefarmers.dao.queries.CustomerDAO;
 import it.ralisin.littlefarmers.dao.queries.OrderDAO;
+import it.ralisin.littlefarmers.enums.OrderStatus;
+import it.ralisin.littlefarmers.enums.UserRole;
 import it.ralisin.littlefarmers.exeptions.DAOException;
 import it.ralisin.littlefarmers.model.Order;
 import it.ralisin.littlefarmers.model.User;
@@ -16,7 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class OrderController {
-    public OrderBean getOrdersList() {
+    public OrderBean getCustomerOrdersList() {
         List<Order> orderList;
         User user = SessionManager.getInstance().getUser();
 
@@ -34,6 +37,24 @@ public class OrderController {
         return orderBean;
     }
 
+    public OrderBean getCompanyOrdersListByStatus(OrderStatus orderStatus) {
+        List<Order> orderList;
+        User user = SessionManager.getInstance().getUser();
+
+        OrderBean newOrderBean = new OrderBean(new ArrayList<>());
+
+        if(user == null || orderStatus == null) return newOrderBean;
+
+        try {
+            orderList = CompanyDAO.getOrdersByStatus(user, orderStatus);
+            newOrderBean.setOrderList(orderList);
+        } catch (DAOException | SQLException e) {
+            Logger.getAnonymousLogger().log(Level.INFO, String.format("Error on getting order list with user %s: %s", user, e));
+        }
+
+        return newOrderBean;
+    }
+
     public ProductsListBean getOrderProducts(OrderBean orderBean) {
         Order order = orderBean.getOrder();
 
@@ -47,5 +68,21 @@ public class OrderController {
         }
 
         return productsListBean;
+    }
+
+    public void updateOrderStatus(OrderBean orderBean) {
+        User company = SessionManager.getInstance().getUser();
+        Order order = orderBean.getOrder();
+        OrderStatus orderStatus = order.getStatus();
+
+        if(company.getRole() == UserRole.COMPANY) {
+            try {
+                CompanyDAO.updateOrderStatus(company, order, orderStatus);
+            } catch (DAOException e) {
+                Logger.getAnonymousLogger().log(Level.INFO, String.format("OrderController updateOrderStatus error: %s", e));
+            }
+        } else {
+            Logger.getAnonymousLogger().log(Level.INFO, "Invalid user, only COMPANY could update order status");
+        }
     }
 }

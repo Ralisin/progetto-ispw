@@ -7,7 +7,7 @@ public class Order {
     private final String companyEmail;
     private final String customerEmail;
     private final String date;
-    private final OrderStatus status;
+    private OrderStatus status;
 
     public Order(int id, String companyEmail, String customerEmail, String date, OrderStatus status) {
         this.id = id;
@@ -35,6 +35,10 @@ public class Order {
 
     public OrderStatus getStatus() {
         return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
     }
 
     @Override
