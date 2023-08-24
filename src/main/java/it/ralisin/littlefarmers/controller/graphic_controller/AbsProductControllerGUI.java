@@ -64,12 +64,13 @@ public abstract class AbsProductControllerGUI {
             }
         };
 
+
         // Update the UI when the image is loaded
         loadImageTask.setOnSucceeded(event -> {
             Image loadedImage = loadImageTask.getValue();
-            if (loadedImage != null) {
-                productImage.setImage(loadedImage);
-            }
+            if (loadedImage != null) productImage.setImage(loadedImage);
         });
+
+        new Thread(loadImageTask).start();
     }
 }
