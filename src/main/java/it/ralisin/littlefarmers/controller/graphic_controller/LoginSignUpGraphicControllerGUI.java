@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class LoginSignUpControllerGUI extends AbsCustomerGraphicController {
+public class LoginSignUpGraphicControllerGUI extends AbsGraphicController {
     @FXML
     private TextField emailLoginTxtFld;
     @FXML

@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderCustomerControllerGUI {
+public class OrderCustomerGraphicControllerGUI {
     @FXML
     private Label orderIdLabel;
     @FXML
@@ -34,7 +34,7 @@ public class OrderCustomerControllerGUI {
     private OrderController controllerGUI;
     private List<Product> productListOrder = new ArrayList<>();
 
-    public OrderCustomerControllerGUI(OrderBean orderBean, OrderController controllerGUI) {
+    public OrderCustomerGraphicControllerGUI(OrderBean orderBean, OrderController controllerGUI) {
         this.order = orderBean.getOrder();
         this.controllerGUI = controllerGUI;
     }
@@ -50,7 +50,7 @@ public class OrderCustomerControllerGUI {
 
             ProductBean pB = new ProductBean(p);
             AnchorPane root = fxmlLoader.getRoot();
-            fxmlLoader.setController(new ProductOrderCenterControllerGUI(pB, root));
+            fxmlLoader.setController(new ProductOrderCenterGraphicControllerGUI(pB, root));
 
             Parent parent;
             try { parent = fxmlLoader.load(); } catch (IOException e) { parent = null; }

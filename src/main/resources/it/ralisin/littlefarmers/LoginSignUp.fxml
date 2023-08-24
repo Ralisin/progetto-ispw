@@ -13,7 +13,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TabPane prefHeight="327.0" prefWidth="233.0" tabClosingPolicy="UNAVAILABLE" tabMinHeight="24.0" tabMinWidth="96.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ralisin.littlefarmers.controller.graphic_controller.LoginSignUpControllerGUI">
+<TabPane prefHeight="327.0" prefWidth="233.0" tabClosingPolicy="UNAVAILABLE" tabMinHeight="24.0" tabMinWidth="96.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ralisin.littlefarmers.controller.graphic_controller.LoginSignUpGraphicControllerGUI">
   <tabs>
     <Tab closable="false" text="Login">
       <content>

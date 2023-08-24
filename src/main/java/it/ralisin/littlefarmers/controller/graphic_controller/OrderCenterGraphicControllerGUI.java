@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.List;
 
-public class OrderCustomerCenterControllerGUI extends AbsCustomerGraphicController {
+public class OrderCenterGraphicControllerGUI extends AbsGraphicController {
     @FXML
     private Button backBtn;
     @FXML
@@ -37,7 +37,7 @@ public class OrderCustomerCenterControllerGUI extends AbsCustomerGraphicControll
 
     private Parent orderLoader(OrderBean oB, OrderController controller) {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("OrderCustomer.fxml"));
-        fxmlLoader.setController(new OrderCustomerControllerGUI(oB, controller));
+        fxmlLoader.setController(new OrderCustomerGraphicControllerGUI(oB, controller));
 
         try {
             return fxmlLoader.load();

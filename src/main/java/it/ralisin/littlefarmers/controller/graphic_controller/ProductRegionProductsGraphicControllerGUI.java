@@ -6,11 +6,11 @@ import it.ralisin.littlefarmers.controller.app_controller.CartController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-public class ProductRegionProductsControllerGUI extends AbsProductControllerGUI {
+public class ProductRegionProductsGraphicControllerGUI extends AbsProductGraphicControllerGUI {
     @FXML
     private Button addToCartBtn;
 
-    public ProductRegionProductsControllerGUI(ProductBean product) {
+    public ProductRegionProductsGraphicControllerGUI(ProductBean product) {
         super(product);
     }
 

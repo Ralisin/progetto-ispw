@@ -4,7 +4,7 @@ import it.ralisin.littlefarmers.beans.RegionBean;
 import it.ralisin.littlefarmers.enums.Regions;
 import javafx.event.ActionEvent;
 
-public class RegionListControllerGUI extends AbsCustomerGraphicController {
+public class RegionListGraphicControllerGUI extends AbsGraphicController {
     public void onClickRegionButton(ActionEvent event) {
         String str = event.getSource().toString();
         String regionName = str.substring(str.indexOf("'")+1, str.lastIndexOf("'"));

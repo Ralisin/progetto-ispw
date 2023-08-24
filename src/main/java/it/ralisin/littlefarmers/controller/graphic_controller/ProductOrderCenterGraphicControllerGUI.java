@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
-public class ProductOrderCenterControllerGUI extends AbsProductControllerGUI {
+public class ProductOrderCenterGraphicControllerGUI extends AbsProductGraphicControllerGUI {
     @FXML
     private Label productQuantity;
     @FXML
@@ -16,7 +16,7 @@ public class ProductOrderCenterControllerGUI extends AbsProductControllerGUI {
     @FXML
     private Button deleteBtn;
     private AnchorPane root;
-    protected ProductOrderCenterControllerGUI(ProductBean product, AnchorPane root) {
+    protected ProductOrderCenterGraphicControllerGUI(ProductBean product, AnchorPane root) {
         super(product);
         this.root = root;
     }

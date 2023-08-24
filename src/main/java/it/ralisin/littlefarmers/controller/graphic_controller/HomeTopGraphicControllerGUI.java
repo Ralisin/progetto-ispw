@@ -3,7 +3,7 @@ package it.ralisin.littlefarmers.controller.graphic_controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-public class HomeTopControllerGUI extends AbsCustomerGraphicController {
+public class HomeTopGraphicControllerGUI extends AbsGraphicController {
     @FXML
     private Button signUpBtn;
     @FXML

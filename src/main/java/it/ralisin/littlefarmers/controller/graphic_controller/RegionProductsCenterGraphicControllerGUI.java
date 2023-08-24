@@ -17,7 +17,7 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.List;
 
-public class RegionProductsCenterControllerGUI extends AbsCustomerGraphicController {
+public class RegionProductsCenterGraphicControllerGUI extends AbsGraphicController {
     @FXML
     private Label regionLabel;
     @FXML
@@ -49,7 +49,7 @@ public class RegionProductsCenterControllerGUI extends AbsCustomerGraphicControl
 
     private static Parent productCustomerLoader(ProductBean pB) {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("ProductCustomer.fxml"));
-        fxmlLoader.setController(new ProductRegionProductsControllerGUI(pB));
+        fxmlLoader.setController(new ProductRegionProductsGraphicControllerGUI(pB));
 
         try {
             return fxmlLoader.load();

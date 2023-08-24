@@ -19,7 +19,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class CartCenterGraphicControllerGUI extends AbsCustomerGraphicController implements Observer {
+public class CartCenterGraphicControllerGUI extends AbsGraphicController implements Observer {
     @FXML
     private VBox cartCenterVBox;
     @FXML
@@ -79,7 +79,7 @@ public class CartCenterGraphicControllerGUI extends AbsCustomerGraphicController
 
     private Parent productCartLoader(ProductBean pB, CartCenterGraphicControllerGUI controller) {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CartProduct.fxml"));
-        fxmlLoader.setController(new ProductCartCenterControllerGUI(pB, controller));
+        fxmlLoader.setController(new ProductCartCenterGraphicControllerGUI(pB, controller));
 
         try {
             return fxmlLoader.load();

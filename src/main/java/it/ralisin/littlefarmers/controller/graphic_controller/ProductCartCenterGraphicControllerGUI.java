@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-public class ProductCartCenterControllerGUI extends AbsProductControllerGUI {
+public class ProductCartCenterGraphicControllerGUI extends AbsProductGraphicControllerGUI {
     @FXML
     private Label productQuantity;
     @FXML
@@ -18,7 +18,7 @@ public class ProductCartCenterControllerGUI extends AbsProductControllerGUI {
     private Button deleteBtn;
     private final CartCenterGraphicControllerGUI controller;
 
-    public ProductCartCenterControllerGUI(ProductBean product, CartCenterGraphicControllerGUI controller) {
+    public ProductCartCenterGraphicControllerGUI(ProductBean product, CartCenterGraphicControllerGUI controller) {
         super(product);
         this.controller = controller;
     }

@@ -5,7 +5,7 @@ import it.ralisin.littlefarmers.utils.SessionManagement;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-public class CustomerLoggedTopBarGraphicControllerGUI extends AbsCustomerGraphicController {
+public class LoggedTopBarGraphicControllerGUI extends AbsGraphicController {
     @FXML
     private Button logOutBtn;
     @FXML

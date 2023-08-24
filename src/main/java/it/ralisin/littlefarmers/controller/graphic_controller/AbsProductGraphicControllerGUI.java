@@ -14,7 +14,7 @@ import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public abstract class AbsProductControllerGUI {
+public abstract class AbsProductGraphicControllerGUI {
     @FXML
     protected ImageView productImage;
     @FXML
@@ -29,7 +29,7 @@ public abstract class AbsProductControllerGUI {
     protected Label productPrice;
     protected final ProductBean productBean;
 
-    protected AbsProductControllerGUI(ProductBean product) {
+    protected AbsProductGraphicControllerGUI(ProductBean product) {
         this.productBean = product;
     }
 
