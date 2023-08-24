@@ -43,7 +43,7 @@ public class OrderGraphicControllerGUI {
     private boolean showCheckBox = false;
     private Order order;
     private OrderStatus orderStatus;
-    private OrderController controller;
+    private final OrderController controller;
     private List<Product> productListOrder = new ArrayList<>();
     private ObservableList<String> choiceList = FXCollections.observableArrayList();
 
