@@ -7,17 +7,17 @@ import it.ralisin.littlefarmers.patterns.Observer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SessionManagement implements Observable {
-    private static SessionManagement instance = null;
+public class SessionManager implements Observable {
+    private static SessionManager instance = null;
     private List<Observer> observerList = new ArrayList<>();
     private User user;
 
-    private SessionManagement() {
+    private SessionManager() {
         user = null;
     }
 
-    public static synchronized SessionManagement getInstance() {
-        if(SessionManagement.instance == null) instance = new SessionManagement();
+    public static synchronized SessionManager getInstance() {
+        if(SessionManager.instance == null) instance = new SessionManager();
         return instance;
     }
 

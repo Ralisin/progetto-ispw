@@ -6,7 +6,7 @@ import it.ralisin.littlefarmers.enums.UserRole;
 import it.ralisin.littlefarmers.exeptions.DAOException;
 import it.ralisin.littlefarmers.exeptions.InvalidFormatException;
 import it.ralisin.littlefarmers.utils.NavigatorSingleton;
-import it.ralisin.littlefarmers.utils.SessionManagement;
+import it.ralisin.littlefarmers.utils.SessionManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
@@ -130,18 +130,15 @@ public class LoginSignUpGraphicControllerGUI extends AbsGraphicController {
         Stage loginStg = NavigatorSingleton.getInstance().getLoginStg();
         if(loginStg != null) loginStg.fireEvent(new WindowEvent(loginStg, WindowEvent.WINDOW_CLOSE_REQUEST));
 
-        UserRole role = SessionManagement.getInstance().getUser().getRole();
+        UserRole role = SessionManager.getInstance().getUser().getRole();
         if(role == UserRole.CUSTOMER) {
             gotoPageTop(CUSTOMER_LOGGED_TOP_BAR);
 
             String currCenterPage = NavigatorSingleton.getInstance().getCurrCenterPage();
-
             if(currCenterPage == null || currCenterPage.equals(HOME_CENTER)) gotoPageCenter(CUSTOMER_REGION_LIST_CENTER);
         } else if (role == UserRole.COMPANY) {
-            // TODO COMPANY home page
-             gotoPageTop(COMPANY_LOGGED_TOP_BAR);
-             gotoPageCenter(COMPANY_HOME_CENTER);
-            Logger.getAnonymousLogger().log(Level.INFO, "User logged is a company, goto...");
+            gotoPageTop(COMPANY_LOGGED_TOP_BAR);
+            gotoPageCenter(COMPANY_HOME_CENTER);
         } else {
             Logger.getAnonymousLogger().log(Level.INFO, "Invalid user, contact LittleFarmer assistance");
         }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.2" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="393.0" layoutY="15.0" text="New orders">
+         <font>
+            <Font name="Arial Black" size="18.0" />
+         </font>
+      </Label>
+      <ScrollPane hbarPolicy="NEVER" layoutY="57.0" prefHeight="530.2" prefWidth="900.0">
+         <content>
+            <VBox fx:id="ordersVBox" prefWidth="900.0" />
+         </content>
+      </ScrollPane>
+      <Label layoutX="295.0" layoutY="285.0" text="Non hai ricevuto nessuna nuova richiesta di ordini">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

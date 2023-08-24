@@ -15,8 +15,8 @@ public abstract class AbsGraphicController {
     protected static final String CUSTOMER_REGION_PRODUCTS_FILTER_LEFT = "RegionProductsFilter.fxml";
     protected static final String CUSTOMER_CART_CENTER = "CartCenter.fxml";
     protected static final String CUSTOMER_ORDER_CENTER = "OrderCustomerCenter.fxml";
-    protected static final String COMPANY_LOGGED_TOP_BAR = ""; // TODO
-    protected static final String COMPANY_HOME_CENTER = "CompanyCenter.fxml";
+    protected static final String COMPANY_LOGGED_TOP_BAR = "TopBarCompanyLogged.fxml";
+    protected static final String COMPANY_HOME_CENTER = "CompanyHomeCenter.fxml";
     protected static final String HOME_TOP = "HomeTop.fxml";
     protected static final String HOME_CENTER = "HomeCenter.fxml";
     protected static final String LOGIN_SIGN_UP = "LoginSignUp.fxml";

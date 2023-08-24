@@ -6,7 +6,7 @@ import it.ralisin.littlefarmers.beans.ProductBean;
 import it.ralisin.littlefarmers.model.Product;
 import it.ralisin.littlefarmers.patterns.Observer;
 import it.ralisin.littlefarmers.controller.app_controller.CartController;
-import it.ralisin.littlefarmers.utils.SessionManagement;
+import it.ralisin.littlefarmers.utils.SessionManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,9 +31,9 @@ public class CartCenterGraphicControllerGUI extends AbsGraphicController impleme
     private final Set<Integer> idsProductsUI = new HashSet<>();
 
     public void initialize() {
-        SessionManagement.getInstance().registerObserver(this);
+        SessionManager.getInstance().registerObserver(this);
 
-        if (SessionManagement.getInstance().getUser() == null) buyCartBtn.setDisable(true);
+        if (SessionManager.getInstance().getUser() == null) buyCartBtn.setDisable(true);
 
         CartBean cartBean = CartController.getInstance().getCart();
         List<Product> productList = cartBean.getProductList();
@@ -49,7 +49,7 @@ public class CartCenterGraphicControllerGUI extends AbsGraphicController impleme
         setPriceLabelUI();
 
         backBtn.setOnMouseClicked(mouseEvent -> {
-            SessionManagement.getInstance().removeObserver(this);
+            SessionManager.getInstance().removeObserver(this);
 
             gotoPageCenter(CUSTOMER_REGION_LIST_CENTER);
             gotoPageLeft(REMOVE_ELEMENT);
@@ -90,6 +90,6 @@ public class CartCenterGraphicControllerGUI extends AbsGraphicController impleme
 
     @Override
     public void update() {
-        if(SessionManagement.getInstance().getUser() != null) buyCartBtn.setDisable(false);
+        if(SessionManager.getInstance().getUser() != null) buyCartBtn.setDisable(false);
     }
 }

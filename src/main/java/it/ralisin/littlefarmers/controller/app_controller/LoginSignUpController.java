@@ -6,7 +6,7 @@ import it.ralisin.littlefarmers.dao.queries.CustomerDAO;
 import it.ralisin.littlefarmers.dao.queries.LoginDAO;
 import it.ralisin.littlefarmers.exeptions.DAOException;
 import it.ralisin.littlefarmers.model.User;
-import it.ralisin.littlefarmers.utils.SessionManagement;
+import it.ralisin.littlefarmers.utils.SessionManager;
 
 import java.sql.SQLException;
 
@@ -14,7 +14,7 @@ public class LoginSignUpController {
     public boolean login(LoginCredentialsBean credentials) throws DAOException, SQLException {
         User user = LoginDAO.getUser(credentials.getEmail(), credentials.getPassword());
 
-        SessionManagement.getInstance().setUser(user);
+        SessionManager.getInstance().setUser(user);
 
         CartController instance = CartController.getInstance();
         if(user != null) {
@@ -33,7 +33,7 @@ public class LoginSignUpController {
         if(result) {
             User user = new User(credentials.getEmail(), credentials.getPassword(), credentials.getRole());
 
-            SessionManagement.getInstance().setUser(user);
+            SessionManager.getInstance().setUser(user);
         }
 
         return result;

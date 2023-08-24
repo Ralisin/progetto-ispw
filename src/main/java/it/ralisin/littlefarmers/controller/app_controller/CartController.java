@@ -6,7 +6,7 @@ import it.ralisin.littlefarmers.enums.UserRole;
 import it.ralisin.littlefarmers.exeptions.DAOException;
 import it.ralisin.littlefarmers.model.Product;
 import it.ralisin.littlefarmers.model.User;
-import it.ralisin.littlefarmers.utils.SessionManagement;
+import it.ralisin.littlefarmers.utils.SessionManager;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -114,7 +114,7 @@ public class CartController {
     }
 
     private void updateRemoteCart() {
-        User currUser = SessionManagement.getInstance().getUser();
+        User currUser = SessionManager.getInstance().getUser();
         if(currUser != null && currUser.getRole() == UserRole.CUSTOMER)
             for(Product p : cart) {
                 try {
@@ -126,7 +126,7 @@ public class CartController {
     }
 
     private void removeFromRemoteCart(Product product) {
-        User currUser = SessionManagement.getInstance().getUser();
+        User currUser = SessionManager.getInstance().getUser();
         if(currUser != null && currUser.getRole() == UserRole.CUSTOMER) {
             try {
                 CustomerDAO.removeFromCart(currUser, product);
@@ -137,7 +137,7 @@ public class CartController {
     }
 
     private void makeOrder() {
-        User currUser = SessionManagement.getInstance().getUser();
+        User currUser = SessionManager.getInstance().getUser();
         if(currUser != null && currUser.getRole() == UserRole.CUSTOMER && !cart.isEmpty()) {
             try {
                 CustomerDAO.makeOrder(currUser);

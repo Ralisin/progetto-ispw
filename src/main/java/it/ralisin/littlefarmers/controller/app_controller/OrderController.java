@@ -7,7 +7,7 @@ import it.ralisin.littlefarmers.dao.queries.OrderDAO;
 import it.ralisin.littlefarmers.exeptions.DAOException;
 import it.ralisin.littlefarmers.model.Order;
 import it.ralisin.littlefarmers.model.User;
-import it.ralisin.littlefarmers.utils.SessionManagement;
+import it.ralisin.littlefarmers.utils.SessionManager;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class OrderController {
     public OrderBean getOrdersList() {
         List<Order> orderList;
-        User user = SessionManagement.getInstance().getUser();
+        User user = SessionManager.getInstance().getUser();
 
         OrderBean orderBean = new OrderBean(new ArrayList<>());
 

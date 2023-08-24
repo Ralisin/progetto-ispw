@@ -1,11 +1,10 @@
 package it.ralisin.littlefarmers.controller.graphic_controller;
 
-import it.ralisin.littlefarmers.controller.app_controller.CartController;
-import it.ralisin.littlefarmers.utils.SessionManagement;
+import it.ralisin.littlefarmers.controller.app_controller.SessionController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-public class LoggedTopBarGraphicControllerGUI extends AbsGraphicController {
+public class TopBarCustomerLoggedGraphicControllerGUI extends AbsGraphicController {
     @FXML
     private Button logOutBtn;
     @FXML
@@ -13,10 +12,13 @@ public class LoggedTopBarGraphicControllerGUI extends AbsGraphicController {
     @FXML
     private Button cartBtn;
 
+    private SessionController controller;
+
     public void initialize() {
+        controller = new SessionController();
+
         logOutBtn.setOnMouseClicked(mouseEvent -> {
-            SessionManagement.getInstance().clear();
-            CartController.getInstance().deleteCart();
+            controller.logOut();
 
             gotoPageTop(HOME_TOP);
             gotoPageCenter(HOME_CENTER);
