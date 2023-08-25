@@ -21,10 +21,12 @@ public class TopBarCompanyGraphicControllerGUI extends AbsGraphicController {
         controller = new SessionController();
 
         ordersBtn.setOnMouseClicked(mouseEvent -> {
-            Logger.getAnonymousLogger().log(Level.INFO, "TopBarCompanyGraphicControllerGUI ordersBtn clicked");
+            gotoPageCenter(COMPANY_ORDER_CENTER);
+            gotoPageLeft(REMOVE_ELEMENT);
         });
 
         productsBtn.setOnMouseClicked(mouseEvent -> {
+            // TODO
             Logger.getAnonymousLogger().log(Level.INFO, "TopBarCompanyGraphicControllerGUI productsBtn clicked");
         });
 

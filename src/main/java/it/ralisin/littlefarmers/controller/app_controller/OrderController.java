@@ -37,6 +37,24 @@ public class OrderController {
         return orderBean;
     }
 
+    public OrderBean getCompanyOrdersList() {
+        List<Order> orderList;
+        User user = SessionManager.getInstance().getUser();
+
+        OrderBean orderBean = new OrderBean(new ArrayList<>());
+
+        if(user == null) return orderBean;
+
+        try {
+            orderList = CompanyDAO.getOrders(user);
+            orderBean.setOrderList(orderList);
+        } catch (DAOException | SQLException e) {
+            Logger.getAnonymousLogger().log(Level.INFO, String.format("Error on getting order list with user %s: %s", user, e));
+        }
+
+        return orderBean;
+    }
+
     public OrderBean getCompanyOrdersListByStatus(OrderStatus orderStatus) {
         List<Order> orderList;
         User user = SessionManager.getInstance().getUser();
