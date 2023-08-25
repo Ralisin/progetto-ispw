@@ -49,7 +49,7 @@ public class OrderController {
             orderList = CompanyDAO.getOrders(user);
             orderBean.setOrderList(orderList);
         } catch (DAOException | SQLException e) {
-            Logger.getAnonymousLogger().log(Level.INFO, String.format("Error on getting order list with user %s: %s", user, e));
+            Logger.getAnonymousLogger().log(Level.INFO, String.format("Error on getCompanyOrdersList with user %s: %s", user, e));
         }
 
         return orderBean;
@@ -67,7 +67,7 @@ public class OrderController {
             orderList = CompanyDAO.getOrdersByStatus(user, orderStatus);
             newOrderBean.setOrderList(orderList);
         } catch (DAOException | SQLException e) {
-            Logger.getAnonymousLogger().log(Level.INFO, String.format("Error on getting order list with user %s: %s", user, e));
+            Logger.getAnonymousLogger().log(Level.INFO, String.format("Error on getCompanyOrdersListByStatus with user %s: %s", user, e));
         }
 
         return newOrderBean;
