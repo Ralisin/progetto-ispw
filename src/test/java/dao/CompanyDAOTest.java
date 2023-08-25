@@ -16,7 +16,7 @@ import java.util.List;
 
 class CompanyDAOTest {
     User company = new User("company1@gmail.com", "test", UserRole.COMPANY);
-    Product product = new Product("company1@gmail.com", 0, "test1", "test", 1f, Regions.ABRUZZO, "test", "test");
+    Product product = new Product("company1@gmail.com", 0, "test1", "test", Regions.ABRUZZO, "test", "test");
     Order order = new Order(1, "company1@gmail.com", "customer1@gmail.com", null, OrderStatus.DELIVERED);
 
     private CompanyDAOTest() {}

@@ -51,6 +51,10 @@ public abstract class AbsDAOJdbc {
         String category = rs.getString("category");
         String imageLink = rs.getString("imageLink");
 
-        return new Product(companyEmail, productId, name, description, price, region, category, imageLink, quantity);
+        Product product = new Product(companyEmail, productId, name, description, region, category, imageLink);
+        product.setPrice(price);
+        product.setQuantity(quantity);
+
+        return product;
     }
 }

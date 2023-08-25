@@ -13,28 +13,26 @@ public class Product {
     private final String imageLink;
     private int quantity = -1;
 
-    public Product(String companyEmail, int productId, String name, String description, float price, Regions region, String category, String imageLink, int quantity) {
+    public Product(String companyEmail, int productId, String name, String description, Regions region, String category, String imageLink) {
         this.companyEmail = companyEmail;
         this.productId = productId;
         this.name = name;
         this.description = description;
-        this.price = price;
-        this.quantity = quantity;
         this.category = category;
         this.imageLink = imageLink;
         this.region = region;
     }
 
-    public Product(String companyEmail, int productId, String name, String description, float price, Regions region, String category, String imageLink) {
-        this.companyEmail = companyEmail;
-        this.productId = productId;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.category = category;
-        this.imageLink = imageLink;
-        this.region = region;
-    }
+//    public Product(String companyEmail, int productId, String name, String description, float price, Regions region, String category, String imageLink) {
+//        this.companyEmail = companyEmail;
+//        this.productId = productId;
+//        this.name = name;
+//        this.description = description;
+//        this.price = price;
+//        this.category = category;
+//        this.imageLink = imageLink;
+//        this.region = region;
+//    }
 
     public String getCompanyEmail() {
         return companyEmail;
