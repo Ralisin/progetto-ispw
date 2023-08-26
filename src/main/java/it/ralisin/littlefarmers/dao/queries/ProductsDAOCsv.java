@@ -6,10 +6,7 @@ import it.ralisin.littlefarmers.enums.Regions;
 import it.ralisin.littlefarmers.model.Product;
 import it.ralisin.littlefarmers.model.User;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -40,7 +37,7 @@ public class ProductsDAOCsv implements ProductDAO {
     public List<Product> getProducts() {
         try {
             return getProductsFromCSVFile();
-        } catch (CsvValidationException | IOException e) {
+        } catch (IOException e) {
             Logger.getAnonymousLogger().log(Level.INFO, String.format("Error on getting products in ProductsDAOCsv, %s", e));
         }
 
@@ -65,28 +62,33 @@ public class ProductsDAOCsv implements ProductDAO {
                 .toList();
     }
 
-    private List<Product> getProductsFromCSVFile() throws CsvValidationException, IOException {
-        CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(fd)));
-        String[] productRecord;
+    private List<Product> getProductsFromCSVFile() throws IOException {
         List<Product> productList = new ArrayList<>();
 
-        while ((productRecord = csvReader.readNext()) != null) {
-            String companyEmail = productRecord[INDEX_COMPANY_EMAIL];
-            int productId = Integer.parseInt(productRecord[INDEX_PRODUCT_ID]);
-            String name = productRecord[INDEX_PRODUCT_NAME];
-            String description = productRecord[INDEX_PRODUCT_DESCRIPTION];
-            float price = Float.parseFloat(productRecord[INDEX_PRODUCT_PRICE]);
-            Regions region = Regions.getByRegionString(productRecord[INDEX_PRODUCT_REGION]);
-            String category = productRecord[INDEX_PRODUCT_CATEGORY];
-            String imageLink = productRecord[INDEX_PRODUCT_IMAGE_LINK];
+        try (CSVReader csvReader = new CSVReader(new BufferedReader(new FileReader(fd)))) {
+            String[] productRecord;
+            productList = new ArrayList<>();
 
-            Product product = new Product(companyEmail, productId, name, description, region, category, imageLink);
-            product.setPrice(price);
+            while ((productRecord = csvReader.readNext()) != null) {
+                String companyEmail = productRecord[INDEX_COMPANY_EMAIL];
+                int productId = Integer.parseInt(productRecord[INDEX_PRODUCT_ID]);
+                String name = productRecord[INDEX_PRODUCT_NAME];
+                String description = productRecord[INDEX_PRODUCT_DESCRIPTION];
+                float price = Float.parseFloat(productRecord[INDEX_PRODUCT_PRICE]);
+                Regions region = Regions.getByRegionString(productRecord[INDEX_PRODUCT_REGION]);
+                String category = productRecord[INDEX_PRODUCT_CATEGORY];
+                String imageLink = productRecord[INDEX_PRODUCT_IMAGE_LINK];
 
-            productList.add(product);
+                Product product = new Product(companyEmail, productId, name, description, region, category, imageLink);
+                product.setPrice(price);
+
+                productList.add(product);
+            }
+        } catch (FileNotFoundException e) {
+            Logger.getAnonymousLogger().log(Level.INFO, String.format("Invalid file descriptor %s", e));
+        } catch (IOException | CsvValidationException e) {
+            throw new IOException(e);
         }
-
-        csvReader.close();
 
         return productList;
     }
