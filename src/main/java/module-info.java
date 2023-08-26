@@ -3,6 +3,7 @@ module it.ralisin.littlefarmers {
     requires javafx.fxml;
     requires java.logging;
     requires java.sql;
+    requires com.opencsv;
 
 
     opens it.ralisin.littlefarmers to javafx.fxml;

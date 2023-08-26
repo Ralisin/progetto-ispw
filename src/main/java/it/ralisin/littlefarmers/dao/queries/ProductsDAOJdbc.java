@@ -17,6 +17,8 @@ import java.util.logging.Logger;
 
 public class ProductsDAOJdbc extends AbsDAOJdbc implements ProductDAO {
     static final String SQL = "select * from products";
+    static final String SQL_BY_REGION = "select * from products where region = ?";
+    static final String SQL_BY_COMPANY = "select * from products where companyEmail = ?";
 
     public List<Product> getProducts() {
         Connection conn = ConnectionFactory.getConnection();
@@ -34,11 +36,11 @@ public class ProductsDAOJdbc extends AbsDAOJdbc implements ProductDAO {
     }
 
     public List<Product> getProductsByRegion(Regions region) {
-        return executeQuery(region.getRegionString());
+        return executeQuery(region.getRegionString(), SQL_BY_REGION);
     }
 
     public List<Product> getProductByCompany(User company) {
-        return executeQuery(company.getEmail());
+        return executeQuery(company.getEmail(), SQL_BY_COMPANY);
     }
 
     private static List<Product> getProductsList(ResultSet rs) throws SQLException {
@@ -51,12 +53,10 @@ public class ProductsDAOJdbc extends AbsDAOJdbc implements ProductDAO {
         return productList;
     }
 
-    private List<Product> executeQuery(String toBeInserted) {
+    private List<Product> executeQuery(String toBeInserted, String sql) {
         List<Product> productList = new ArrayList<>();
 
         Connection conn = ConnectionFactory.getConnection();
-
-        String sql = SQL + " where region = ?";
 
         ResultSet rs = null;
 

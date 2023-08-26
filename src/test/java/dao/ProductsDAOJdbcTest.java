@@ -24,7 +24,9 @@ class ProductsDAOJdbcTest {
         // Check all regions
         for(Regions region : Regions.values()) {
             List<Product> productList = new ProductsDAOJdbc().getProductsByRegion(region);
+
             System.out.println(productList);
+
             Assertions.assertNotNull(productList);
         }
     }
@@ -32,6 +34,8 @@ class ProductsDAOJdbcTest {
     @Test
     void testGetProductsByCompany() {
         List<Product> productList = new ProductsDAOJdbc().getProductByCompany(company);
+
+        productList.forEach(System.out::println);
 
         Assertions.assertNotNull(productList);
     }

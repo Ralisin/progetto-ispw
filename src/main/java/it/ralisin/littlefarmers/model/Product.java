@@ -18,9 +18,9 @@ public class Product {
         this.productId = productId;
         this.name = name;
         this.description = description;
+        this.region = region;
         this.category = category;
         this.imageLink = imageLink;
-        this.region = region;
     }
 
     public String getCompanyEmail() {
