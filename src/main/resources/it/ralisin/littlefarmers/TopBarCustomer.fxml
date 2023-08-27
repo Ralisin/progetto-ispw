@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<HBox alignment="CENTER" style="-fx-background-color: rgba(112, 174, 110, 0.1); -fx-border-color: rgba(112, 174, 110, 1); -fx-border-width: 0 0 0.5 0;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ralisin.littlefarmers.controller.graphic_controller_GUI.TopBarCustomerGraphicControllerGUI">
+<HBox alignment="CENTER" style="-fx-background-color: rgba(112, 174, 110, 0.1); -fx-border-color: rgba(112, 174, 110, 1); -fx-border-width: 0 0 0.5 0;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ralisin.littlefarmers.controller.graphic_controller_gui.TopBarCustomerGraphicControllerGUI">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="365.0">
          <children>

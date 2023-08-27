@@ -1,4 +1,4 @@
-package it.ralisin.littlefarmers.controller.graphic_controller_CLI;
+package it.ralisin.littlefarmers.controller.graphic_controller_cli;
 
 import it.ralisin.littlefarmers.controller.app_controller.SessionController;
 import it.ralisin.littlefarmers.enums.Regions;
