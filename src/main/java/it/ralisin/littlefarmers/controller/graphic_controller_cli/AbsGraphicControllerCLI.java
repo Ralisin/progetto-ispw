@@ -70,11 +70,10 @@ public abstract class AbsGraphicControllerCLI implements GraphicControllerCLIInt
             CLIPrinter.printf("2) Company");
             CLIPrinter.print("Select role: ");
             int choice = getMenuChoice(1, 2);
+
             UserRole role = UserRole.NONE;
-            switch (choice) {
-                case 1 -> role = UserRole.CUSTOMER;
-                case 2 -> role = UserRole.COMPANY;
-            }
+            if(choice == 1) role = UserRole.CUSTOMER;
+            else if(choice == 2) role = UserRole.COMPANY;
 
             CLIPrinter.print("email: ");
             String email = reader.readLine();
