@@ -19,6 +19,7 @@ public class CartGraphicControllerCLI extends AbsGraphicControllerCLI {
     @Override
     public void start() {
         productList = CartController.getInstance().getCart().getProductList();
+        final String invalidChoiceString = "Invalid choice";
 
         while(true) {
             int choice;
@@ -38,11 +39,9 @@ public class CartGraphicControllerCLI extends AbsGraphicControllerCLI {
                         CLIPrinter.print("New quantity: ");
                         int quantity = input.nextInt();
 
-                        Product newP = null;
-                        for(Product p : productList)
-                            if(p.getProductId() == productId) newP = p;
+                        Product newP = findProductInCartById(productId);
                         if(newP != null) newP.setQuantity(quantity);
-                        else throw new InvalidFormatException("Invalid choice");
+                        else throw new InvalidFormatException(invalidChoiceString);
 
                         CartBean cartBean = new CartBean();
                         cartBean.setProduct(newP);
@@ -54,10 +53,8 @@ public class CartGraphicControllerCLI extends AbsGraphicControllerCLI {
                         CLIPrinter.print("ProductId to edit quantity: ");
                         int productId = input.nextInt();
 
-                        Product productToRemove = null;
-                        for(Product p : productList)
-                            if(p.getProductId() == productId) productToRemove = p;
-                        if(productToRemove == null) throw new InvalidFormatException("Invalid choice");
+                        Product productToRemove = findProductInCartById(productId);
+                        if(productToRemove == null) throw new InvalidFormatException(invalidChoiceString);
 
                         CartBean cartBean = new CartBean();
                         cartBean.setProduct(productToRemove);
@@ -65,7 +62,7 @@ public class CartGraphicControllerCLI extends AbsGraphicControllerCLI {
                         CartController.getInstance().removeProduct(cartBean);
                     }
                     case 0 -> new RegionListGraphicControllerCLI().start();
-                    default -> throw new InvalidFormatException("Invalid choice");
+                    default -> throw new InvalidFormatException(invalidChoiceString);
                 }
             } catch (IOException | InvalidFormatException e) {
                 Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
@@ -89,5 +86,12 @@ public class CartGraphicControllerCLI extends AbsGraphicControllerCLI {
 
             CLIPrinter.printf(productString);
         }
+    }
+
+    private Product findProductInCartById(int id) {
+        for(Product p : productList)
+            if(p.getProductId() == id) return p;
+
+        return null;
     }
 }
