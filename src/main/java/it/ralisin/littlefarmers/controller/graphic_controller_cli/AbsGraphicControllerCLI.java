@@ -49,16 +49,15 @@ public abstract class AbsGraphicControllerCLI implements GraphicControllerCLIInt
             if(result) {
                 User user = SessionManager.getInstance().getUser();
                 if(user.getRole() == UserRole.CUSTOMER) new RegionListGraphicControllerCLI().start();
-                else if(user.getRole() == UserRole.COMPANY) {
-                    Logger.getAnonymousLogger().log(Level.INFO, "Company logged in");
-                }
+                else if(user.getRole() == UserRole.COMPANY) CLIPrinter.printf("Logged as COMPANY"); // TODO
             }
+            else throw new DAOException("Invalid login credentials");
         } catch (InvalidFormatException e) {
             CLIPrinter.printf("Email or password format is not correct");
         } catch (DAOException | SQLException e) {
-            Logger.getAnonymousLogger().log(Level.INFO, String.format("Database reading error: %s", e));
+            CLIPrinter.printf(String.format("Database reading error: %s", e));
         } catch (IOException e) {
-            Logger.getAnonymousLogger().log(Level.INFO, String.format("BufferReading error: %s", e));
+            CLIPrinter.printf(String.format("BufferReading error: %s", e));
         }
     }
 
@@ -87,11 +86,18 @@ public abstract class AbsGraphicControllerCLI implements GraphicControllerCLIInt
             String pswRep = reader.readLine();
 
             LoginCredentialsBean loginCredentialsBean = new LoginCredentialsBean(email, emailRep, psw, pswRep, role);
-            new LoginSignUpController().login(loginCredentialsBean);
+            boolean result = new LoginSignUpController().signUp(loginCredentialsBean);
+
+            if(result) {
+                User user = SessionManager.getInstance().getUser();
+                if(user.getRole() == UserRole.CUSTOMER) new RegionListGraphicControllerCLI().start();
+                else if(user.getRole() == UserRole.COMPANY) CLIPrinter.printf("Registered as COMPANY"); // TODO
+            }
+            else throw new DAOException("User already exist");
         } catch (InvalidFormatException e) {
             CLIPrinter.printf("Email or password format is not correct");
-        } catch (DAOException | SQLException e) {
-            Logger.getAnonymousLogger().log(Level.INFO, String.format("Database reading error: %s", e));
+        } catch (DAOException e) {
+            Logger.getAnonymousLogger().log(Level.INFO, String.format("Database writing error: %s", e));
         } catch (IOException e) {
             Logger.getAnonymousLogger().log(Level.INFO, String.format("BufferReading error: %s", e));
         }

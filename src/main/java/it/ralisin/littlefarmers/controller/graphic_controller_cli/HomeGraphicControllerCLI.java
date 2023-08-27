@@ -10,15 +10,18 @@ import java.util.logging.Logger;
 public class HomeGraphicControllerCLI extends AbsGraphicControllerCLI {
     @Override
     public void start() {
-        while(true) {
-            int choice;
+        int choice = -1;
+        while(choice == -1) {
             try {
                 choice = showMenu();
                 switch(choice) {
                     case 1 -> login();
                     case 2 -> signUp();
                     case 3 -> System.exit(0);
-                    default -> throw new InvalidFormatException("Invalid choice");
+                    default -> {
+                        choice = -1;
+                        throw new InvalidFormatException("Invalid choice");
+                    }
                 }
             } catch (IOException | InvalidFormatException e) {
                 Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
