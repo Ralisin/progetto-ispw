@@ -1,4 +1,4 @@
-package it.ralisin.littlefarmers.controller.graphic_controller;
+package it.ralisin.littlefarmers.controller.graphic_controller_GUI;
 
 import it.ralisin.littlefarmers.Main;
 import it.ralisin.littlefarmers.beans.OrderBean;
@@ -8,7 +8,7 @@ import javafx.scene.Parent;
 
 import java.io.IOException;
 
-public class AbsOrderGraphicController extends AbsGraphicController {
+public class AbsOrderGraphicControllerGUI extends AbsGraphicControllerGUI {
     Parent orderLoader(OrderBean oB, OrderController controller) {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("OrderCustomer.fxml"));
         fxmlLoader.setController(new OrderGraphicControllerGUI(oB, controller, true));

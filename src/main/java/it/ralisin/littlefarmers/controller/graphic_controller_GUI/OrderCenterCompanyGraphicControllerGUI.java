@@ -1,4 +1,4 @@
-package it.ralisin.littlefarmers.controller.graphic_controller;
+package it.ralisin.littlefarmers.controller.graphic_controller_GUI;
 
 import it.ralisin.littlefarmers.beans.OrderBean;
 import it.ralisin.littlefarmers.controller.app_controller.OrderController;
@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 
-public class OrderCenterCompanyGraphicControllerGUI extends AbsOrderGraphicController {
+public class OrderCenterCompanyGraphicControllerGUI extends AbsOrderGraphicControllerGUI {
     @FXML
     private Label noOrdersLabel;
     @FXML

@@ -1,4 +1,4 @@
-package it.ralisin.littlefarmers.controller.graphic_controller;
+package it.ralisin.littlefarmers.controller.graphic_controller_GUI;
 
 import it.ralisin.littlefarmers.Main;
 import it.ralisin.littlefarmers.beans.ProductBean;
@@ -17,7 +17,7 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.List;
 
-public class RegionProductsCenterGraphicControllerGUI extends AbsGraphicController {
+public class RegionProductsCenterGraphicControllerGUI extends AbsGraphicControllerGUI {
     @FXML
     private Label regionLabel;
     @FXML

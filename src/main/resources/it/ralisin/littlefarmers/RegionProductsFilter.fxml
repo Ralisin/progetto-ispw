@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<VBox xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ralisin.littlefarmers.controller.graphic_controller.RegionProductsFilterGraphicControllerGUI">
+<VBox xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ralisin.littlefarmers.controller.graphic_controller_GUI.RegionProductsFilterGraphicControllerGUI">
    <padding>
       <Insets left="5.0" right="5.0" />
    </padding>

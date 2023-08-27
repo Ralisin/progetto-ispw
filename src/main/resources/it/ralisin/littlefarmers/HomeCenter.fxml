@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ralisin.littlefarmers.controller.graphic_controller.HomeCenterGraphicControllerGUI">
+<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.ralisin.littlefarmers.controller.graphic_controller_GUI.HomeCenterGraphicControllerGUI">
    <center>
       <VBox alignment="TOP_CENTER" focusTraversable="true" prefHeight="650.0" prefWidth="900.0">
          <children>

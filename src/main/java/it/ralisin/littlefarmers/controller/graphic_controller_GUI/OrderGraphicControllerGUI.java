@@ -1,4 +1,4 @@
-package it.ralisin.littlefarmers.controller.graphic_controller;
+package it.ralisin.littlefarmers.controller.graphic_controller_GUI;
 
 import it.ralisin.littlefarmers.Main;
 import it.ralisin.littlefarmers.beans.OrderBean;

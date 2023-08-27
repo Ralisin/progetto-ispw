@@ -1,4 +1,4 @@
-package it.ralisin.littlefarmers.controller.graphic_controller;
+package it.ralisin.littlefarmers.controller.graphic_controller_GUI;
 
 import it.ralisin.littlefarmers.Main;
 import it.ralisin.littlefarmers.beans.CartBean;
@@ -19,7 +19,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class CartCenterGraphicControllerGUI extends AbsGraphicController implements Observer {
+public class CartCenterGraphicControllerGUI extends AbsGraphicControllerGUI implements Observer {
     @FXML
     private VBox cartCenterVBox;
     @FXML

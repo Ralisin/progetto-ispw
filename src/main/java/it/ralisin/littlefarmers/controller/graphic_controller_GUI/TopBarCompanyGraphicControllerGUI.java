@@ -1,4 +1,4 @@
-package it.ralisin.littlefarmers.controller.graphic_controller;
+package it.ralisin.littlefarmers.controller.graphic_controller_GUI;
 
 import it.ralisin.littlefarmers.controller.app_controller.SessionController;
 import javafx.fxml.FXML;
@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class TopBarCompanyGraphicControllerGUI extends AbsGraphicController {
+public class TopBarCompanyGraphicControllerGUI extends AbsGraphicControllerGUI {
     @FXML
     private Button productsBtn;
     @FXML

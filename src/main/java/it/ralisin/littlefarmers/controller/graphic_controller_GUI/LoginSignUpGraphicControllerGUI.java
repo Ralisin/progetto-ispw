@@ -1,4 +1,4 @@
-package it.ralisin.littlefarmers.controller.graphic_controller;
+package it.ralisin.littlefarmers.controller.graphic_controller_GUI;
 
 import it.ralisin.littlefarmers.beans.LoginCredentialsBean;
 import it.ralisin.littlefarmers.controller.app_controller.LoginSignUpController;
@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class LoginSignUpGraphicControllerGUI extends AbsGraphicController {
+public class LoginSignUpGraphicControllerGUI extends AbsGraphicControllerGUI {
     @FXML
     private TextField emailLoginTxtFld;
     @FXML

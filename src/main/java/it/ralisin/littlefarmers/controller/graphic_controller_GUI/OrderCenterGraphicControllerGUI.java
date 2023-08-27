@@ -1,4 +1,4 @@
-package it.ralisin.littlefarmers.controller.graphic_controller;
+package it.ralisin.littlefarmers.controller.graphic_controller_GUI;
 
 import it.ralisin.littlefarmers.Main;
 import it.ralisin.littlefarmers.beans.OrderBean;
@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.List;
 
-public class OrderCenterGraphicControllerGUI extends AbsGraphicController {
+public class OrderCenterGraphicControllerGUI extends AbsGraphicControllerGUI {
     @FXML
     private Button backBtn;
     @FXML

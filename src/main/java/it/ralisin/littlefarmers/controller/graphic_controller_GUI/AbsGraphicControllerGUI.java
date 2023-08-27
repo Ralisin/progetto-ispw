@@ -1,4 +1,4 @@
-package it.ralisin.littlefarmers.controller.graphic_controller;
+package it.ralisin.littlefarmers.controller.graphic_controller_GUI;
 
 import it.ralisin.littlefarmers.utils.NavigatorSingleton;
 import javafx.stage.Stage;
@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public abstract class AbsGraphicController {
+public abstract class AbsGraphicControllerGUI {
     protected static final String CUSTOMER_TOP_BAR = "TopBarCustomer.fxml";
     protected static final String CUSTOMER_LOGGED_TOP_BAR = "TopBarCustomerLogged.fxml";
     protected static final String CUSTOMER_REGION_LIST_CENTER = "RegionList.fxml";
