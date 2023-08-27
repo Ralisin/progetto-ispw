@@ -12,8 +12,8 @@ import java.util.logging.Logger;
 public class RegionListGraphicControllerCLI extends AbsGraphicControllerCLI {
     @Override
     public void start() {
-        while(true) {
-            int choice;
+        int choice = -1;
+        while(choice == -1) {
             try {
                 choice = showMenu();
                 Regions region = null;
@@ -43,7 +43,10 @@ public class RegionListGraphicControllerCLI extends AbsGraphicControllerCLI {
                         new HomeGraphicControllerCLI().start();
                     }
                     case 21 -> new CartGraphicControllerCLI().start();
-                    default -> throw new InvalidFormatException("Invalid choice");
+                    default -> {
+                        choice = -1;
+                        throw new InvalidFormatException("Invalid choice");
+                    }
                 }
 
                 if(region != null) {
