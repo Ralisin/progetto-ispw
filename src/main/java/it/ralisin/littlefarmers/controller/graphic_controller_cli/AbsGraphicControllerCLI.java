@@ -1,10 +1,13 @@
 package it.ralisin.littlefarmers.controller.graphic_controller_cli;
 
 import it.ralisin.littlefarmers.beans.LoginCredentialsBean;
+import it.ralisin.littlefarmers.beans.OrderBean;
 import it.ralisin.littlefarmers.controller.app_controller.LoginSignUpController;
+import it.ralisin.littlefarmers.controller.app_controller.OrderController;
 import it.ralisin.littlefarmers.enums.UserRole;
 import it.ralisin.littlefarmers.exeptions.DAOException;
 import it.ralisin.littlefarmers.exeptions.InvalidFormatException;
+import it.ralisin.littlefarmers.model.Order;
 import it.ralisin.littlefarmers.model.User;
 import it.ralisin.littlefarmers.utils.CLIPrinter;
 import it.ralisin.littlefarmers.utils.SessionManager;
@@ -13,6 +16,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,12 +28,12 @@ public abstract class AbsGraphicControllerCLI implements GraphicControllerCLIInt
         int choice;
 
         while (true) {
-            CLIPrinter.print("Please enter your choice: ");
+            CLIPrinter.print("Per favore, inserisci un numero: ");
 
             choice = input.nextInt();
             if (choice >= min && choice <= max) break;
 
-            CLIPrinter.printf("Invalid option\n");
+            CLIPrinter.printf("Opzione non valida\n");
         }
 
         return choice;
@@ -47,9 +52,11 @@ public abstract class AbsGraphicControllerCLI implements GraphicControllerCLIInt
             boolean result = new LoginSignUpController().login(loginCredentialsBean);
 
             if(result) nextPage(SessionManager.getInstance().getUser());
-            else throw new DAOException("Invalid login credentials");
+            else CLIPrinter.printf("Credenziali login non valide");
+
+            new HomeGraphicControllerCLI().start();
         } catch (InvalidFormatException e) {
-            CLIPrinter.printf("Email or password format is not correct");
+            CLIPrinter.printf("Formato email o password invalido");
         } catch (DAOException | SQLException e) {
             CLIPrinter.printf(String.format("Database reading error: %s", e));
         } catch (IOException e) {
@@ -61,10 +68,9 @@ public abstract class AbsGraphicControllerCLI implements GraphicControllerCLIInt
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         try {
-            CLIPrinter.printf("*** Select role ***");
+            CLIPrinter.printf("*** Seleziona il tuo ruolo ***");
             CLIPrinter.printf("1) Customer");
             CLIPrinter.printf("2) Company");
-            CLIPrinter.print("Select role: ");
             int choice = getMenuChoice(1, 2);
 
             UserRole role = UserRole.NONE;
@@ -84,7 +90,9 @@ public abstract class AbsGraphicControllerCLI implements GraphicControllerCLIInt
             boolean result = new LoginSignUpController().signUp(loginCredentialsBean);
 
             if(result) nextPage(SessionManager.getInstance().getUser());
-            else throw new DAOException("User already exist");
+            else CLIPrinter.printf("User already exist");
+
+            new HomeGraphicControllerCLI().start();
         } catch (InvalidFormatException e) {
             CLIPrinter.printf("Email or password format is not correct");
         } catch (DAOException e) {
@@ -95,7 +103,18 @@ public abstract class AbsGraphicControllerCLI implements GraphicControllerCLIInt
     }
 
     private void nextPage(User user) {
-        if(user.getRole() == UserRole.CUSTOMER) new RegionListGraphicControllerCLI().start();
-        else if(user.getRole() == UserRole.COMPANY) CLIPrinter.printf("Registered as COMPANY"); // TODO
+        if(user.getRole() == UserRole.CUSTOMER) new CustomerHomeGraphicControllerCLI().start();
+        else if(user.getRole() == UserRole.COMPANY) new CompanyHomeGraphicControllerCLI().start();
+    }
+
+    protected List<Order> getOrderList(User user) {
+        OrderController orderController = new OrderController();
+
+        OrderBean orderBean = null;
+        if(user.getRole() == UserRole.CUSTOMER) orderBean = orderController.getCustomerOrdersList();
+        else if(user.getRole() == UserRole.COMPANY) orderBean = orderController.getCompanyOrdersList();
+
+        if (orderBean != null) return orderBean.getOrderList();
+        return new ArrayList<>();
     }
 }

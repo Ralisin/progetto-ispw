@@ -3,13 +3,16 @@ package it.ralisin.littlefarmers.controller.graphic_controller_cli;
 import it.ralisin.littlefarmers.controller.app_controller.SessionController;
 import it.ralisin.littlefarmers.enums.Regions;
 import it.ralisin.littlefarmers.exeptions.InvalidFormatException;
+import it.ralisin.littlefarmers.model.Order;
 import it.ralisin.littlefarmers.utils.CLIPrinter;
+import it.ralisin.littlefarmers.utils.SessionManager;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class RegionListGraphicControllerCLI extends AbsGraphicControllerCLI {
+public class CustomerHomeGraphicControllerCLI extends AbsGraphicControllerCLI {
     @Override
     public void start() {
         int choice = -1;
@@ -43,6 +46,16 @@ public class RegionListGraphicControllerCLI extends AbsGraphicControllerCLI {
                         new HomeGraphicControllerCLI().start();
                     }
                     case 21 -> new CartGraphicControllerCLI().start();
+                    case 22 -> {
+                        CLIPrinter.printf("*** Customer orders ***");
+                        List<Order> orderList = getOrderList(SessionManager.getInstance().getUser());
+                        for(Order o : orderList) {
+                            String orderString = String.format("orderId: %d, companyEmail: %s, orderStatus: %s", o.getId(), o.getCompanyEmail(), o.getStatus());
+
+                            CLIPrinter.printf(orderString);
+                        }
+                        choice = -1;
+                    }
                     default -> {
                         choice = -1;
                         throw new InvalidFormatException("Invalid choice");
@@ -62,14 +75,14 @@ public class RegionListGraphicControllerCLI extends AbsGraphicControllerCLI {
 
     @Override
     public int showMenu() throws IOException {
-        CLIPrinter.printf("*** Select region you want products ***");
+        CLIPrinter.printf("*** Seleziona la regione di cui vuoi acquistare i prodotti ***");
         CLIPrinter.printf("1- Abruzzo          6- Friuli     11- Molise    16- Toscana");
         CLIPrinter.printf("2- Basilicata       7- Lazio      12- Piemonte  17- Trentino Alto Adige");
         CLIPrinter.printf("3- Calabria         8- Liguria    13- Puglia    18- Umbria");
         CLIPrinter.printf("4- Campania         9- Lombardia  14- Sardegna  19- Val d'Aosta");
         CLIPrinter.printf("5- Emilia Romagna  10- Marche     15- Sicilia   20- Veneto");
-        CLIPrinter.printf("0- LogOut    21- Cart");
+        CLIPrinter.printf("0- LogOut    21- Carrello    22- Ordini");
 
-        return getMenuChoice(0, 21);
+        return getMenuChoice(0, 22);
     }
 }

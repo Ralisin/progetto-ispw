@@ -7,11 +7,8 @@ import it.ralisin.littlefarmers.model.Product;
 import it.ralisin.littlefarmers.utils.CLIPrinter;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class CartGraphicControllerCLI extends AbsGraphicControllerCLI {
     private List<Product> productList;
@@ -19,7 +16,7 @@ public class CartGraphicControllerCLI extends AbsGraphicControllerCLI {
     @Override
     public void start() {
         productList = CartController.getInstance().getCart().getProductList();
-        final String invalidChoiceString = "Invalid choice";
+        final String invalidChoiceString = "Scelta non valida";
 
         int choice = -1;
         while(choice == -1) {
@@ -30,13 +27,13 @@ public class CartGraphicControllerCLI extends AbsGraphicControllerCLI {
                 switch(choice) {
                     case 1 -> {
                         CartController.getInstance().buyCart();
-                        productList = new ArrayList<>();
+                        new CustomerHomeGraphicControllerCLI().start();
                     }
                     case 2 -> {
                         Scanner input = new Scanner(System.in);
-                        CLIPrinter.print("ProductId to edit quantity: ");
+                        CLIPrinter.print("Id del prodotto di cui modificare la quantità: ");
                         int productId = input.nextInt();
-                        CLIPrinter.print("New quantity: ");
+                        CLIPrinter.print("Nuova quantità: ");
                         int quantity = input.nextInt();
 
                         Product newP = findProductInCartById(productId);
@@ -47,10 +44,12 @@ public class CartGraphicControllerCLI extends AbsGraphicControllerCLI {
                         cartBean.setProduct(newP);
 
                         CartController.getInstance().updateProduct(cartBean);
+
+                        choice = -1;
                     }
                     case 3 -> {
                         Scanner input = new Scanner(System.in);
-                        CLIPrinter.print("ProductId to edit quantity: ");
+                        CLIPrinter.print("Id del prodotto da rimuovere dal carrello: ");
                         int productId = input.nextInt();
 
                         Product productToRemove = findProductInCartById(productId);
@@ -59,26 +58,28 @@ public class CartGraphicControllerCLI extends AbsGraphicControllerCLI {
                         CartBean cartBean = new CartBean();
                         cartBean.setProduct(productToRemove);
 
+                        productList.remove(productToRemove);
                         CartController.getInstance().removeProduct(cartBean);
-                    }
-                    case 0 -> new RegionListGraphicControllerCLI().start();
-                    default -> {
+
                         choice = -1;
-                        throw new InvalidFormatException(invalidChoiceString);
                     }
+                    case 0 -> new CustomerHomeGraphicControllerCLI().start();
+                    default -> throw new InvalidFormatException(invalidChoiceString);
                 }
             } catch (IOException | InvalidFormatException e) {
-                Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
+                CLIPrinter.printf(e.getMessage());
+
+                choice = -1;
             }
         }
     }
 
     @Override
     public int showMenu() throws IOException {
-        CLIPrinter.printf("1- Buy cart");
-        CLIPrinter.printf("2- Edit product quantity");
-        CLIPrinter.printf("3- Remove product");
-        CLIPrinter.printf("0- Back");
+        CLIPrinter.printf("1- Acquista carrello");
+        CLIPrinter.printf("2- Modifica la quantità di prodotto nel carrello");
+        CLIPrinter.printf("3- Rimuovi un prodotto");
+        CLIPrinter.printf("0- Indietro");
 
         return getMenuChoice(0, 3);
     }

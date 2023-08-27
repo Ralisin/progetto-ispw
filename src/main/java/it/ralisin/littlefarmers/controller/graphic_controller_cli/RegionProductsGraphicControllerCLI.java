@@ -24,12 +24,12 @@ public class RegionProductsGraphicControllerCLI extends AbsGraphicControllerCLI 
         ProductsListBean productsListBean = new RegionProductsController().loadRegionProducts(region);
         productList = productsListBean.getProductList();
 
-        while(true) {
-            int choice;
+        int choice = -1;
+        while(choice == -1) {
             try {
                 choice = showMenu();
 
-                if (choice == 0) new RegionListGraphicControllerCLI().start();
+                if (choice == 0) new CustomerHomeGraphicControllerCLI().start();
                 Product p = null;
                 for(Product p1 : productList)
                     if(p1.getProductId() == choice) p = p1;
@@ -42,9 +42,11 @@ public class RegionProductsGraphicControllerCLI extends AbsGraphicControllerCLI 
 
                     CartController.getInstance().addProduct(cartBean);
                 }
-                else throw new InvalidFormatException("Invalid choice");
+                else throw new InvalidFormatException("Scelta non valida");
             } catch (IOException | InvalidFormatException e) {
                 Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
+
+                choice = -1;
             }
         }
     }
@@ -57,10 +59,10 @@ public class RegionProductsGraphicControllerCLI extends AbsGraphicControllerCLI 
 
             CLIPrinter.printf(productString);
         }
-        CLIPrinter.printf("0- Back");
+        CLIPrinter.printf("0- Indietro");
 
         Scanner input = new Scanner(System.in);
-        CLIPrinter.print("Please enter your choice: ");
+        CLIPrinter.print("Id del prodotto per aggiungerlo una volta al carrello, 0 per tornare indietro: ");
 
         return input.nextInt();
     }
