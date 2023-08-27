@@ -21,8 +21,8 @@ public class CartGraphicControllerCLI extends AbsGraphicControllerCLI {
         productList = CartController.getInstance().getCart().getProductList();
         final String invalidChoiceString = "Invalid choice";
 
-        while(true) {
-            int choice;
+        int choice = -1;
+        while(choice == -1) {
             try {
                 printProductList();
                 choice = showMenu();
@@ -62,7 +62,10 @@ public class CartGraphicControllerCLI extends AbsGraphicControllerCLI {
                         CartController.getInstance().removeProduct(cartBean);
                     }
                     case 0 -> new RegionListGraphicControllerCLI().start();
-                    default -> throw new InvalidFormatException(invalidChoiceString);
+                    default -> {
+                        choice = -1;
+                        throw new InvalidFormatException(invalidChoiceString);
+                    }
                 }
             } catch (IOException | InvalidFormatException e) {
                 Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
