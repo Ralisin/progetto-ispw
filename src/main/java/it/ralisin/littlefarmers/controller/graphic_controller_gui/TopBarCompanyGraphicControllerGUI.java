@@ -25,10 +25,7 @@ public class TopBarCompanyGraphicControllerGUI extends AbsGraphicControllerGUI {
             gotoPageLeft(REMOVE_ELEMENT);
         });
 
-        productsBtn.setOnMouseClicked(mouseEvent -> {
-            // TODO
-            Logger.getAnonymousLogger().log(Level.INFO, "TopBarCompanyGraphicControllerGUI productsBtn clicked");
-        });
+        productsBtn.setOnMouseClicked(mouseEvent -> Logger.getAnonymousLogger().log(Level.INFO, "TopBarCompanyGraphicControllerGUI productsBtn clicked"));
 
         logOutBtn.setOnMouseClicked(mouseEvent -> {
             controller.logOut();
