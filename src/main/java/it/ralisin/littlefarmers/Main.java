@@ -37,7 +37,6 @@ public class Main extends Application {
         n.getMainStg().setScene(scene);
         n.getMainStg().show();
     }
-
     public static void main(String[] args) {
         launch();
     }
