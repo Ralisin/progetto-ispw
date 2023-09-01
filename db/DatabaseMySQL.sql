@@ -328,3 +328,78 @@ INSERT INTO `LittleFarmers`.`customer` (`email`, `name`, `surname`, `address`) V
 
 COMMIT;
 
+
+-- -----------------------------------------------------
+-- Data for table `LittleFarmers`.`orders`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `LittleFarmers`;
+INSERT INTO `LittleFarmers`.`orders` (`id`, `companyEmail`, `customerEmail`, `date`, `status`) VALUES (33, 'company1@gmail.com', 'customer1@gmail.com', '2023-08-23', 'accepted');
+INSERT INTO `LittleFarmers`.`orders` (`id`, `companyEmail`, `customerEmail`, `date`, `status`) VALUES (34, 'company3@gmail.com', 'customer1@gmail.com', '2023-08-23', 'waiting');
+INSERT INTO `LittleFarmers`.`orders` (`id`, `companyEmail`, `customerEmail`, `date`, `status`) VALUES (35, 'company4@gmail.com', 'customer1@gmail.com', '2023-08-23', 'waiting');
+INSERT INTO `LittleFarmers`.`orders` (`id`, `companyEmail`, `customerEmail`, `date`, `status`) VALUES (36, 'company2@gmail.com', 'customer1@gmail.com', '2023-08-23', 'waiting');
+INSERT INTO `LittleFarmers`.`orders` (`id`, `companyEmail`, `customerEmail`, `date`, `status`) VALUES (37, 'company1@gmail.com', 'customer1@gmail.com', '2023-08-23', 'denied');
+INSERT INTO `LittleFarmers`.`orders` (`id`, `companyEmail`, `customerEmail`, `date`, `status`) VALUES (38, 'company1@gmail.com', 'customer1@gmail.com', '2023-08-23', 'denied');
+INSERT INTO `LittleFarmers`.`orders` (`id`, `companyEmail`, `customerEmail`, `date`, `status`) VALUES (39, 'company1@gmail.com', 'customer1@gmail.com', '2023-08-24', 'accepted');
+INSERT INTO `LittleFarmers`.`orders` (`id`, `companyEmail`, `customerEmail`, `date`, `status`) VALUES (40, 'company5@gmail.com', 'customer1@gmail.com', '2023-08-24', 'waiting');
+INSERT INTO `LittleFarmers`.`orders` (`id`, `companyEmail`, `customerEmail`, `date`, `status`) VALUES (41, 'company1@gmail.com', 'customer1@gmail.com', '2023-08-24', 'accepted');
+INSERT INTO `LittleFarmers`.`orders` (`id`, `companyEmail`, `customerEmail`, `date`, `status`) VALUES (42, 'company1@gmail.com', 'customer1@gmail.com', '2023-08-27', 'accepted');
+INSERT INTO `LittleFarmers`.`orders` (`id`, `companyEmail`, `customerEmail`, `date`, `status`) VALUES (43, 'company1@gmail.com', 'customer1@gmail.com', '2023-08-27', 'shipped');
+INSERT INTO `LittleFarmers`.`orders` (`id`, `companyEmail`, `customerEmail`, `date`, `status`) VALUES (44, 'company6@gmail.com', 'customer1@gmail.com', '2023-08-27', 'waiting');
+INSERT INTO `LittleFarmers`.`orders` (`id`, `companyEmail`, `customerEmail`, `date`, `status`) VALUES (45, 'company20@gmail.com', 'customer1@gmail.com', '2023-08-27', 'waiting');
+INSERT INTO `LittleFarmers`.`orders` (`id`, `companyEmail`, `customerEmail`, `date`, `status`) VALUES (46, 'company1@gmail.com', 'customer1@gmail.com', '2023-08-27', 'denied');
+INSERT INTO `LittleFarmers`.`orders` (`id`, `companyEmail`, `customerEmail`, `date`, `status`) VALUES (47, 'company1@gmail.com', 'customer1@gmail.com', '2023-08-27', 'accepted');
+INSERT INTO `LittleFarmers`.`orders` (`id`, `companyEmail`, `customerEmail`, `date`, `status`) VALUES (48, 'company1@gmail.com', 'customer1@gmail.com', '2023-08-29', 'accepted');
+INSERT INTO `LittleFarmers`.`orders` (`id`, `companyEmail`, `customerEmail`, `date`, `status`) VALUES (49, 'company1@gmail.com', 'customer1@gmail.com', '2023-08-31', 'accepted');
+INSERT INTO `LittleFarmers`.`orders` (`id`, `companyEmail`, `customerEmail`, `date`, `status`) VALUES (50, 'company5@gmail.com', 'customer1@gmail.com', '2023-08-31', 'waiting');
+INSERT INTO `LittleFarmers`.`orders` (`id`, `companyEmail`, `customerEmail`, `date`, `status`) VALUES (51, 'company2@gmail.com', 'customer1@gmail.com', '2023-08-31', 'waiting');
+INSERT INTO `LittleFarmers`.`orders` (`id`, `companyEmail`, `customerEmail`, `date`, `status`) VALUES (52, 'company1@gmail.com', 'customer1@gmail.com', '2023-09-01', 'denied');
+INSERT INTO `LittleFarmers`.`orders` (`id`, `companyEmail`, `customerEmail`, `date`, `status`) VALUES (53, 'company1@gmail.com', 'customer1@gmail.com', '2023-09-01', 'accepted');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `LittleFarmers`.`orderItems`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `LittleFarmers`;
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (33, 1, 1);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (34, 30, 1);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (34, 31, 1);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (35, 16, 1);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (36, 27, 1);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (37, 1, 1);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (38, 1, 9);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (39, 1, 2);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (40, 35, 1);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (40, 36, 1);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (41, 1, 2);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (41, 2, 2);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (41, 3, 2);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (41, 4, 2);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (42, 11, 1);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (42, 12, 1);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (42, 15, 1);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (43, 1, 1);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (43, 2, 1);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (43, 3, 1);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (44, 40, 1);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (45, 54, 1);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (46, 15, 1);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (47, 1, 7);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (48, 1, 1);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (48, 2, 1);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (48, 3, 5);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (49, 1, 3);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (50, 35, 3);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (51, 27, 2);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (52, 1, 1);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (52, 2, 1);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (52, 3, 1);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (53, 1, 1);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (53, 2, 2);
+INSERT INTO `LittleFarmers`.`orderItems` (`orderId`, `productId`, `quantity`) VALUES (53, 3, 1);
+
+COMMIT;
+
